@@ -7,8 +7,10 @@ and open the template in the editor.
     Created on : 2014-11-6, 16:20:04
     Author     : tianye
 */
-//[TODO][TEST] !!!please delete me before producing!!!
+/*[TODO][TEST] !!!please delete me before producing!!!*/
 div {
+    width: 100%;
     border: 1px solid red;
+    height: 100px;
 }
-//[TODO][TEST] !!!please delete me before producing!!!
+/*[TODO][TEST] !!!please delete me before producing!!!*/
