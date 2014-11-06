@@ -6,9 +6,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>DiTi</title>
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
     </head>
     <body>
-        <div style="border: 1px solid red; height: 100px; width: 100px"></div>
-        <div style="border: 1px solid red; height: 200px"></div>
+        <div></div>
+        <div></div>
     </body>     
 </html>
