@@ -1,7 +1,8 @@
 DiTi
+[extends breakable toys]
 ====
 
-DiTi is not a simple wiki
+DiTi is not a simple wiki.
 
 FUNCTION
 ====
