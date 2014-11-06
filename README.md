@@ -1,5 +1,4 @@
-DiTi
-[extends breakable toys]
+[DiTi] extends breakable toys
 ====
 
 DiTi is not a simple wiki.
