@@ -49,7 +49,34 @@
                 12312312312
             </div>
             <div class="large-9 medium-8 columns">
-                <h1>关于我</h1>
+                <h2>联系方式</h2>
+		<hr/>
+		<ul>
+		    <li>tel:&nbsp;&nbsp; 135-8199-9594</li>
+		    <li>mail: spidertianye@gmail.com</li>
+		    <li>QQ:&nbsp;&nbsp;619686417</li>
+		</ul>
+                <h2>个人信息</h2>
+		<hr/>
+		<ul>
+		    <li>田野/男/1986</li>
+		    <li>本科/北京联合大学计算机科学与技术专业</li>
+		    <li>工作年限: 5年</li>
+		    <li>微博: <a href="http://weibo.com/u/2240779113" target="_blank">@田野_DT</a></li>
+		    <li>技术博客: <a href="http://deviltian.github.io/DiTi" target="_blank">http://deviltian.github.io/DiTi</a></li>
+		    <li>GitHub: <a href="https://github.com/devilTian" target="_blank">https://github.com/devilTian</a></li>
+		    <li>期望职位: PHP高级研发工程师, 架构师, DBA</li>
+		    <li>期望薪水: 税前月薪14 - 16k, 开发团队过千人的公司可例外</li>
+		    <li>期望城市: 北京</li>
+		</ul>
+                <h2>工作经历</h2>
+		<hr/>
+		<h3>北京网御星云信息技术有限公司 ( 2012年9月 ~ 至今 )</h3>
+		<hr/>
+		<h4>xaa项目</h4>
+		<h3>联科集团（中国）有限公司 ( 2010年3月 ~ 2012年6月 )</h3>
+		<hr/>
+		<h4>xaa项目</h4>
             </div>
         </div>
     </section> 
