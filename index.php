@@ -1,10 +1,12 @@
 <?php
 // entrace file
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" >
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DiTi</title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/foundation.css">
@@ -45,8 +47,8 @@
     </div>
     <section role="main" class="scroll-container">
         <div class="row">
-            <div class="large-3 medium-4 columns hide-for-small-only">
-                12312312312
+            <div class="large-3 medium-4 columns hide-for-small-only fixed">
+                
             </div>
             <div class="large-9 medium-8 columns">
                 <h2>联系方式</h2>
@@ -73,10 +75,32 @@
 		<hr/>
 		<h3>北京网御星云信息技术有限公司 ( 2012年9月 ~ 至今 )</h3>
 		<hr/>
-		<h4>xaa项目</h4>
+		<h4>网御安全隔离与信息交换系统</h4>
+                <p>负责产品web模块的需求收集与分析、架构设计、构建、调试和完成上市后的定制需求。
+                    <u>技术方面</u>：弃用之前的c+cgi模式，改为LNMP架构。采用面向过程式设计。
+                    将600百万条以上的日志数据的查询速度，从6秒降至0.5秒，此功能也被其他所有产品线引用。
+                    <u>团队成长与产品成长</u>：自己组建新团队，招聘人才和组织培训等，新产品上市时，团队增长至7人，获得年度团队奖。新的界面设计与交互方式，让产品三年市场占有率持续保持第一。
+                    <u>问题与解决</u>：因业务流程项之间的耦合，在构建时人员增加导致的代码质量下降。
+                    解决方法是提取功能之间的公共部分代码封装成函数，在代码提交时至少一人review通过，将开发规则文档化。
+                    在调试和产品上市后的定制开发中，提高了扩展与维护的速度。
+                </p>
+                <h4>网御FW防火墙</h4>
+                <p>负责重构产品的web模块，公共功能构建，代码调试，
+                </p>
+                <h4>网御信息交换平台</h4>
 		<h3>联科集团（中国）有限公司 ( 2010年3月 ~ 2012年6月 )</h3>
 		<hr/>
-		<h4>xaa项目</h4>
+		<h4>CHESS(联科高性能计算管理平台)产品</h4>
+                <h2>开源项目和作品</h2>
+		<hr/>
+                <h3>开源项目</h3>
+                <hr/>
+                <h3>技术文章</h3>
+                <hr/>
+                <h3>演讲和讲义</h3>
+                <hr/>
+                <h2>技能清单</h2>
+		<hr/>
             </div>
         </div>
     </section> 
