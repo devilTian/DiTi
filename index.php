@@ -48,22 +48,37 @@
     <section role="main" class="scroll-container">
         <div class="row">
             <div class="large-3 medium-4 columns hide-for-small-only">
-                <div>
-                <div class="fixed">
-                    123
+                <div style="width: 210px; height: 330px;position: fixed; background: #fafafa">
+                    <ul class="side-nav">
+                        <li><a href="#connect">联系方式</a></li>
+                        <li><a href="#info">个人信息</a></li>
+                        <li><a href="#experience">工作经历</a></li>
+                        <li><a href="#openProject">开源项目和作品</a></li>
+                        <li><a href="#skillList">技能清单</a></li>
+                        <li><a href="#bookList">读书清单</a></li>
+                        <li><a href="#thx">致谢</a></li>
+                    </ul>
                 </div>
-                    </div>
             </div>
             <div class="large-9 medium-8 columns">
+                <p>
+                    <a name="connect"></a>
+                </p>
                 <h2>联系方式</h2>
-		<hr/>
+		<hr/>                
 		<ul>
 		    <li>tel:&nbsp;&nbsp; 135-8199-9594</li>
 		    <li>mail: spidertianye@gmail.com</li>
 		    <li>QQ:&nbsp;&nbsp;619686417</li>
 		</ul>
-                <h2>个人信息</h2>
+                <p>
+                    <a name="info"></a>
+                </p>
+                <h2>个人信息<a name="info"></a></h2>
 		<hr/>
+                <a class="th [radius]" href="#" style="float:right">
+                    <img src="img/me.png">
+                </a>
 		<ul>
 		    <li>田野/男/1986</li>
 		    <li>本科/北京联合大学计算机科学与技术专业</li>
@@ -75,6 +90,9 @@
 		    <li>期望薪水: 税前月薪14 - 16k, 开发团队过千人的公司可例外</li>
 		    <li>期望城市: 北京</li>
 		</ul>
+                <p>
+                    <a name="experience"></a>
+                </p>
                 <h2>工作经历</h2>
 		<hr/>
 		<h3>北京网御星云信息技术有限公司 ( 2012年9月 ~ 至今 )</h3>
@@ -108,8 +126,9 @@
                     <li>维护和编写产品文档，包括用户使用手册，新功能需求设计，bug记录。</li>
                     <li>远程支持售前工程师安装软件，远程解决客户问题。</li>
                 </ul>
-                
-                </dl>
+                <p>
+                    <a name="openProject"></a>
+                </p>
                 <h2>开源项目和作品</h2>
 		<hr/>
                 <h3>开源项目</h3>
@@ -118,8 +137,14 @@
                 <hr/>
                 <h3>演讲和讲义</h3>
                 <hr/>
+                <p>
+                    <a name="skillList"></a>
+                </p>
                 <h2>技能清单</h2>
 		<hr/>
+                <p>
+                    <a name="bookList"></a>
+                </p>
                 <h2>读书清单</h2>               
 		<hr/>
                 <span class="label">PHP</span><p>《PHP和MySQL Web开发》，《深入PHP面向对象、模式与实现》，《PHP Cookbook》，《高性能PHP应用开发》，《PHP语言精粹》。</p>
@@ -129,6 +154,9 @@
                 <span class="label">前端</span><p>《HTML5揭秘》，《Bootstrap用户手册》，《精通CSS》， 《CSS基础教程》。</p>
                 <span class="label">Linux/Nginx</span><p>《实战Nginx》,《Linux权威指南》，《鸟哥》。</p>
                 <span class="label">其他</span><p>《黑客与画家》，《Refactoring,Improving the Design of Existing》，《程序员修炼之道》，《HEAD FIRST设计模式》，《大数据时代》。</p>
+                <p>
+                    <a name="thx"></a>
+                </p>
                 <h2>致谢</h2>
 		<hr/>
                 <p>感谢您花时间阅读我的简历，期待能有机会和您共事。</p>
