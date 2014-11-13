@@ -77,7 +77,7 @@
                 </p>
                 <h2>个人信息<a name="info"></a></h2>
 		<hr/>
-                <a class="th [radius]" href="#" style="float:right">
+                <a class="th radius" href="#" style="float:right">
                     <img src="img/me.png">
                 </a>
 		<ul>
