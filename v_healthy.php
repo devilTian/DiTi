@@ -51,57 +51,67 @@
                 <a href="#dietCal">记录饮食热量</a>
                 <div id="dietCal" class="content">
                     <div data-alert class="alert-box info radius" id="dietAlter1">记录你当前吃下的食物的热量~</div>
-                    <div class="row">
-                        <div class="large-3 small-3 columns">
-                            <label class="right">类型</label>
+                    <form id="dietForm">
+                          <div class="row">
+                            <div class="large-3 small-3 columns">
+                                <label class="right">类型</label>
+                            </div>
+                            <div class="large-6 small-9 columns">
+                                <input type="radio" name="dietType" value="new" id="newDiet" checked="checked"><label for="newDiet">新食物</label>&nbsp;
+                                <input type="radio" name="dietType" value="old" id="oldDiet"><label for="oldDiet">已存食物</label>
+                            </div>
+                            <div class="large-3 columns hide-for-small-only"></div>
                         </div>
-                        <div class="large-6 small-9 columns">
-                            <input type="radio" name="dietType" value="new" id="newDiet" checked="checked"><label for="newDiet">新食物</label>&nbsp;
-                            <input type="radio" name="dietType" value="old" id="oldDiet"><label for="oldDiet">已存食物</label>
+                        <div class="row dietNewDiv">
+                            <div class="large-3 small-3 columns">
+                                <label class="right inline">热量</label>
+                            </div>
+                            <div class="large-3 small-9 columns">
+                                <input type="text" name="calorie" id="calorie" placeholder="calorie"/>
+                            </div>
+                            <div class="large-6 columns hide-for-small-only"></div>
                         </div>
-                        <div class="large-3 columns hide-for-small-only"></div>
-                    </div>
-                    <div class="row dietNewDiv">
-                        <div class="large-3 small-3 columns">
-                            <label class="right inline">热量</label>
+                        <div class="row dietNewDiv">
+                            <div class="large-3 small-4 columns">
+                                <label class="right inline">食物名称</label>
+                            </div>
+                            <div class="large-3 small-8 columns">
+                                <input type="text" name="foodName" id="foodName"/>
+                            </div>
+                            <div class="large-6 columns hide-for-small-only"></div>
                         </div>
-                        <div class="large-3 small-9 columns">
-                            <input type="text" name="calorie" id="calorie"/>
+                        <div class="row dietNewDiv">
+                            <div class="large-3 small-4 columns">
+                                <label class="right inline">价格</label>
+                            </div>
+                            <div class="large-3 small-8 columns">
+                                <input type="text" name="price" id="price"/>
+                            </div>
+                            <div class="large-6 columns hide-for-small-only"></div>
                         </div>
-                        <div class="large-6 columns hide-for-small-only"></div>
-                    </div>
-                    <div class="row dietNewDiv">
-                        <div class="large-3 small-4 columns">
-                            <label class="right inline">食物名称</label>
+                        <div class="row dietOldDiv">
+                            <div class="large-3 columns hide-for-small-only">
+                                <label class="right inline">食物名称</label>
+                            </div>
+                            <div class="large-3 small-12 columns">
+                                <select id="foodOptions">
+                                    <?php foreach ($foodOpt as $v) { ?>
+                                    <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="large-6 columns hide-for-small-only"></div>
                         </div>
-                        <div class="large-3 small-8 columns">
-                            <input type="text" name="calorie" id="calorie"/>
+                        <div class="row">
+                            <div class="large-3 small-3 columns">
+                                <label class="right inline">份数</label>
+                            </div>
+                            <div class="large-3 small-9 columns">
+                                <input type="text" name="copies" id="copies" value="1"/>
+                            </div>
+                            <div class="large-3 columns hide-for-small-only"></div>
                         </div>
-                        <div class="large-6 columns hide-for-small-only"></div>
-                    </div>
-                    <div class="row dietOldDiv">
-                        <div class="large-3 columns hide-for-small-only">
-                            <label class="right inline">食物名称</label>
-                        </div>
-                        <div class="large-3 small-12 columns">
-                            <select id="foodOptions">
-                                <?php foreach ($foodOpt as $v) { ?>
-                                <option value="<?php echo $v['name'] ?>"><?php echo $v['name'] ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <div class="large-6 columns hide-for-small-only"></div>
-                    </div>
-                    <div class="row">
-                        <div class="large-3 small-3 columns">
-                            <label class="right inline">份数</label>
-                        </div>
-                        <div class="large-3 small-9 columns">
-                            <input type="text" name="copies" id="copies" value="1"/>
-                        </div>
-                        <div class="large-3 columns hide-for-small-only"></div>
-                    </div>
-                    <div class="row">
+                        <div class="row">
                             <div class="large-6 small-8 small-centered columns">
                                 <ul class="button-group">
                                     <li>
@@ -116,12 +126,12 @@
                                 </ul>
                             </div>
                         </div>
+                    </form>
                 </div>
             </dd>
             <dd class="accordion-navigation">
-                <a href="#panel3">Accordion 3</a>
-                <div id="panel3" class="content">
-                    Panel 3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                <a href="#energyConsume">记录运动消耗的热量</a>
+                <div id="energyConsume" class="content">
                 </div>
             </dd>
         </dl>    
@@ -148,9 +158,39 @@ $(document).foundation().ready(function() {
             }
         });
     });
+    $('#submitDietBtn').click(function() {
+        var data = {};
+        data.dietType = $('input[type=radio][name=dietType]:checked').val();
+        data.copies   = $('#copies').val();
+        if (data.dietType === 'new') {
+            data.calorie  = $('#calorie').val();
+            data.foodName = $('#foodName').val();
+            data.copies   = $('#copies').val();
+            data.price    = $('#price').val();
+        } else if (data.dietType === 'old') {
+            data.foodId = $('#foodOptions>option:selected').val();
+        } else {
+            alert('incorrect diet type!');
+        }
+        $.ajax({
+            type: "POST",
+            url: 'm_healthy.php',
+            data: data,
+            dataType: "JSON",
+            success: function(ret) {
+                console.info(ret);
+                $('#dietForm')[0].reset();
+            }
+        });
+    });
+    // skip button definition
     $('#jumpToDietCalBtn').click(function() {
         $('a[href=#dietCal]').trigger('click');
     });
+    $('#jumpToFinalBtn').click(function() {
+        $('a[href=#energyConsume]').trigger('click');
+    });
+    
     $('input[type=radio][name=dietType]').click(function() {
         var type = $(this).val();
         if (type === 'old') {
