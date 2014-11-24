@@ -52,8 +52,10 @@
                 var link = $(this).attr('name');
                 $.ajax({
                     type: "POST",
-                    url: 'view.php',
-                    data: {link: link},
+                    url: 'controller.php',
+                    data: {
+                        link: link
+                    },
                     dataType: "html",
                     success: function(html) {
                         $('#mainContent').html(html);
