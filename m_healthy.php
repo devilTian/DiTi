@@ -5,7 +5,8 @@ $weightUnitOpt = array('kilograms' => '公斤/千克', 'jin' => '斤',
 $dbh = new PDO('mysql:dbname=diti;host=192.168.1.103;charset=UTF8', 'spidertianye', 'root');
 $foodOpt = $dbh->query('SELECT id, name FROM food')->fetchAll(PDO::FETCH_ASSOC);
 
-if (isset($_POST['weight']) && isset($_POST['unit'])) {    
+// recode body weight daily
+if (isset($_POST['weight']) && isset($_POST['unit'])) {
     $weight = $_POST['weight'];
     $unit   = $_POST['unit'];
     
@@ -25,8 +26,11 @@ if (isset($_POST['weight']) && isset($_POST['unit'])) {
         throw new Exception('更新体重数据失败!');
     }
     echo json_encode(array('status' => 0));
+    
+ // record food`s calorie 
 } else if (isset($_POST['dietType'])) {
     $dietType = $_POST['dietType'];
+    $foodId   = 0;
     $copies   = intval($_POST['copies']);
     
     // validation
@@ -38,6 +42,9 @@ if (isset($_POST['weight']) && isset($_POST['unit'])) {
         $name    = $_POST['foodName'];
         $price   = floatval($_POST['price']);
         
+        if (strlen(utf8_decode($name)) > 15) {  
+            throw new Exception('输入的食物名称长度超过15个字!');
+        }
         if ($calorie < 1) {
             throw new Exception('输入的卡路里值不为整数或小于1!');
         }
@@ -61,21 +68,38 @@ if (isset($_POST['weight']) && isset($_POST['unit'])) {
             if ($affectedRow !== 1) {
                 throw new Exception("更新食物[{$name}]时失败!");
             }
+            $foodId = $id;
         } else {
             // insert new food row which don`t exists in db.
             $sql = "INSERT INTO food VALUES(NULL, ?, ?, ?)";
             $sth = $dbh->prepare($sql);
             $sth->execute(array($name, $calorie, $price));
-            $affectedRow = $sth->rowCount();
+            $affectedRow = $sth->rowCount();            
             if ($affectedRow !== 1) {
                 throw new Exception('录入新食品数据失败!');
             }
-        } // have finished to handle diti.food table
-        
+            $foodId = $dbh->lastInsertId();
+        } // have finished to handle diti.food table        
     } else if ($dietType === 'old') {
-        $foodId = $_POST['foodId'];
+        $foodId = intval($_POST['foodId']);
+        // valid whether the food id exists in table or not
+        $sql = 'SELECT id FROM food WHERE id = ?';
+        $sth = $dbh->prepare($sql);
+        $sth->execute(array($foodId));
+        if (empty($sth->fetchAll(PDO::FETCH_ASSOC))) {
+            throw new Exception('食品名称数据篡改!');
+        }
+        // have got safe data
     } else {
         throw new Exception("incorrect diet type!");
     }
+    $sql = 'INSERT INTO diets(foodId, copies, datetime) VALUES(?, ?, DEFAULT)';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($foodId, $copies));
+    if ($sth->rowCount() !== 1) {
+        $errorInfo = $sth->errorInfo();
+        throw new Exception($errorInfo[2]);
+    }    
+    echo json_encode(array('status' => 0));
 }
 

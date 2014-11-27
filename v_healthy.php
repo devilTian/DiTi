@@ -178,8 +178,11 @@ $(document).foundation().ready(function() {
             data: data,
             dataType: "JSON",
             success: function(ret) {
-                console.info(ret);
-                $('#dietForm')[0].reset();
+                if (ret.status === 0) {
+                    $('a[href=#energyConsume]').trigger('click');
+                    $('#dietForm')[0].reset();
+                    $('input[type=radio][name=dietType]').trigger('click');
+                }                
             }
         });
     });
