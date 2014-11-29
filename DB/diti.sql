@@ -18,6 +18,35 @@ USE `diti`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `diets`
+--
+
+DROP TABLE IF EXISTS `diets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `diets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `foodId` int(11) DEFAULT NULL,
+  `copies` int(10) NOT NULL DEFAULT '1',
+  `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `foodId` (`foodId`),
+  CONSTRAINT `diets_ibfk_1` FOREIGN KEY (`foodId`) REFERENCES `food` (`id`),
+  CONSTRAINT `diets_ibfk_2` FOREIGN KEY (`foodId`) REFERENCES `food` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2106 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `diets`
+--
+
+LOCK TABLES `diets` WRITE;
+/*!40000 ALTER TABLE `diets` DISABLE KEYS */;
+INSERT INTO `diets` VALUES (1,3,1,'2014-11-28 00:35:51'),(2,4,1,'2014-11-29 22:36:11'),(3,1,1,'2014-11-29 22:42:29');
+/*!40000 ALTER TABLE `diets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `food`
 --
 
@@ -26,11 +55,11 @@ DROP TABLE IF EXISTS `food`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `food` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(10) NOT NULL,
+  `name` varchar(15) DEFAULT NULL,
   `calorie` int(10) DEFAULT NULL,
   `price` float(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +68,7 @@ CREATE TABLE `food` (
 
 LOCK TABLES `food` WRITE;
 /*!40000 ALTER TABLE `food` DISABLE KEYS */;
-INSERT INTO `food` VALUES (1,'软袋装三元特品鲜牛奶',158,2.20);
+INSERT INTO `food` VALUES (1,'软袋装三元特品鲜牛奶',158,2.20),(2,'软袋装光明特品鲜牛奶',150,2.00),(3,'杯装蒙牛风味酸牛奶原味',76,NULL),(4,'100克加州原野精选腰果',491,8.00);
 /*!40000 ALTER TABLE `food` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,7 +87,7 @@ CREATE TABLE `weight` (
   `userId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `datetime` (`datetime`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,8 +96,34 @@ CREATE TABLE `weight` (
 
 LOCK TABLES `weight` WRITE;
 /*!40000 ALTER TABLE `weight` DISABLE KEYS */;
-INSERT INTO `weight` VALUES (1,100.50,'kilograms','2014-11-21 08:56:29',1),(2,102.00,'kilograms','2014-11-23 08:56:29',1),(3,101.22,'kilograms','2014-11-22 08:56:29',1),(4,102.00,'kilograms','2014-11-24 18:35:35',1);
+INSERT INTO `weight` VALUES (1,100.50,'kilograms','2014-11-21 08:56:29',1),(2,102.00,'kilograms','2014-11-23 08:56:29',1),(3,101.22,'kilograms','2014-11-22 08:56:29',1),(4,102.00,'kilograms','2014-11-24 18:35:35',1),(5,101.50,'kilograms','2014-11-25 08:50:22',1),(6,101.00,'kilograms','2014-11-26 09:46:33',1),(7,101.00,'kilograms','2014-11-27 09:56:08',1),(8,99.00,'kilograms','2014-11-28 09:35:05',1),(9,100.00,'kilograms','2014-11-29 10:08:41',1);
 /*!40000 ALTER TABLE `weight` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `workout`
+--
+
+DROP TABLE IF EXISTS `workout`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `workout` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) DEFAULT NULL,
+  `calorie` int(11) NOT NULL,
+  `type` varchar(10) DEFAULT NULL,
+  `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `workout`
+--
+
+LOCK TABLES `workout` WRITE;
+/*!40000 ALTER TABLE `workout` DISABLE KEYS */;
+/*!40000 ALTER TABLE `workout` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -80,4 +135,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-11-24 20:09:07
+-- Dump completed on 2014-11-29 23:58:48

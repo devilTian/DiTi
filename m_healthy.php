@@ -4,6 +4,7 @@ $weightUnitOpt = array('kilograms' => '公斤/千克', 'jin' => '斤',
 
 $dbh = new PDO('mysql:dbname=diti;host=192.168.1.103;charset=UTF8', 'spidertianye', 'root');
 $foodOpt = $dbh->query('SELECT id, name FROM food')->fetchAll(PDO::FETCH_ASSOC);
+$weight = $dbh->query('SELECT val, unit FROM weight WHERE date(datetime) = current_date()')->fetch(PDO::FETCH_ASSOC);
 
 // recode body weight daily
 if (isset($_POST['weight']) && isset($_POST['unit'])) {
@@ -101,5 +102,25 @@ if (isset($_POST['weight']) && isset($_POST['unit'])) {
         throw new Exception($errorInfo[2]);
     }    
     echo json_encode(array('status' => 0));
-}
 
+// record energy consumption
+} else if (isset($_POST['burn']) && ($_POST['burn'] === '1')) {
+    $type = $_POST['type'];
+    $cal  = intval($_POST['cal']);
+    
+    if ($cal <= 0 || $cal > 10000) {
+        throw new Exception('卡路里输入范围在1到10000之间!');
+    }
+    if (strlen(utf8_decode($type)) > 10) {
+        throw new Exception('输入的运行类型字符超10个字');
+    }
+    
+    $sql = 'INSERT INTO workout(userId, calorie, type, datetime) ' .
+            'VALUES(1, ?, ?, DEFAULT)';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($cal, $type));
+    if ($sth->rowCount() !== 1) {
+        throw new Exception('添加信息失败');
+    }    
+    echo json_encode(array('status' => 0));
+}
