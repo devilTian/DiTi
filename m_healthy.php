@@ -5,7 +5,7 @@ $weightUnitOpt = array('kilograms' => '公斤/千克', 'jin' => '斤',
 $dbh = new PDO('mysql:dbname=diti;host=192.168.1.103;charset=UTF8', 'spidertianye', 'root');
 $foodOpt = $dbh->query('SELECT id, name FROM food')->fetchAll(PDO::FETCH_ASSOC);
 $weight = $dbh->query('SELECT val, unit FROM weight WHERE date(datetime) = current_date()')->fetch(PDO::FETCH_ASSOC);
-
+return;
 // recode body weight daily
 if (isset($_POST['weight']) && isset($_POST['unit'])) {
     $weight = $_POST['weight'];
@@ -13,7 +13,7 @@ if (isset($_POST['weight']) && isset($_POST['unit'])) {
     
     //validation
     $weight = floatval($weight);
-    if (!($weight > 0 && $weight <= 1000)) {
+    if (!($weight > 0 && $weight < 1000)) {
         throw new Exception('输入的重量范围不在0到1000之间!');
     }
     if (false === array_key_exists($unit, $weightUnitOpt)) {

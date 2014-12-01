@@ -6,13 +6,13 @@
                 <div id="weightRecord" class="content active">
                     <div data-alert class="alert-box info radius <?php if($weight !== false) echo 'hide'; ?>" id="weightAlter1">Hi, **!今天你还没有记录你的体重!<br/>赶紧去测一下吧！</div>
                     <div data-alert class="alert-box info radius <?php if($weight === false) echo 'hide'; ?>" id="weightAlter2">Hi, **!你已经记录了你的体重, 但还可以再次测试~</div>
-                    <form id="weigthForm">
+                    <form id="weightForm">
                         <div class="row">
                             <div class="large-3 medium-3 small-3 columns">
-                                <label class="right inline">体重</label>
+                                <label class="right inline">体重</label>                                
                             </div>
                             <div class="large-3 medium-3 small-9 columns">
-                                <input type="text" name="weigth" id="weigth"
+                                <input type="text" name="weight" id="weight"
                                        placeholder="<?php if($weight !== false) echo $weight['val'] . $weightUnitOpt[$weight['unit']];?>"/>
                             </div>
                             <div class="large-6 columns hide-for-small-only"></div>
@@ -96,6 +96,7 @@
                             </div>
                             <div class="large-3 medium-3 small-12 columns">
                                 <select id="foodOptions">
+                                    <option selected="selected" value="">请选择</option>
                                     <?php foreach ($foodOpt as $v) { ?>
                                     <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
                                     <?php } ?>
@@ -180,15 +181,32 @@
         </dl>    
     </div>
 </div>
-<script type="text/javascript">
+<script type="text/javascript">    
 $(document).foundation().ready(function() {
+    function clearAllErrorClass() {
+        $('input.error').removeClass('error');
+        $('small.error').remove();
+    }
+    function addErrorClass(dom, errMsg) {
+        dom.addClass('error');
+        dom.after('<small class="error">' + errMsg + '.</small>');
+    }
     $('#submitWeightBtn').click(function() {
+        // validation
+        clearAllErrorClass();
+        var weight = $('#weight').val(),
+            unit   = $('#weightUnit>option:selected').val();
+        if (!/^[1-9][0-9]{0,2}$/.test(weight)) {
+            addErrorClass($('#weight'), '范围应在0到1000之间!');
+            return false;
+        }
+        
         $.ajax({
             type: "POST",
             url: 'm_healthy.php',
             data: {
-                weight: $('#weigth').val(),
-                unit  : $('#weightUnit>option:selected').val()
+                weight: weight,
+                unit  : unit
             },
             dataType: "JSON",
             success: function(ret) {
@@ -196,22 +214,53 @@ $(document).foundation().ready(function() {
                     $('#weightAlter1').addClass('hide');
                     $('#weightAlter2').removeClass('hide');
                     $('a[href=#dietCal]').trigger('click');
-                    $('#weigthForm')[0].reset();
+                    $('#weightForm')[0].reset();
                 }
             }
         });
     });
     $('#submitDietBtn').click(function() {
+        // validation
+        clearAllErrorClass();
+        var type   = $('input[type=radio][name=dietType]:checked').val(),
+            copies = $('#copies').val();
+            
+        if ((!/^\d+$/.test(copies)) && (copies < 1)) {
+            addErrorClass($('#copies'), '必填且为正整数');
+        }        
+        if (type === 'new') {
+            var cal      = $('#calorie').val(),
+                foodName = $('#foodName').val(),
+                price    = $('#price').val();
+            if ((!/^\d+$/.test(cal)) || (cal < 1)) {
+                addErrorClass($('#calorie'), '必填且为正整数');
+            }
+            if (foodName.length > 15 || foodName.length < 1) {
+                addErrorClass($('#foodName'), '必填且不超过15个字');
+            }
+            if (!/^[1-9][0-9]{0,9}(\.[0-9]{1,2})?$/.test(price)) {
+                addErrorClass($('#price'), '格式错误');
+            }
+        } else if (type === 'old') {
+            var foodId = $('#foodOptions>option:selected').val();
+            if (!/^\d+$/.test(foodId) || foodId === '') {
+                addErrorClass($('#foodOptions'), '请选择食物名称');
+            }
+        } else {
+            return false;
+        }
+        if ($('input.error').length > 0) {
+            return false;
+        }        
         var data = {};
-        data.dietType = $('input[type=radio][name=dietType]:checked').val();
-        data.copies   = $('#copies').val();
+        data.dietType = type;
+        data.copies   = copies;
         if (data.dietType === 'new') {
-            data.calorie  = $('#calorie').val();
-            data.foodName = $('#foodName').val();
-            data.copies   = $('#copies').val();
-            data.price    = $('#price').val();
+            data.calorie  = cal;
+            data.foodName = foodName;
+            data.price    = price;
         } else if (data.dietType === 'old') {
-            data.foodId = $('#foodOptions>option:selected').val();
+            data.foodId = foodId;
         } else {
             alert('incorrect diet type!');
         }
@@ -230,13 +279,25 @@ $(document).foundation().ready(function() {
         });
     });
     $('#submitBurnBtn').click(function() {
+         // validation
+        clearAllErrorClass();
+        var calDom  = $('#burnForm').find('#calorie'),
+            typeDom = $('#burnForm').find('#type'),
+            cal     = calDom.val(),
+            type    = typeDom.val();
+        if ((!/^\d+$/.test(cal)) || (cal <= 0 ) || (cal > 10000)) {
+            addErrorClass(calDom, '范围在1到10000之间');
+        }
+        if (type.length > 10 || type.length < 1) {
+            addErrorClass(typeDom, '必填且不超过10个字');
+        }
         $.ajax({
             type: "POST",
             url: 'm_healthy.php',
             data: {
                 burn : 1,
-                type : $('#burnForm').find('#type').val(),
-                cal  : $('#burnForm').find('#calorie').val()
+                type : type,
+                cal  : cal
             },
             dataType: "JSON",
             success: function(ret) {
