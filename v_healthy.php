@@ -8,20 +8,20 @@
                     <div data-alert class="alert-box info radius <?php if($weight === false) echo 'hide'; ?>" id="weightAlter2">Hi, **!你已经记录了你的体重, 但还可以再次测试~</div>
                     <form id="weigthForm">
                         <div class="row">
-                            <div class="large-3 small-3 columns">
+                            <div class="large-3 medium-3 small-3 columns">
                                 <label class="right inline">体重</label>
                             </div>
-                            <div class="large-3 small-9 columns">
+                            <div class="large-3 medium-3 small-9 columns">
                                 <input type="text" name="weigth" id="weigth"
                                        placeholder="<?php if($weight !== false) echo $weight['val'] . $weightUnitOpt[$weight['unit']];?>"/>
                             </div>
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row">
-                            <div class="large-3 small-3 columns">
+                            <div class="large-3 medium-3 small-3 columns">
                                 <label class="right inline">单位</label>
                             </div>
-                            <div class="large-3 small-9 columns">
+                            <div class="large-3 medium-3 small-9 columns">
                                 <select id="weightUnit">
                                     <?php foreach ($weightUnitOpt as $k => $v) { ?>
                                     <option value="<?php echo $k ?>"><?php echo $v ?></option>
@@ -31,7 +31,7 @@
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row">
-                            <div class="large-6 small-8 small-centered columns">
+                            <div class="large-6 medium-6 small-8 small-centered columns">
                                 <ul class="button-group">
                                     <li>
                                         <a href="#" class="button tiny radius"
@@ -54,47 +54,47 @@
                     <div data-alert class="alert-box info radius" id="dietAlter1">记录你当前吃下的食物~</div>
                     <form id="dietForm">
                           <div class="row">
-                            <div class="large-3 small-3 columns">
+                            <div class="large-3 medium-3 small-3 columns">
                                 <label class="right">类型</label>
                             </div>
-                            <div class="large-6 small-9 columns">
+                            <div class="large-6 medium-6 small-9 columns">
                                 <input type="radio" name="dietType" value="old" id="oldDiet" checked="checked"><label for="oldDiet">已存食物</label>&nbsp;
                                 <input type="radio" name="dietType" value="new" id="newDiet"><label for="newDiet">新食物</label>
                             </div>
                             <div class="large-3 columns hide-for-small-only"></div>
                         </div>
                         <div class="row dietNewDiv">
-                            <div class="large-3 small-3 columns">
+                            <div class="large-3 medium-3 small-3 columns">
                                 <label class="right inline">热量</label>
                             </div>
-                            <div class="large-3 small-9 columns">
+                            <div class="large-3 medium-3 small-9 columns">
                                 <input type="text" name="calorie" id="calorie" placeholder="calorie"/>
                             </div>
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row dietNewDiv">
-                            <div class="large-3 small-4 columns">
+                            <div class="large-3 medium-3 small-4 columns">
                                 <label class="right inline">食物名称</label>
                             </div>
-                            <div class="large-3 small-8 columns">
+                            <div class="large-3 medium-3 small-8 columns">
                                 <input type="text" name="foodName" id="foodName"/>
                             </div>
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row dietNewDiv">
-                            <div class="large-3 small-4 columns">
+                            <div class="large-3 medium-3 small-4 columns">
                                 <label class="right inline">价格</label>
                             </div>
-                            <div class="large-3 small-8 columns">
+                            <div class="large-3 medium-3 small-8 columns">
                                 <input type="text" name="price" id="price"/>
                             </div>
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row dietOldDiv">
-                            <div class="large-3 columns hide-for-small-only">
+                            <div class="large-3 medium-3 columns hide-for-small-only">
                                 <label class="right inline">食物名称</label>
                             </div>
-                            <div class="large-3 small-12 columns">
+                            <div class="large-3 medium-3 small-12 columns">
                                 <select id="foodOptions">
                                     <?php foreach ($foodOpt as $v) { ?>
                                     <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
@@ -104,16 +104,16 @@
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row">
-                            <div class="large-3 small-3 columns">
+                            <div class="large-3 medium-3 small-3 columns">
                                 <label class="right inline">份数</label>
                             </div>
-                            <div class="large-3 small-9 columns">
+                            <div class="large-3 medium-3 small-9 columns">
                                 <input type="text" name="copies" id="copies" value="1"/>
                             </div>
                             <div class="large-3 columns hide-for-small-only"></div>
                         </div>
                         <div class="row">
-                            <div class="large-6 small-8 small-centered columns">
+                            <div class="large-6 medium-6 small-8 small-centered columns">
                                 <ul class="button-group">
                                     <li>
                                         <a href="#" class="button tiny radius"
@@ -135,27 +135,27 @@
                 <div id="burn" class="content">
                     <form id="burnForm">
                         <div class="row">
-                            <div class="large-3 small-4 columns">
+                            <div class="large-3 medium-3 small-4 columns">
                                 <label class="right inline">消耗</label>
                             </div>
-                            <div class="large-3 small-8 columns">
+                            <div class="large-3 medium-3 small-8 columns">
                                 <input type="text" name="calorie" id="calorie"
                                     placeholder="calorie"/>
                             </div>
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row">
-                            <div class="large-3 small-4 columns">
+                            <div class="large-3 medium-3 small-4 columns">
                                 <label class="right inline">运动类型</label>
                             </div>
-                            <div class="large-3 small-8 columns">
+                            <div class="large-3 medium-3 small-8 columns">
                                 <input type="text" name="type" id="type"
                                     value="跑步"/>
                             </div>
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row">
-                            <div class="large-6 small-8 small-centered columns">
+                            <div class="large-6 medium-6 small-8 small-centered columns">
                                 <ul class="button-group">
                                     <li>
                                         <a href="#" class="button tiny radius"
