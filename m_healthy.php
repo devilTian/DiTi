@@ -59,18 +59,21 @@ if (isset($_POST['weight']) && isset($_POST['unit'])) {
         $sth = $dbh->prepare($sql);
         $sth->execute(array($name));
         $ret = $sth->fetch(PDO::FETCH_ASSOC);        
-        if (!empty($ret) && ($ret['calorie'] !== $calorie ||
-                $ret['price'] !== $price)) {
+        
+        if (!empty($ret) && (intval($ret['calorie']) !== $calorie ||
+            round($ret['price'], 2) !== $price)) {
             // update price or/and calorie when the new food exists in db.
             $id  = $ret['id'];
             $sql = "UPDATE food SET calorie = $calorie, price = $price " .
                     "WHERE id = $id";
+            echo $sql;
             $affectedRow = $dbh->exec($sql);
             if ($affectedRow !== 1) {
+                echo $affectedRow;
                 throw new Exception("更新食物[{$name}]时失败!");
             }
             $foodId = $id;
-        } else {
+        } else if (empty($ret)) {
             // insert new food row which don`t exists in db.
             $sql = "INSERT INTO food VALUES(NULL, ?, ?, ?)";
             $sth = $dbh->prepare($sql);
@@ -80,7 +83,10 @@ if (isset($_POST['weight']) && isset($_POST['unit'])) {
                 throw new Exception('录入新食品数据失败!');
             }
             $foodId = $dbh->lastInsertId();
-        } // have finished to handle diti.food table        
+        } else {
+            $foodId = $ret['id'];
+        }
+        // have finished to handle diti.food table        
     } else if ($dietType === 'old') {
         $foodId = intval($_POST['foodId']);
         // valid whether the food id exists in table or not
