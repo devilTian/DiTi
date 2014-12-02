@@ -2,8 +2,25 @@
     <div class="small-12 small-centered columns">
         <dl class="accordion" data-accordion>
             <dd class="accordion-navigation">
+                <a href="#statistic">总结</a>
+                <div id="statistic" class="content active">                    
+                    <?php if($weight === false) { ?>
+                    <a href="#" class="button tiny radius"
+                       id="jumpToWeightBtn">记录今天的体重
+                    </a>
+                    <?php } else { ?>
+                    <p>
+                        今天的体重是<span class="label"><?php echo $weight['val'] . $weightUnitOpt[$weight['unit']]?></span>.<br/>
+                        请将今天的总卡路里摄入量控制在<span class="alert label"><?php echo $calPerDay ?>calories</span>以下.<br/>
+                        运动消耗掉<span class="success label"><?php echo $workout?>calories</span>.<br/>
+                        已摄入<b><?php echo $intake ?>卡</b>, 包括: <?php echo $eatFoodNameStr ?>
+                    </p>    
+                    <?php } ?>                    
+                </div>
+            </dd>            
+            <dd class="accordion-navigation">
                 <a href="#weightRecord">记录体重</a>
-                <div id="weightRecord" class="content active">
+                <div id="weightRecord" class="content">
                     <div data-alert class="alert-box info radius <?php if($weight !== false) echo 'hide'; ?>" id="weightAlter1">Hi, **!今天你还没有记录你的体重!<br/>赶紧去测一下吧！</div>
                     <div data-alert class="alert-box info radius <?php if($weight === false) echo 'hide'; ?>" id="weightAlter2">Hi, **!你已经记录了你的体重, 但还可以再次测试~</div>
                     <form id="weightForm">
@@ -38,10 +55,6 @@
                                            id="submitWeightBtn">提交
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="#" class="button tiny radius"
-                                           id="jumpToDietCalBtn">跳过</a>
-                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -68,24 +81,31 @@
                                 <label class="right inline">热量</label>
                             </div>
                             <div class="large-3 medium-3 small-9 columns">
-                                <input type="text" name="calorie" id="calorie" placeholder="calorie"/>
+                                <div class="row collapse">
+                                    <div class="small-8 columns">
+                                        <input type="text" name="calorie" id="calorie" placeholder="calorie"/>
+                                    </div>
+                                    <div class="small-4 columns">
+                                        <a href="#" class="button postfix" id="convertKjToCalBtn">KJ->Cal</a>
+                                    </div>
+                                </div>                                
                             </div>
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row dietNewDiv">
-                            <div class="large-3 medium-3 small-4 columns">
-                                <label class="right inline">食物名称</label>
+                            <div class="large-3 medium-3 small-3 columns">
+                                <label class="right inline">名称</label>
                             </div>
-                            <div class="large-3 medium-3 small-8 columns">
+                            <div class="large-3 medium-3 small-9 columns">
                                 <input type="text" name="foodName" id="foodName"/>
                             </div>
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row dietNewDiv">
-                            <div class="large-3 medium-3 small-4 columns">
+                            <div class="large-3 medium-3 small-3 columns">
                                 <label class="right inline">价格</label>
                             </div>
-                            <div class="large-3 medium-3 small-8 columns">
+                            <div class="large-3 medium-3 small-9 columns">
                                 <input type="text" name="price" id="price"/>
                             </div>
                             <div class="large-6 columns hide-for-small-only"></div>
@@ -120,10 +140,6 @@
                                         <a href="#" class="button tiny radius"
                                            id="submitDietBtn">提交
                                         </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="button tiny radius"
-                                           id="jumpToBurnBtn">跳过</a>
                                     </li>
                                 </ul>
                             </div>
@@ -163,19 +179,10 @@
                                            id="submitBurnBtn">提交
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="#" class="button tiny radius"
-                                           id="jumpToStatisticBtn">跳过</a>
-                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </form>                   
-                </div>
-            </dd>
-            <dd class="accordion-navigation">
-                <a href="#statistic">总结</a>
-                <div id="statistic" class="content">
                 </div>
             </dd>
         </dl>    
@@ -213,8 +220,8 @@ $(document).foundation().ready(function() {
                 if (ret.status === 0) {
                     $('#weightAlter1').addClass('hide');
                     $('#weightAlter2').removeClass('hide');
-                    $('a[href=#dietCal]').trigger('click');
                     $('#weightForm')[0].reset();
+                    $('a[href=#statistic]').trigger('click');
                 }
             }
         });
@@ -274,6 +281,7 @@ $(document).foundation().ready(function() {
                     $('a[href=#burn]').trigger('click');
                     $('#dietForm')[0].reset();
                     $('input[type=radio][name=dietType]').trigger('click');
+                    $('a[href=#statistic]').trigger('click');
                 }                
             }
         });
@@ -302,22 +310,21 @@ $(document).foundation().ready(function() {
             dataType: "JSON",
             success: function(ret) {
                 if (ret.status === 0) {
-                    alert(ret);
+                    $('a[href=#statistic]').trigger('click');
+                    $('#burnForm')[0].reset();
+                    $('a[href=#statistic]').trigger('click');
                 }
             }
         });
     });
-    // skip button definition
-    $('#jumpToDietCalBtn').click(function() {
-        $('a[href=#dietCal]').trigger('click');
+    $('#convertKjToCalBtn').click(function() {
+        var v = Math.round($('#calorie').val() * 0.2389);
+        $('#calorie').val(v);
+        return false;
     });
-    $('#jumpToBurnBtn').click(function() {
-        $('a[href=#burn]').trigger('click');
+    $('#jumpToWeightBtn').click(function() {
+        $('a[href=#weightRecord]').trigger('click');
     });
-    $('#jumpToStatisticBtn').click(function() {
-        $('a[href=#statistic]').trigger('click');
-    });
-    
     $('input[type=radio][name=dietType]').click(function() {
         var type = $(this).val();
         if (type === 'old') {
