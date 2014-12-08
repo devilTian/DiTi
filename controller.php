@@ -3,7 +3,7 @@
 if (!empty($_POST['link'])) {
     $link = $_POST['link'];
     // validate POST param
-    $valid = array('resume', 'healthy');
+    $valid = array('resume', 'healthy', 'note');
     if (array_search($link, $valid) === false){
         throw new Exception('访问的页面非法！');        
     }

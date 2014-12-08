@@ -4,26 +4,7 @@ $weightUnitOpt = array('kilograms' => '公斤/千克', 'jin' => '斤',
 $maintenance = array('kilograms' => 39.6, 'jin' => 19.8, 'pounds' => 18);
 
 $dbh = new PDO('mysql:dbname=diti;host=192.168.1.103;charset=UTF8', 'spidertianye', 'root');
-$foodOpt = $dbh->query('SELECT id, name FROM food')->fetchAll(PDO::FETCH_ASSOC);
-$weight = $dbh->query('SELECT val, unit FROM weight WHERE date(datetime) = current_date() ORDER BY id')->fetch(PDO::FETCH_ASSOC);
-if ($weight !== false) {
-    $calPerDay = round($weight['val'], 2) * round($maintenance[$weight['unit']], 2);
-    $sql = 'SELECT copies, name, calorie FROM diets LEFT JOIN food ON ' .
-        'diets.foodId = food.id where date(diets.datetime) = current_date()';
-    $intake = 0.0;
-    $eatFoodNameStr = '';
-    foreach ($dbh->query($sql)->fetchAll(PDO::FETCH_ASSOC) as $v) {
-        $intake += round($v['calorie'], 2) * intval($v['copies']);
-        $eatFoodNameStr .= "{$v['copies']}份[{$v['name']}],";
-    }
-    $eatFoodNameStr = substr_replace($eatFoodNameStr, '.' , -1, 1);
-    
-    $sql = 'SELECT calorie FROM workout WHERE date(datetime) = current_date()';
-    $workout = 0;
-    foreach ($dbh->query($sql)->fetchAll(PDO::FETCH_ASSOC) as $v) {
-        $workout += $v['calorie'];
-    }
-}
+$foodOpt = $dbh->query('SELECT diets.foodId, food.name FROM diets inner join food on diets.foodId = food.id GROUP BY(diets.foodId) ORDER BY sum(diets.copies) DESC')->fetchAll(PDO::FETCH_ASSOC);
 
 // recode body weight daily
 if (isset($_POST['weight']) && isset($_POST['unit'])) {

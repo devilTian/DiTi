@@ -4,18 +4,7 @@
             <dd class="accordion-navigation">
                 <a href="#statistic">总结</a>
                 <div id="statistic" class="content active">                    
-                    <?php if($weight === false) { ?>
-                    <a href="#" class="button tiny radius"
-                       id="jumpToWeightBtn">记录今天的体重
-                    </a>
-                    <?php } else { ?>
-                    <p>
-                        今天的体重是<span class="label"><?php echo $weight['val'] . $weightUnitOpt[$weight['unit']]?></span>.<br/>
-                        请将今天的总卡路里摄入量控制在<span class="alert label"><?php echo $calPerDay ?>calories</span>以下.<br/>
-                        运动消耗掉<span class="success label"><?php echo $workout?>calories</span>.<br/>
-                        已摄入<b><?php echo $intake ?>卡</b>, 包括: <?php echo $eatFoodNameStr ?>
-                    </p>    
-                    <?php } ?>                    
+                    <?php require('v_healthy_statistics.php');?>                   
                 </div>
             </dd>            
             <dd class="accordion-navigation">
@@ -198,6 +187,17 @@ $(document).foundation().ready(function() {
         dom.addClass('error');
         dom.after('<small class="error">' + errMsg + '.</small>');
     }
+    
+    function freshStatisticsData() {
+        $.ajax({
+            url: 'v_healthy_statistics.php',
+            dataType: "html",
+            success: function(html) {
+                $('#statistic').html(html);
+            }
+        });
+    }
+    
     $('#submitWeightBtn').click(function() {
         // validation
         clearAllErrorClass();
@@ -222,6 +222,7 @@ $(document).foundation().ready(function() {
                     $('#weightAlter2').removeClass('hide');
                     $('#weightForm')[0].reset();
                     $('a[href=#statistic]').trigger('click');
+                    freshStatisticsData();
                 }
             }
         });
@@ -278,10 +279,10 @@ $(document).foundation().ready(function() {
             dataType: "JSON",
             success: function(ret) {
                 if (ret.status === 0) {
-                    $('a[href=#burn]').trigger('click');
                     $('#dietForm')[0].reset();
-                    $('input[type=radio][name=dietType]').trigger('click');
+                    $('input[type=radio][name=dietType]:checked').trigger('click');
                     $('a[href=#statistic]').trigger('click');
+                    freshStatisticsData();
                 }                
             }
         });
@@ -310,9 +311,9 @@ $(document).foundation().ready(function() {
             dataType: "JSON",
             success: function(ret) {
                 if (ret.status === 0) {
-                    $('a[href=#statistic]').trigger('click');
                     $('#burnForm')[0].reset();
                     $('a[href=#statistic]').trigger('click');
+                    freshStatisticsData();
                 }
             }
         });

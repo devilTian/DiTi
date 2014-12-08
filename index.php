@@ -35,6 +35,8 @@
                 <li class="divider"></li>
                 <li><a href="#" name="healthy">健康</a></li>
                 <li class="divider"></li>
+                <li><a href="#" name="note">Note</a></li>
+                <li class="divider"></li>
                 <li><a href="#">Building</a></li>
                 <li class="divider"></li>
             </ul>
