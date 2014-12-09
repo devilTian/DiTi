@@ -1,22 +1,3 @@
-<?php
-$dbh   = new PDO('mysql:dbname=diti;host=192.168.1.103;charset=UTF8', 'spidertianye', 'root');
-$notes = $dbh->query('SELECT DATE_FORMAT(t, "%m月%d日 %H:%s") AS t, content, userId FROM notes ORDER BY t DESC')->fetchAll(PDO::FETCH_ASSOC);
-
-if (!empty($_POST['content'])) {
-    $content = $_POST['content'];
-    if (strlen(utf8_decode($content)) > 200) {
-        throw new Exception('超过200个字!');
-    }
-    $sth = $dbh->prepare('INSERT INTO notes VALUES(CURRENT_TIMESTAMP, ?, 1)');
-    $sth->execute(array($content));
-    $affectedRow = $sth->rowCount();            
-    if ($affectedRow !== 1) {
-        throw new Exception('存入新内容时出错!');
-    }
-    echo json_encode(array('status' => 0));
-    return true;
- }
-?>
 <div class="row">
     <div class="large-6 large-centered small-centered columns">
         <?php foreach($notes as $note) {?>
@@ -59,7 +40,7 @@ $(document).foundation().ready(function() {
         
         $.ajax({
             type: "POST",
-            url: 'm_note.php',
+            url: 'index.php/notes/add',
             data: {
                 content: content
             },
@@ -70,4 +51,3 @@ $(document).foundation().ready(function() {
     });
 });
 </script>
-

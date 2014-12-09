@@ -4,14 +4,14 @@
             <dd class="accordion-navigation">
                 <a href="#statistic">总结</a>
                 <div id="statistic" class="content active">                    
-                    <?php require('v_healthy_statistics.php');?>                   
+                    <?php require('healthy_statistics_view.php');?>                   
                 </div>
             </dd>            
             <dd class="accordion-navigation">
                 <a href="#weightRecord">记录体重</a>
                 <div id="weightRecord" class="content">
-                    <div data-alert class="alert-box info radius <?php if($weight !== false) echo 'hide'; ?>" id="weightAlter1">Hi, **!今天你还没有记录你的体重!<br/>赶紧去测一下吧！</div>
-                    <div data-alert class="alert-box info radius <?php if($weight === false) echo 'hide'; ?>" id="weightAlter2">Hi, **!你已经记录了你的体重, 但还可以再次测试~</div>
+                    <div data-alert class="alert-box info radius <?php if($data['weight'] !== false) echo 'hide'; ?>" id="weightAlter1">Hi, **!今天你还没有记录你的体重!<br/>赶紧去测一下吧！</div>
+                    <div data-alert class="alert-box info radius <?php if($data['weight'] === false) echo 'hide'; ?>" id="weightAlter2">Hi, **!你已经记录了你的体重, 但还可以再次测试~</div>
                     <form id="weightForm">
                         <div class="row">
                             <div class="large-3 medium-3 small-3 columns">
@@ -19,7 +19,7 @@
                             </div>
                             <div class="large-3 medium-3 small-9 columns">
                                 <input type="text" name="weight" id="weight"
-                                       placeholder="<?php if($weight !== false) echo $weight['val'] . $weightUnitOpt[$weight['unit']];?>"/>
+                                       placeholder="<?php if($data['weight'] !== false) echo $data['weight']['val'] . $weightUnitOpt[$data['weight']['unit']];?>"/>
                             </div>
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
@@ -190,7 +190,7 @@ $(document).foundation().ready(function() {
     
     function freshStatisticsData() {
         $.ajax({
-            url: 'v_healthy_statistics.php',
+            url: 'index.php/healthy/showStatistics',
             dataType: "html",
             success: function(html) {
                 $('#statistic').html(html);
@@ -210,7 +210,7 @@ $(document).foundation().ready(function() {
         
         $.ajax({
             type: "POST",
-            url: 'm_healthy.php',
+            url: 'index.php/healthy/updateWeight',
             data: {
                 weight: weight,
                 unit  : unit
@@ -274,7 +274,7 @@ $(document).foundation().ready(function() {
         }
         $.ajax({
             type: "POST",
-            url: 'm_healthy.php',
+            url: 'index.php/healthy/updateDiet',
             data: data,
             dataType: "JSON",
             success: function(ret) {
@@ -302,7 +302,7 @@ $(document).foundation().ready(function() {
         }
         $.ajax({
             type: "POST",
-            url: 'm_healthy.php',
+            url: 'index.php/healthy/updateWorkout',
             data: {
                 burn : 1,
                 type : type,
