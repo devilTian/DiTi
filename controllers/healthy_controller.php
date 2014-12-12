@@ -91,7 +91,7 @@ class Healthy_Controller extends Super_Controller {
             } else if ($dietType === 'old') {
                 $foodId = intval($_POST['foodId']);
                 // valid whether the food id exists in table or not
-                if (false === $this->m->checkFoodIdExist($id)) {
+                if (false === $this->m->checkFoodIdExist($foodId)) {
                     throw new Exception('食品名称数据篡改!');
                 }
                 // have got safe data

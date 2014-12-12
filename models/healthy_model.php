@@ -16,9 +16,9 @@ class Healthy_Model {
     
     function getFoodOpt() {
         $dbh = $this->getdbh();
-        $sql = 'SELECT diets.foodId AS id, food.name AS name ' .
-            'FROM diets inner join food on diets.foodId = food.id ' .
-            'GROUP BY(diets.foodId) ORDER BY sum(diets.copies) DESC';
+        $sql = 'select food.id, food.name from food left join diets ' .
+            'on food.id = diets.foodId group by (foodId) ' .
+            'order by sum(copies) desc';
         return $dbh->query($sql)->fetchAll(PDO::FETCH_ASSOC);        
     }
     
@@ -30,7 +30,7 @@ class Healthy_Model {
         return $sth->fetch(PDO::FETCH_ASSOC);
     }
     
-    function checkFoodIdExist($id) {
+    function checkFoodIdExist($foodId) {
         $dbh = $this->getdbh();
         $sql = 'SELECT id FROM food WHERE id = ?';
         $sth = $dbh->prepare($sql);
@@ -40,35 +40,40 @@ class Healthy_Model {
     }
     
     function getStatistic() {
+        $result = array('weight'    => false,
+                        'calPerDay' => 0,
+                        'workout'   => 0,
+                        'intake'    => 0.0,
+                        'dietItems' => array()
+        );
+        
         $dbh = $this->getdbh();
         $sql = 'SELECT val, unit FROM weight ' .
             'WHERE date(datetime) = current_date() ' .
             'ORDER BY datetime DESC limit 1';        
-        $weight = $dbh->query($sql)->fetch(PDO::FETCH_ASSOC);
-        if ($weight !== false) {
-            $calPerDay = round($weight['val'], 2) * round($this->maintenance[$weight['unit']], 2);
+        $result['weight'] = $dbh->query($sql)->fetch(PDO::FETCH_ASSOC);
+        if ($result['weight'] !== false) {
+            $result['calPerDay'] = round($result['weight']['val'], 2) *
+                    round($this->maintenance[$result['weight']['unit']], 2);
             $sql = 'SELECT sum(copies) as copies, name, calorie FROM ' .
                 'diets LEFT JOIN food ON diets.foodId = food.id ' .
-                'WHERE date(diets.datetime) = current_date() GROUP BY(food.name) ';
-            $intake = 0.0;
-            $eatFoodNameStr = '';
+                'WHERE date(diets.datetime) = current_date() ' .
+                'GROUP BY(food.name) ORDER BY diets.datetime DESC';
+            $dietItems = '';
             foreach ($dbh->query($sql)->fetchAll(PDO::FETCH_ASSOC) as $v) {
-                $intake += round($v['calorie'], 2) * intval($v['copies']);
-                $eatFoodNameStr .= "{$v['copies']}份[{$v['name']}],";
+                $result['intake'] +=
+                        round($v['calorie'], 2) * intval($v['copies']);
+                $result['dietItems'][] = "{$v['copies']}份[{$v['name']}], " .
+                        "热量{$v['calorie']}Cal/份";
             }
-            $eatFoodNameStr = substr_replace($eatFoodNameStr, '.' , -1, 1);
 
-            $sql = 'SELECT calorie FROM workout WHERE date(datetime) = current_date()';
-            $workout = 0;
+            $sql = 'SELECT calorie FROM workout ' .
+                'WHERE date(datetime) = current_date()';
             foreach ($dbh->query($sql)->fetchAll(PDO::FETCH_ASSOC) as $v) {
-                $workout += $v['calorie'];
+                $result['workout'] += $v['calorie'];
             }
         }
-        return array('weight'         => $weight,
-                     'calPerDay'      => $calPerDay,
-                     'workout'        => $workout,
-                     'intake'         => $intake,
-                     'eatFoodNameStr' => $eatFoodNameStr);
+        return $result;
     }
     
     // insert new weight record into db
