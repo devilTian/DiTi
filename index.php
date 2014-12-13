@@ -21,10 +21,10 @@ $function   = isset($segment[1]) ? $segment[1] : $defFunction;
 $function   = strtolower($function);
 
 // validate request`s controller
-$valid = array('resume', 'healthy', 'notes');
+$valid = array('resume', 'healthy', 'notes', 'login');
 if (array_search($controller, $valid) === false){
     header("location: http://{$_SERVER['SERVER_ADDR']}" .
-            dirname($_SERVER['SCRIPT_NAME']) ."/frame.html");
+            dirname($_SERVER['SCRIPT_NAME']) ."/frame.php");
     die;
 }
 

@@ -8,9 +8,7 @@ and open the template in the editor.
     Author     : tianye
 */
 /*[TODO][TEST] !!!please delete me before producing!!!*/
-div {
-    width: 100%;
-    border: 1px solid red;
-    height: 100px;
+.white {
+    color: white;
 }
 /*[TODO][TEST] !!!please delete me before producing!!!*/
