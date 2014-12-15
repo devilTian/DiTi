@@ -8,7 +8,7 @@
         今日已摄入总热量: <b><?php echo $data['intake'] ?>卡</b>, 包括:
         <ul class="disc">
             <?php foreach($data['dietItems'] as $v) {?>
-            <li><?php echo $v ?></li>
+            <li><?php echo "[{$v[0]}]<br/>{$v[1]}"?></li>
             <?php } ?>
         </ul>
     </p>    

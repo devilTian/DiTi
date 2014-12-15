@@ -63,8 +63,10 @@ class Healthy_Model {
             foreach ($dbh->query($sql)->fetchAll(PDO::FETCH_ASSOC) as $v) {
                 $result['intake'] +=
                         round($v['calorie'], 2) * intval($v['copies']);
-                $result['dietItems'][] = "{$v['copies']}份[{$v['name']}], " .
-                        "热量{$v['calorie']}Cal/份";
+                $result['dietItems'][] =
+                        array($v['name'],
+                              "{$v['copies']}份, 热量{$v['calorie']}Cal/份."
+                        );
             }
 
             $sql = 'SELECT calorie FROM workout ' .
