@@ -29,6 +29,11 @@ class Login_Controller extends Super_Controller {
         session_start();
         $_SESSION[$k] = $v; 
     }
+    
+    private function clearSession() {
+        session_start();
+        session_destroy();
+    }
 
     // [todo] MOVE TO model layer
     private function getdbh() {
@@ -58,6 +63,12 @@ class Login_Controller extends Super_Controller {
         }
         $this->setSession('user', $user);
         echo json_encode(array('status' => 0));
+    }
+    
+    public function logout() {
+        $this->clearSession();
+        header("location: http://{$_SERVER['SERVER_ADDR']}" .
+            dirname($_SERVER['SCRIPT_NAME']) ."/frame.php");
     }
 }
 ?>

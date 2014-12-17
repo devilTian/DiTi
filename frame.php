@@ -38,48 +38,56 @@
                 <li><a href="#">Building</a></li>
                 <li class="divider"></li>
             </ul>
-			<?php if(empty($_SESSION['user'])) { ?>
-			<!-- Right login Section -->
-			<ul class="right" id="loginDiv">
-				<form>
-				<li class="has-form">
-					<div class="row collapse">
-						<div class="large-12 small-12 columns">
-							<input type="text" name="username" id="username"
-								placeholder="用户名">
-						</div>
-				</li>
-				<li class="has-form">
-					<div class="row collapse">
-						<div class="large-12 small-12 columns">
-							<input type="password" name="password" id="password"
-								placeholder="密码">
-						</div>
-					</div>
-				</li>
-				<!--
-				<li class="has-form">
-					<ul class="inline-list">
-						<li>
-							<label class="white" for="remember">
-							<input type="checkbox" id="remember"/>
-							记住我</label>
-						</li>
-						<li>
-							<a href="#">忘记密码</a>
-						</li>
-					</ul>
-				</li>
-				-->
-				<li class="has-form">
-					<a href="#" class="button" id="loginBtn">登录</a>
-				</li>
-				<li class="has-form">
-					<a href="#" class="button alert" id="registerBtn">注册</a>
-				</li>
-				</form>
-			</ul>
-			<?php } ?>
+            <?php if(empty($_SESSION['user'])) { ?>
+            <!-- Right login Section -->
+            <ul class="right" id="loginDiv">
+                    <form>
+                    <li class="has-form">
+                            <div class="row collapse">
+                                    <div class="large-12 small-12 columns">
+                                            <input type="text" name="username" id="username"
+                                                    placeholder="用户名">
+                                    </div>
+                    </li>
+                    <li class="has-form">
+                            <div class="row collapse">
+                                    <div class="large-12 small-12 columns">
+                                            <input type="password" name="password" id="password"
+                                                    placeholder="密码">
+                                    </div>
+                            </div>
+                    </li>
+                    <!--
+                    <li class="has-form">
+                            <ul class="inline-list">
+                                    <li>
+                                            <label class="white" for="remember">
+                                            <input type="checkbox" id="remember"/>
+                                            记住我</label>
+                                    </li>
+                                    <li>
+                                            <a href="#">忘记密码</a>
+                                    </li>
+                            </ul>
+                    </li>
+                    -->
+                    <li class="has-form">
+                            <a href="#" class="button" id="loginBtn">登录</a>
+                    </li>
+                    <li class="has-form">
+                            <a href="#" class="button alert" id="registerBtn">注册</a>
+                    </li>
+                    </form>
+            </ul>
+            <?php } else { ?>
+            <ul class="right" id="loginDiv">
+                <li class="divider"></li>
+                <li class="has-form">
+                    <a href="index.php/login/logout" id="logout" class="button alert">退出</a>
+                </li>
+                <li class="divider"></li>
+            </ul>
+            <?php } ?>
             </section>
         </nav>       
     </div>
