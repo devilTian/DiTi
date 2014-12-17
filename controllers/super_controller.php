@@ -1,5 +1,4 @@
 <?php
-
 class Super_Controller {
         
     function loadModel($fileName, $alias = 'M') {
@@ -19,15 +18,12 @@ class Super_Controller {
         }
     }
     
-    function loadView($fileName, $alias = 'V') {
+    function loadView($fileName) {
         $view   = strtolower("{$fileName}_view");
-        $v_file = "views/$model.php";
+        $v_file = "views/$view.php";
         if (file_exists($v_file)) {
             try {
-                require_once($v_file);
-                $viewClassName = ucwords($view);
-                $V = new $viewClassName();
-                $this->$alias = $V;
+                include_once($v_file);
             } catch (Exception $e) {
                 throw new Exception('加载视图层失败!');
             } 
