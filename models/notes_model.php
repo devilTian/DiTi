@@ -2,7 +2,7 @@
 class Notes_Model extends Super_Model  {
     
     function __construct() {
-        self::__construct();
+        parent::__construct();
     }
     
     function show() {
