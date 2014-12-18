@@ -51,4 +51,8 @@ if (file_exists($c_file)) {
 } else {
    throw new Exception('对应的控制器文件不存在!'); 
 }
+
+function &get_instance() {
+    return Super_Controller::get_instance();
+}
 ?>

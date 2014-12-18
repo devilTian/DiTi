@@ -1,11 +1,22 @@
 <?php
 class Super_Controller {
+    
+    private static $instance;
+    
+    public function __construct() {
+        self::$instance = &$this;
+    }
+    
+    public static function &get_instance() {
+        return self::$instance;
+    }
         
     function loadModel($fileName, $alias = 'M') {
         $model = strtolower("{$fileName}_model");
         $m_file = "models/$model.php";
         if (file_exists($m_file)) {
             try {
+                require_once('models/super_model.php');
                 require_once($m_file);
                 $modelClassName = ucwords($model);
                 $M = new $modelClassName();
