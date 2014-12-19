@@ -23,8 +23,11 @@ $function   = strtolower($function);
 // validate request`s controller
 $valid = array('resume', 'healthy', 'notes', 'login');
 if (array_search($controller, $valid) === false){
-    header("location: http://{$_SERVER['SERVER_ADDR']}" .
-            dirname($_SERVER['SCRIPT_NAME']) ."/frame.php");
+    $path = dirname($_SERVER['SCRIPT_NAME']);
+    if ($path !== '\\' && $path !== '/') {
+        $path .= '/';
+    }
+    header("location: http://{$_SERVER['SERVER_ADDR']}{$path}frame.php");
     die;
 }
 
