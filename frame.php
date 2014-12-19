@@ -83,6 +83,10 @@
             <ul class="right" id="loginDiv">
                 <li class="divider"></li>
                 <li class="has-form">
+                    <a href="#" id="userConfigure" class="button info">账号配置</a>
+                </li>
+                <li class="divider"></li>
+                <li class="has-form">
                     <a href="index.php/login/logout" id="logout" class="button alert">退出</a>
                 </li>
                 <li class="divider"></li>

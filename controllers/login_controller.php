@@ -4,15 +4,16 @@ class Login_Controller extends Super_Controller {
     public function index() {
         $user = trim($_POST['u']);
         $pwd  = trim($_POST['p']);
+		$this->loadModel('user', 'm');
         if (strlen($user) === 0) {
-                $msg = '用户名不能为空!';
+			$msg = '用户名不能为空!';
         } else if (strlen($pwd) === 0) {
-                $msg = '密码不能为空!';
-        } else if (!$this->checkUserExist($user, $pwd)) {
-                $msg = '用户名或密码错误!';
+			$msg = '密码不能为空!';
+        } else if (!$this->m->checkUserAndPwd($user, $pwd)) {
+            $msg = '用户名或密码错误!';
         } else {
-                $this->setSession('user', $user);
-                $msg = 'success';
+            $this->setSession('user', $user);
+            $msg = 'success';
         }
         echo json_encode(array('msg' => $msg));
     }
@@ -35,19 +36,6 @@ class Login_Controller extends Super_Controller {
         session_destroy();
     }
 
-    // [todo] MOVE TO model layer
-    private function getdbh() {
-        return new PDO('mysql:dbname=diti;host=192.168.1.103;charset=UTF8', 'spidertianye', 'root');
-    }
-
-    private function checkUserExist($user, $pwd) {
-        $dbh = $this->getdbh();
-        $sth = $dbh->prepare('SELECT id FROM users WHERE name = ? AND pwd = ?');
-        $sth->execute(array($user, $pwd));
-        $result = $sth->rowCount() === 1 ? true : false;
-        return $result;
-    }
-    
     public function showRegisterForm() {
         $this->loadView('register', 'v');
     }
@@ -55,13 +43,9 @@ class Login_Controller extends Super_Controller {
     public function register() {
         $user = $_POST['u'];
         $pwd  = $_POST['p'];
-        $dbh  = $this->getdbh();
-        $sth = $dbh->prepare('INSERT INTO users VALUES (NULL, ?, ?, CURRENT_TIMESTAMP)');
-        $sth->execute(array($user, $pwd));
-        if ($sth->rowCount() !== 1) {
-            throw new Exception('添加信息失败' . $sth->rowCount());
-        }
-        $this->setSession('user', $user);
+		$this->loadModel('user', 'm');
+        $this->m->addNewUser($user, $pwd);
+		$this->setSession('user', $user);
         echo json_encode(array('status' => 0));
     }
     
