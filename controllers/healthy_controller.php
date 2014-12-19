@@ -1,6 +1,6 @@
 <?php
 class Healthy_Controller extends Super_Controller {
-    
+
     function index() {
        $this->show();
     }

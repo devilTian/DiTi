@@ -38,48 +38,56 @@
                 <li><a href="#">Building</a></li>
                 <li class="divider"></li>
             </ul>
-			<?php if(empty($_SESSION['user'])) { ?>
-			<!-- Right login Section -->
-			<ul class="right" id="loginDiv">
-				<form>
-				<li class="has-form">
-					<div class="row collapse">
-						<div class="large-12 small-12 columns">
-							<input type="text" name="username" id="username"
-								placeholder="用户名">
-						</div>
-				</li>
-				<li class="has-form">
-					<div class="row collapse">
-						<div class="large-12 small-12 columns">
-							<input type="text" name="password" id="password"
-								placeholder="密码">
-						</div>
-					</div>
-				</li>
-				<!--
-				<li class="has-form">
-					<ul class="inline-list">
-						<li>
-							<label class="white" for="remember">
-							<input type="checkbox" id="remember"/>
-							记住我</label>
-						</li>
-						<li>
-							<a href="#">忘记密码</a>
-						</li>
-					</ul>
-				</li>
-				-->
-				<li class="has-form">
-					<a href="#" class="button" id="loginBtn">登录</a>
-				</li>
-				<li class="has-form">
-					<a href="#" class="button alert" id="registerBtn">注册</a>
-				</li>
-				</form>
-			</ul>
-			<?php } ?>
+            <?php if(empty($_SESSION['user'])) { ?>
+            <!-- Right login Section -->
+            <ul class="right" id="loginDiv">
+                    <form>
+                    <li class="has-form">
+                            <div class="row collapse">
+                                    <div class="large-12 small-12 columns">
+                                            <input type="text" name="username" id="username"
+                                                    placeholder="用户名">
+                                    </div>
+                    </li>
+                    <li class="has-form">
+                            <div class="row collapse">
+                                    <div class="large-12 small-12 columns">
+                                            <input type="password" name="password" id="password"
+                                                    placeholder="密码">
+                                    </div>
+                            </div>
+                    </li>
+                    <!--
+                    <li class="has-form">
+                            <ul class="inline-list">
+                                    <li>
+                                            <label class="white" for="remember">
+                                            <input type="checkbox" id="remember"/>
+                                            记住我</label>
+                                    </li>
+                                    <li>
+                                            <a href="#">忘记密码</a>
+                                    </li>
+                            </ul>
+                    </li>
+                    -->
+                    <li class="has-form">
+                            <a href="#" class="button" id="loginBtn">登录</a>
+                    </li>
+                    <li class="has-form">
+                            <a href="#" class="button alert" id="registerBtn">注册</a>
+                    </li>
+                    </form>
+            </ul>
+            <?php } else { ?>
+            <ul class="right" id="loginDiv">
+                <li class="divider"></li>
+                <li class="has-form">
+                    <a href="index.php/login/logout" id="logout" class="button alert">退出</a>
+                </li>
+                <li class="divider"></li>
+            </ul>
+            <?php } ?>
             </section>
         </nav>       
     </div>
@@ -89,18 +97,16 @@
     <script src="js/vendor/jquery.js"></script>
     <script src="js/foundation.min.js"></script>
     <script>
-		
-        $(document).foundation().ready(function() {
-            
-			function clearAllErrorClass() {
-				$('input.error').removeClass('error');
-				$('small.error').remove();
-			}
-			function addErrorClass(dom, errMsg) {
-				dom.addClass('error');
-				dom.after('<small class="error">' + errMsg + '.</small>');
-			}
-		    $('#topmenu>li>a').click(function() {
+        function clearAllErrorClass() {
+            $('input.error').removeClass('error');
+            $('small.error').remove();
+        }
+        function addErrorClass(dom, errMsg) {
+            dom.addClass('error');
+            dom.after('<small class="error">' + errMsg + '.</small>');
+        }
+        $(document).foundation().ready(function() {            
+            $('#topmenu>li>a').click(function() {
                 var link = $(this).attr('name');
                 $.ajax({
                     type: "POST",
@@ -111,41 +117,50 @@
                     }
                 });
             });
-			$('#loginBtn').click(function() {
-				clearAllErrorClass();
-				var userDom  = $('#username'),
-					pwdDom   = $('#password'),
-					username = userDom.val().trim(),	
-					password = pwdDom.val().trim();
-				if (username.length === 0) {
-					addErrorClass(userDom, '用户名不能为空!');
-				} else if (password.length === 0) {
-					addErrorClass(pwdDom, '密码不能为空!');
-				} else {
-					$.ajax({
-						type: "POST",
-						url: 'index.php/login',
-						dataType: "JSON",
-						data: {
-							u: username,
-							p: password  // [TODO] encrypt
-						},
-						success: function(ret) {
-							if ('success' === ret.msg) {
-								window.location.reload();
-							} else {
-								userDom.focus();
-								addErrorClass(userDom, ret.msg);
-							}
-						}
-					});
-				}
-				return false;
-			});
-			$('#registerBtn').click(function() {
-				clearAllErrorClass();
-				return false;
-			});
+            $('#loginBtn').click(function() {
+                clearAllErrorClass();
+                var userDom  = $('#username'),
+                    pwdDom   = $('#password'),
+                    username = userDom.val().trim(),	
+                    password = pwdDom.val().trim();
+                if (username.length === 0) {
+                    addErrorClass(userDom, '用户名不能为空!');
+                } else if (password.length === 0) {
+                    addErrorClass(pwdDom, '密码不能为空!');
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: 'index.php/login',
+                        dataType: "JSON",
+                        data: {
+                                u: username,
+                                p: password  // [TODO] encrypt
+                        },
+                        success: function(ret) {
+                                if ('success' === ret.msg) {
+                                        window.location.reload();
+                                } else {
+                                        userDom.focus();
+                                        addErrorClass(userDom, ret.msg);
+                                }
+                        }
+                    });
+                }
+                return false;
+            });
+            $('#registerBtn').click(function() {
+                clearAllErrorClass();
+                $.ajax({
+                    type: "POST",
+                    url: 'index.php/login/showRegisterForm',
+                    dataType: "html",
+                    success: function(html) {
+                        $('#mainContent').html(html);
+                        document.body.scrollTop+=9999; // 滚动到页底
+                    }
+                });
+                return false;
+            });
         });
     </script>
 </body>     
