@@ -1,4 +1,4 @@
-<?php 
+<?php
 $uri   = substr($_SERVER['REQUEST_URI'], strlen($_SERVER['SCRIPT_NAME']));
 $parts = preg_split('/\?/', $uri);
 

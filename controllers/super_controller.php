@@ -10,6 +10,21 @@ class Super_Controller {
     public static function &get_instance() {
         return self::$instance;
     }
+    
+    function load($name, $path = 'library', $param = null, $alias = null) {
+        $lowName = strtolower($name);
+        $class   = ucfirst($lowName);
+        $file    = "$path/$name.php";
+        $key     = $alias === null ? $name : $alias;
+        if (isset($this->load[$key])) {
+            return true;
+        } else if (file_exists($file)) {
+            require_once($file);
+            $this->load[$key] = new $class($param);
+        } else {
+            throw new Exception("加载的库文件[$file]不存在!");
+        }
+    }
         
     function loadModel($fileName, $alias = 'M') {
         $model = strtolower("{$fileName}_model");
