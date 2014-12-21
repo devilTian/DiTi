@@ -10,7 +10,7 @@
                 </div>
                 <div class="large-9 small-9 columns">
                     <input type="text" id="nickname" name="nickname"
-                        placeholder="<?php echo isset($_SESSEION['nickname']) ? "现昵称: {$_SESSEION['nickname']}" : ''?>"/>
+                        placeholder="<?php echo $this->nick?>"/>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@ $(document).foundation().ready(function() {
         // validation
         var nickDom = $('#nickname'),
             nickVal = nickDom.val();
-        if (false === /^[a-zA-Z0-9_\-\u4E00-\u9FA5]{4,30}$/.test(nickVal)) {
+        if (false === <?php echo $this->regexp['nickname']?>.test(nickVal)) {
             addErrorClass(nickDom, '请输入4-30个字符，支持中英文、数字、"_"或减号');
             return false;
         }
@@ -45,6 +45,9 @@ $(document).foundation().ready(function() {
             },
             dataType: "JSON",
             success: function(ret) {
+                if (ret.status === 0) {
+                    $('#accountSetup').trigger('click')
+                }
             }
         });
     });

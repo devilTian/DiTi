@@ -11,8 +11,8 @@
             <dd class="accordion-navigation">
                 <a href="#weightRecord">记录体重</a>
                 <div id="weightRecord" class="content">
-                    <div data-alert class="alert-box info radius <?php if($data['weight'] !== false) echo 'hide'; ?>" id="weightAlter1">Hi, <?php echo $_SESSION['user'] ?>!今天你还没有记录你的体重!<br/>赶紧去测一下吧！</div>
-                    <div data-alert class="alert-box info radius <?php if($data['weight'] === false) echo 'hide'; ?>" id="weightAlter2">Hi, <?php echo $_SESSION['user']?>!你已经记录了你的体重, 但还可以再次测试~</div>
+                    <div data-alert class="alert-box info radius <?php if($data['weight'] !== false) echo 'hide'; ?>" id="weightAlter1">Hi, <?php echo $_SESSION['nickname'] ?>!今天你还没有记录你的体重!<br/>赶紧去测一下吧！</div>
+                    <div data-alert class="alert-box info radius <?php if($data['weight'] === false) echo 'hide'; ?>" id="weightAlter2">Hi, <?php echo $_SESSION['nickname']?>!你已经记录了你的体重, 但还可以再次测试~</div>
                     <form id="weightForm">
                         <div class="row">
                             <div class="large-3 medium-3 small-3 columns">
