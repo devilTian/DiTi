@@ -10,7 +10,7 @@
                 </div>
                 <div class="large-9 small-9 columns">
                     <input type="text" id="nickname" name="nickname"
-                        placeholder="<?php echo $this->nick?>"/>
+                        placeholder="<?php echo $data['nick']?>"/>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@ $(document).foundation().ready(function() {
         // validation
         var nickDom = $('#nickname'),
             nickVal = nickDom.val();
-        if (false === <?php echo $this->regexp['nickname']?>.test(nickVal)) {
+        if (false === <?php echo $data['regexp']?>.test(nickVal)) {
             addErrorClass(nickDom, '请输入4-30个字符，支持中英文、数字、"_"或减号');
             return false;
         }

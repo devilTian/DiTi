@@ -14,7 +14,7 @@
 class Notes_Controller extends Super_Controller {
     
     function index() {
-        $this->loadModel('notes', 'm');
+        $this->load->model('notes', 'm');
         $this->m->show();
     }
     
@@ -24,7 +24,7 @@ class Notes_Controller extends Super_Controller {
             if (strlen(utf8_decode($content)) > 200) {
                 throw new Exception('超过200个字!');
             }
-            $this->loadModel('notes', 'm');
+            $this->load->model('notes', 'm');
             if (true === $this->m->add($content)) {
                 echo json_encode(array('status' => 0));
             }            

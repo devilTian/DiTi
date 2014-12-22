@@ -6,7 +6,7 @@ class Healthy_Controller extends Super_Controller {
     }
     
     function show() {
-        $this->loadModel('healthy', 'm');
+        $this->load->model('healthy', 'm');
         $data = $this->m->getStatistic();
         $weightUnitOpt = $this->m->weightUnitOpt;
         $maintenance   = $this->m->maintenance;
@@ -15,7 +15,7 @@ class Healthy_Controller extends Super_Controller {
     }
     
     function showStatistics() {
-        $this->loadModel('healthy', 'm');
+        $this->load>model('healthy', 'm');
         $data = $this->m->getStatistic();
         $weightUnitOpt = $this->m->weightUnitOpt;
         require('views/healthy_statistics_view.php'); 
@@ -33,7 +33,7 @@ class Healthy_Controller extends Super_Controller {
                 throw new Exception('输入的重量范围不在0到1000之间!');
             }
             
-            $this->loadModel('healthy', 'm');
+            $this->load->model('healthy', 'm');
             if (false === array_key_exists($unit, $this->m->weightUnitOpt)) {
                 throw new Exception('输入的重量单位错误!');
             }
@@ -46,7 +46,7 @@ class Healthy_Controller extends Super_Controller {
     
     // record food`s calorie 
     function updateDiet() {
-        $this->loadModel('healthy', 'm');
+        $this->load->model('healthy', 'm');
         if (isset($_POST['dietType'])) {
             $dietType = $_POST['dietType'];
             $foodId   = 0;
@@ -117,7 +117,7 @@ class Healthy_Controller extends Super_Controller {
                 throw new Exception('输入的运行类型字符超10个字');
             }
             
-            $this->loadModel('healthy', 'm');
+            $this->load->model('healthy', 'm');
             if ($this->m->addWorkout(array($cal, $type)) ===  true) {
                 echo json_encode(array('status' => 0));
             }

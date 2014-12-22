@@ -28,7 +28,7 @@ class Healthy_Model extends Super_Model {
         $sql = 'SELECT id FROM food WHERE id = ?';
         $sth = $this->db->prepare($sql);
         $sth->execute(array($foodId));
-        $ret = !empty($sth->fetchAll(PDO::FETCH_ASSOC));
+        $ret = count($sth->fetchAll(PDO::FETCH_ASSOC)) > 0 ? true : false;
         return $ret;
     }
     
@@ -125,4 +125,3 @@ class Healthy_Model extends Super_Model {
         return true;
     }
 }
-
