@@ -28,7 +28,8 @@ class Healthy_Model extends Super_Model {
         $sql = 'SELECT id FROM food WHERE id = ?';
         $sth = $this->db->prepare($sql);
         $sth->execute(array($foodId));
-        $ret = !empty($sth->fetchAll(PDO::FETCH_ASSOC));
+        $ret = $sth->fetchAll(PDO::FETCH_ASSOC);
+        $ret = !empty($ret);
         return $ret;
     }
     
@@ -111,7 +112,7 @@ class Healthy_Model extends Super_Model {
         if ($affectedRow !== 1) {
             throw new Exception('录入新食品数据失败!');
         }
-        return $dbh->lastInsertId();
+        return $this->db->lastInsertId();
     }
     
     function addNewDiets($data) {
