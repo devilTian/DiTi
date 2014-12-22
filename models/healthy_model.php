@@ -111,7 +111,7 @@ class Healthy_Model extends Super_Model {
         if ($affectedRow !== 1) {
             throw new Exception('录入新食品数据失败!');
         }
-        return $dbh->lastInsertId();
+        return $this->db->lastInsertId();
     }
     
     function addNewDiets($data) {

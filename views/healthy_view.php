@@ -324,7 +324,7 @@ $(document).foundation().ready(function() {
         $('#calorie').val(v);
         return false;
     });
-    $('#jumpToWeightBtn').click(function() {
+    $('#statistic').on('click', '#jumpToWeightBtn', function() {
         $('a[href=#weightRecord]').trigger('click');
     });
     $('input[type=radio][name=dietType]').click(function() {
