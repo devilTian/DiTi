@@ -25,11 +25,25 @@ class Login_Controller extends Super_Controller {
         }
         echo json_encode(array('msg' => $msg));
     }
+    
+    public function checkUserName() {
+        $username = $_POST['username'];
+        $this->load->model('user', 'm');
+        if (true === $this->m->checkUserNameIsExist($username)) {
+            echo json_encode(array('status' => 1));
+            return false;
+        }
+        echo json_encode(array('status' => 0));
+    }
 
     public function register() {
         $user = $_POST['u'];
-        $pwd = $_POST['p'];
+        $pwd  = $_POST['p'];
         $this->load->model('user', 'm');
+        if (true === $this->m->checkUserNameIsExist($user)) {
+            echo json_encode(array('status' => 1));
+            return false;
+        }
         $id = $this->m->addNewUser($user, $pwd);
         $this->session->set('user', $user);
         $this->session->set('id',   $id);

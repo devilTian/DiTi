@@ -2,8 +2,8 @@
 // default
 $config['database']['product'] = 'mysql';
 $config['database']['dbname']  = 'diti';
-$config['database']['host']    = '127.0.0.1';
+$config['database']['host']    = '192.168.1.103';
 $config['database']['charset'] = 'UTF8';
-$config['database']['user']    = 'root';
-$config['database']['passwd']  = '';
+$config['database']['user']    = 'spidertianye';
+$config['database']['passwd']  = 'root';
 

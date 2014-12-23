@@ -72,7 +72,9 @@ class Healthy_Model extends Super_Model {
     
     // insert new weight record into db
     function updateWeight($weight, $unit) {
-        $sql = "INSERT INTO weight VALUES(null, $weight, '$unit', default, 1)";
+        $userId = $this->session->get('id');
+        $sql = "INSERT INTO weight VALUES(null, $weight, '$unit', default, " .
+                "$userId)";
         $affectedRow = $this->db->exec($sql);
         if ($affectedRow !== 1) {
             throw new Exception('更新体重数据失败!');

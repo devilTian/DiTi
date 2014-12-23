@@ -1,9 +1,9 @@
 <div class="row">
     <div class="large-6 large-centered small-centered columns">
-        <?php foreach($notes as $note) {?>
+        <?php foreach($data['notes'] as $note) {?>
             <div class="panel callout radius">
                 <?php echo $note['content']?>
-                <label><?php echo $note['t']?> | <strong><?php echo '田野'?></strong></label> 
+                <label><?php echo $note['t']?> | <strong><?php echo $note['nickname']?></strong></label> 
             </div>
         <?php } ?>
     </div>

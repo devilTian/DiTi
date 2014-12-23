@@ -19,10 +19,22 @@ class User_Model extends Super_Model {
         $ret = $sth->fetch(PDO::FETCH_ASSOC);
         return $ret['nickname'];
     }
+    
+    public function checkUserNameIsExist($name) {
+        $sql = 'SELECT id FROM users WHERE name = ?';
+        $sth = $this->db->prepare($sql);
+        $sth->execute(array($name));
+         if ($sth->rowCount() !== 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function addNewUser($user, $pwd) {
         $data = array($user, $pwd);
-        $sql = 'INSERT INTO users VALUES (NULL, ?, md5(?), CURRENT_TIMESTAMP)';
+        $sql = 'INSERT INTO users VALUES (NULL, ?, md5(?), CURRENT_TIMESTAMP, '.
+            'NULL)';
         $sth = $this->db->prepare($sql);
         $sth->execute($data);
         if ($sth->rowCount() !== 1) {

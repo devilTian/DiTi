@@ -5,9 +5,12 @@ class Notes_Model extends Super_Model  {
         parent::__construct();
     }
     
-    function show() {
-        $notes = $this->db->query('SELECT DATE_FORMAT(t, "%m月%d日 %H:%s") AS t, content, userId FROM notes ORDER BY t DESC')->fetchAll(PDO::FETCH_ASSOC);
-        include('views/notes_view.php');
+    function getAllData() {
+        $sql   = 'SELECT DATE_FORMAT(t, "%m月%d日 %H:%s") AS t, content, ' .
+            'nickname FROM notes left join users on notes.userId = users.id ' .
+            'ORDER BY t DESC';
+        return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        
     }
     
     function add($content) {

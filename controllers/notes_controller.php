@@ -15,7 +15,8 @@ class Notes_Controller extends Super_Controller {
     
     function index() {
         $this->load->model('notes', 'm');
-        $this->m->show();
+        $data = $this->m->getAllData();
+        $this->load->view('notes', null, array('notes' => $data));
     }
     
     function add() {        

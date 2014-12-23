@@ -3,11 +3,13 @@ class Super_Model {
     
     protected $db = null;    
     
-    public function __construct() {
-        $this->db = $this->database();
+    public function __get($k) {
+        $Super_Controller = &get_instance();
+        return $Super_Controller->$k;
     }
     
-    private function database() {
-        return new PDO('mysql:dbname=diti;host=192.168.1.103;charset=UTF8', 'spidertianye', 'root');
-    }
+    public function __construct() {
+        $t = &load_class('database');
+        $this->db = $t->getdbh();
+    }  
 }

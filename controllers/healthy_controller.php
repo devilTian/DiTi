@@ -15,7 +15,7 @@ class Healthy_Controller extends Super_Controller {
     }
     
     function showStatistics() {
-        $this->load>model('healthy', 'm');
+        $this->load->model('healthy', 'm');
         $data = $this->m->getStatistic();
         $weightUnitOpt = $this->m->weightUnitOpt;
         require('views/healthy_statistics_view.php'); 
@@ -37,7 +37,7 @@ class Healthy_Controller extends Super_Controller {
             if (false === array_key_exists($unit, $this->m->weightUnitOpt)) {
                 throw new Exception('输入的重量单位错误!');
             }
-            
+            $this->session = &load_class('session');
             if ($this->m->updateWeight($weight, $unit) === true) {
                 echo json_encode(array('status' => 0));
             }
