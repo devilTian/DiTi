@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <div class="row">
     <div class="small-12 small-centered columns">
         <dl class="accordion" data-accordion>

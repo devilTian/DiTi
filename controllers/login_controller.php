@@ -73,7 +73,7 @@ class Login_Controller extends Super_Controller {
         }
         if (($id = $this->session->get('id')) &&
             ($height = $this->m->getHeight($id))) {
-            $data['height'] = $height;
+            $data['height'] = "{$height}厘米";
         } else {
             $data['height'] = '你还没有登记你的身高欧~';
         }        

@@ -69,5 +69,4 @@ class User_Model extends Super_Model {
         return true;
     }
 }
-
 ?>
