@@ -13,9 +13,10 @@
         <link rel="stylesheet" href="css/app.css"/>
 
         <script src="js/vendor/modernizr.js"></script>
+        <script src="js/angular.js"></script>
     </head>
-    <body>
-        <div class=''>
+    <body ng-app="myApp">
+        <div>            
             <nav class="top-bar" data-topbar role="navigation">
                 <ul class="title-area">
                     <li class="name">
@@ -41,19 +42,14 @@
                     <?php if (empty($_SESSION['user'])) { ?>
                         <!-- Right login Section -->
                         <ul class="right" id="loginDiv">
-                            <form>
-                                <li class="has-form">
+                            <form ng-controller="loginController">
+                                <li class="has-form" ng-repeat="param in params">
                                     <div class="row collapse">
                                         <div class="large-12 small-12 columns">
-                                            <input type="text" name="username" id="username"
-                                                   placeholder="用户名">
-                                        </div>
-                                </li>
-                                <li class="has-form">
-                                    <div class="row collapse">
-                                        <div class="large-12 small-12 columns">
-                                            <input type="password" name="password" id="password"
-                                                   placeholder="密码">
+                                            <input type="{{param.type}}"
+                                                   name="{{param.name}}"
+                                                   id="{{param.name}}"
+                                                   placeholder="{{param.cnName}}">
                                         </div>
                                     </div>
                                 </li>
@@ -179,6 +175,12 @@
                     });
                     return false;
                 });
+            });
+            
+            var myAppModule = angular.module('myApp', []);
+            myAppModule.controller('loginController', function($scope) {
+                $scope.params = [{name: 'username', cnName: '用户名', type: 'text'},
+                                 {name: 'password', cnName: '密码', type:'password'}];
             });
         </script>
     </body>     
