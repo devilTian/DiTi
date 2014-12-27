@@ -64,12 +64,19 @@ class Login_Controller extends Super_Controller {
     }
     
     public function showAccountSetupForm() {
-        $data = array('regexp' => '/^[a-zA-Z0-9_\-\u4E00-\u9FA5]{4,30}$/');
+        $this->load->model('user', 'm');
+        $data['regexp'] = '/^[a-zA-Z0-9_\-\u4E00-\u9FA5]{4,30}$/';
         if ($nick = $this->session->get('nickname')) {
             $data['nick'] = "现昵称: $nick";
         } else {
             $data['nick'] = '你还没有昵称哦~';
         }
+        if (($id = $this->session->get('id')) &&
+            ($height = $this->m->getHeight($id))) {
+            $data['height'] = $height;
+        } else {
+            $data['height'] = '你还没有登记你的身高欧~';
+        }        
         $this->load->view('accountsetup', 'v', $data);
     }
     
@@ -85,5 +92,17 @@ class Login_Controller extends Super_Controller {
         $this->session->set('nickname', $nickname);
         echo json_encode(array('status' => 0));
     }
+    
+    public function updateHeight() {
+        $height = floatval($_POST['v']);
+        if ($height < 0.0 || $height > 999){
+            throw new Exception('身高范围1-999');
+        }
+        $this->load->model('user', 'm');
+        $id = $this->session->get('id');
+        $this->m->updateHeight($height, $id);
+        $this->session->set('height', $height);
+        echo json_encode(array('status' => 0));
+    }    
 }
 ?>

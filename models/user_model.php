@@ -17,7 +17,15 @@ class User_Model extends Super_Model {
     public function getNickName($id) {
         $sth = $this->db->query("SELECT nickname FROM users WHERE id = $id");
         $ret = $sth->fetch(PDO::FETCH_ASSOC);
-        return $ret['nickname'];
+        $result = $ret['nickname'] === null ? false : $ret['nickname'];
+        return $result;
+    }
+    
+    public function getHeight($id) {
+        $sth = $this->db->query("SELECT height FROM users WHERE id = $id");
+        $ret = $sth->fetch(PDO::FETCH_ASSOC);
+        $result = $ret['height'] === null ? false : $ret['height'];
+        return $result;
     }
     
     public function checkUserNameIsExist($name) {
@@ -33,8 +41,8 @@ class User_Model extends Super_Model {
 
     public function addNewUser($user, $pwd) {
         $data = array($user, $pwd);
-        $sql = 'INSERT INTO users VALUES (NULL, ?, md5(?), CURRENT_TIMESTAMP, '.
-            'NULL)';
+        $sql = 'INSERT INTO users(name, pwd, createdTime) VALUES ' .
+            '(?, md5(?), CURRENT_TIMESTAMP)';
         $sth = $this->db->prepare($sql);
         $sth->execute($data);
         if ($sth->rowCount() !== 1) {
@@ -48,6 +56,15 @@ class User_Model extends Super_Model {
         $count = $this->db->exec($sql);
         if ($count !== 1) {
             throw new Exception('昵称更新失败!');
+        }
+        return true;
+    }
+    
+     public function updateHeight($height, $id) {
+        $sql = "UPDATE users SET height = '$height' WHERE id = $id";
+        $count = $this->db->exec($sql);
+        if ($count !== 1) {
+            throw new Exception('身高更新失败!');
         }
         return true;
     }
