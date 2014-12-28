@@ -80,7 +80,7 @@ $(document).foundation().ready(function() {
             dataType: "JSON",
             success: function(ret) {
                 if (ret.status === 0) {
-                    $('#accountSetup').trigger('click')
+                    $('#accountSetup').trigger('click');
                 }
             }
         });
@@ -103,7 +103,7 @@ $(document).foundation().ready(function() {
             dataType: "JSON",
             success: function(ret) {
                 if (ret.status === 0) {
-                    $('#accountSetup').trigger('click')
+                    $('#accountSetup').trigger('click');
                 }
             }
         });
