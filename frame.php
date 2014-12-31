@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php session_start(); preg_match('/\d+/U', 123123, $m); var_dump($m); ?>
 <!DOCTYPE html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 <html class="no-js" lang="en" >

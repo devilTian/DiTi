@@ -82,7 +82,7 @@ class Login_Controller extends Super_Controller {
     
     public function updateNick() {
         $nickname = $_POST['v'];
-        if (!preg_match('/^[a-zA-Z0-9_\-\?]{4,30}$/',  utf8_decode($nickname))){
+        if (!preg_match('/^[a-zA-Z0-9_\-\?\p{L}]{4,30}$/u', $nickname)){
             // [hack]
             throw new Exception('请输入4-30个字符，支持中英文、数字、"_"或减号');
         }

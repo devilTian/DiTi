@@ -57,7 +57,7 @@ class Healthy_Model extends Super_Model {
                         round($v['calorie'], 2) * intval($v['copies']);
                 $result['dietItems'][] =
                         array($v['name'],
-                              "{$v['copies']}份, 热量{$v['calorie']}Cal/份."
+                              "{$v['copies']}份, {$v['calorie']}Cal/份."
                         );
             }
 
