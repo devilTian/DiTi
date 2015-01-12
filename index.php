@@ -21,7 +21,7 @@ $function   = isset($segment[1]) ? $segment[1] : $defFunction;
 $function   = strtolower($function);
 
 // validate request`s controller
-$valid = array('resume', 'healthy', 'notes', 'login');
+$valid = array('resume', 'healthy', 'notes', 'login', 'sentence');
 if (array_search($controller, $valid) === false){
     $path = dirname($_SERVER['SCRIPT_NAME']);
     if ($path !== '\\' && $path !== '/') {

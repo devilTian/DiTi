@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php session_start();?>
 <!DOCTYPE html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 <html class="no-js" lang="en" >
@@ -34,6 +34,13 @@
                         <li class="divider"></li>
                         <?php if (!empty($_SESSION['user'])) { ?>
                             <li><a href="#" name="healthy">健康</a></li>
+                            <li class="divider"></li>
+                            <li class="has-dropdown">
+                                <a href="#">英语</a>
+                                <ul class="dropdown">
+                                    <li><a href="#" name="sentence">五百句</a></li>
+                                </ul>
+                            </li>
                             <li class="divider"></li>
                         <?php } ?>
                         <li><a href="#" name="notes">Note</a></li>
@@ -108,7 +115,7 @@
                 dom.after('<small class="error">' + errMsg + '.</small>');
             }
             $(document).foundation().ready(function() {
-                $('#topmenu>li>a').click(function() {
+                $('#topmenu>li a[name]').click(function() {
                     var link = $(this).attr('name');
                     $.ajax({
                         type: "POST",

@@ -22,8 +22,19 @@ class Loader {
     }
     
     public function view($fileName, $alias = null, $data = array()) {
-        $view   = strtolower("{$fileName}_view");
-        $v_file = "views/$view.php";
+        $tmp = explode(DIRECTORY_SEPARATOR, $fileName);
+        if (count($tmp) !== 1) {
+            $fileName = array_pop($tmp);
+            $dir      = join(DIRECTORY_SEPARATOR, $tmp);
+            if (!is_dir("views/$dir")) {
+                throw new Exception('没有找到视图文件所在的路径');
+            }
+            $view   = strtolower("{$fileName}_view");
+            $v_file = "views/$dir/$view.php";
+        } else {
+            $view   = strtolower("{$fileName}_view");
+            $v_file = "views/$view.php";
+        }
         if (file_exists($v_file)) {
             try {
                 include_once($v_file);

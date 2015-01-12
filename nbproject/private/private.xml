@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/htdocs/DiTi/views/healthy_view.php</file>
-            <file>file:/E:/htdocs/DiTi/views/notes_view.php</file>
-            <file>file:/E:/htdocs/DiTi/frame.php</file>
-            <file>file:/E:/htdocs/DiTi/models/notes_model.php</file>
-            <file>file:/E:/htdocs/DiTi/controllers/notes_controller.php</file>
+            <file>file:/E:/htdocs/DiTi/index.php</file>
+            <file>file:/E:/htdocs/DiTi/css/app.css</file>
+            <file>file:/E:/htdocs/DiTi/controllers/healthy_controller.php</file>
+            <file>file:/E:/htdocs/DiTi/views/english/sentence_view.php</file>
         </group>
     </open-files>
 </project-private>
