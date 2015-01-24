@@ -20,12 +20,22 @@ and open the template in the editor.
     color:green;
 }
 .res_express>.label{
+    padding-left: 0px;
     background-color: #ffffff;
     color: #006600;
     font: 14px/150% Arial,Helvetica,sans-serif;
-    margin: 0 0 12px;
 }
 .res_express>.label>.pl {
     color:#666666;
     font:12px/150% Arial,Helvetica,sans-serif;
+}
+.gray-link {
+    font: 12px Helvetica,Arial,sans-serif;
+    line-height: 1.62;
+    border-top: 1px dashed #dcdcdc;
+    margin-top: 30px;
+    color: #999;
+    overflow: hidden;
+    zoom: 1;
+    padding: 14px 0;
 }
