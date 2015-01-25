@@ -34,7 +34,7 @@
             <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
                 <?php
                 foreach ($data['books'] as $book) {
-                    echo "<li><a class='bookImg' href='index.php/sentence/showSpecBookDetail" .
+                    echo "<li><a data-reveal-id='myModal' class='bookImg' href='index.php/sentence/showSpecBookDetail" .
                     "?id={$book['id']}'>" .
                     "<img class='th' title='{$book['name']}' " .
                     "alt='{$book['name']}' data-orign=''".
@@ -42,6 +42,8 @@
                 }
                 ?>
             </ul>
+            <div id="myModal" class="reveal-modal" data-reveal>
+            </div>
         </div>
         <div class="large-2 hide-for-small-only columns">      
             <img src='img/english/listen_aside.jpg'/>
@@ -53,13 +55,13 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).foundation().ready(function() {
         $('a.bookImg').click(function() {
             $.ajax({
                 url: $(this).attr('href'),
                 dataType: "html",
                 success: function(html) {
-                    $('#statistic').html(html);
+                    $('#myModal').html(html).foundation('reveal', 'open');
                 }
             });
             return false;

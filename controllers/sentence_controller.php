@@ -15,12 +15,16 @@ class Sentence_Controller extends Super_Controller {
         $this->load->model('sentence_en', 'm');
         $bookId = $_GET['id'];
         $data   = $this->m->getSpecBookById($bookId);
-        if ($data === false) {
-            // 找不到您想看的书的信息,抱歉啦.
-            // Reveal Model~~~
-        } else {        
-            
+        if ($data !== false) {
+            $data['lessonCount'] = $this->m->getLessonCountByBookId($bookId);
+            if (intval($data['lessonCount']) === 0) {
+                $data['progress'] = '0';
+            }  else {
+                $data['progress'] = $this->m->getStudyProgressByBookId($bookId);
+                $data['progress'] /= ($data['lessonCount']);
+                $data['progress'] = round($data['progress'] * 100, 1);
+            }            
         }
-        var_dump($data);
+        $this->load->view('english/specbookinfo', 'v', $data);
     }
 }
