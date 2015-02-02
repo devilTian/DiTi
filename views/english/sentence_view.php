@@ -2,7 +2,7 @@
 <br/>
 <div class="row">
     <!-- sub-navigation -->
-    <div class="large-2 hide-for-small-only columns">
+    <div class="large-2 show-for-medium-up columns">
         &nbsp;
     </div>
     <div class="large-3 columns hide-for-small-only">
@@ -11,17 +11,25 @@
     <div class="large-3 small-8 columns">
         <input class="englishSearchInput" type="text" placeholder='book, author, isbn'/>            
     </div>
-    <div class="large-4 small-4 columns">
-        <a href="#" class="button tiny englishSearchBtn">Search</a>            
+    <div class="large-2 small-2 columns">
+        <a href="#" class="button tiny englishSearchBtn">Search</a>
+    </div>
+    <div class="large-2 small-2 columns hide-for-small-only">
+        <a href="#" class="button tiny">查看进度</a> 
+    </div>
+</div>
+<div class="row show-for-small-only">
+    <div class="columns small-12">
+        <a href="#" class="button tiny expand">查看进度</a> 
     </div>
 </div>
 <!-- content -->
 <div class="row" id="content">
     <div class='large-12 small-12 columns'>
-        <div class="large-2 hide-for-small-only columns">
+        <div class="large-2 show-for-medium-up columns">
             &nbsp;
         </div>
-        <div class="large-8 small-12 columns">
+        <div class="large-8 small-12 columns">            
             <img class='hide-for-small-only' src='img/english/listen_article.jpg'>
             <div class="res_express">
                 <span class="label">
@@ -31,7 +39,7 @@
                     </span>
                 </span>
             </div>
-            <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
+            <ul class="small-block-grid-2 medium-block-grid-4 large-block-grid-4">
                 <?php
                 foreach ($data['books'] as $book) {
                     echo "<li><a data-reveal-id='myModal' class='bookImg' href='index.php/sentence/showSpecBookDetail" .
@@ -45,7 +53,7 @@
             <div id="myModal" class="reveal-modal" data-reveal>
             </div>
         </div>
-        <div class="large-2 hide-for-small-only columns">      
+        <div class="large-2 show-for-large-up columns">      
             <img src='img/english/listen_aside.jpg'/>
         </div>    
     </div>

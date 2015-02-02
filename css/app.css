@@ -19,7 +19,10 @@ and open the template in the editor.
     font:normal bold 30px arial,sans-serif;
     color:green;
 }
-.res_express>.label{
+.res_express {
+    margin-bottom: 1px;
+}
+.res_express>.label, span.bookDescription{
     padding-left: 0px;
     background-color: #ffffff;
     color: #006600;
@@ -38,4 +41,21 @@ and open the template in the editor.
     overflow: hidden;
     zoom: 1;
     padding: 14px 0;
+}
+.specBookTxt {
+    text-indent: 2em;
+}
+.lessonInfoTitle {
+    color: #209E85;
+}
+.lessonInfoVal {
+    margin-left:1em;
+    color:#C09;
+}
+div.evenLesson {
+    border-bottom:dashed 1px #CCC
+}
+div.oddLesson {
+    border-bottom:dashed 1px #CCC;
+    background-color:rgb(233,244,233)
 }
