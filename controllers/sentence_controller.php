@@ -15,8 +15,35 @@ class Sentence_Controller extends Super_Controller {
         }
     } 
     
-    function index() {
-        $this->show();
+    private function replication() {
+        $en = '';
+        $cn = '';
+        $num = 0;
+        $data = array();
+        $this->load->model('sentence_en', 'm');
+        $handle = @fopen('DB/1.txt', 'r');        
+        if ($handle) {
+            while (($buffer = fgets($handle, 4096)) !== false) {
+                if (trim($buffer) === '') {
+                    continue;
+                } else if (preg_match('/^(\d{1,3})\.\s?(.*)/', $buffer, $match)) { // us     
+                    $num = $match[1]; 
+                    $en  = $match[2];
+                } else {  // en
+                    $cn = trim($buffer);
+                    $data[] = array($num, $en, $cn, '听力口语关键句', 1);                    
+                }
+            }
+            if (!feof($handle)) {
+                throw new Exception('Error: unexpected fgets() fail.');
+            }
+            fclose($handle);
+            $this->m->insertSentence($data);
+        }
+    }
+    
+    function index() {        
+        $this->show();        
     }
     
     function show() {

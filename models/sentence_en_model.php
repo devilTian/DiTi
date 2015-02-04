@@ -3,6 +3,15 @@ class Sentence_En_Model extends Super_Model {
     function __construct() {
         parent::__construct();
     }
+    
+    function insertSentence($data) {        
+        $sql = 'insert into en_sentence_lesson values(null, ?, ?, ?, ?, ?)';
+        $sth = $this->db->prepare($sql);
+        foreach ($data as $d) {
+            $sth->execute($d);
+        }
+    }
+    
     function getAllBook() {
         $sql = 'SELECT id, name, state, category, description, imgPath ' .
                 'FROM en_book';
@@ -17,18 +26,18 @@ class Sentence_En_Model extends Super_Model {
     }
     
     function getLessonsByBookId($id) {
-        $sql    = 'SELECT les_num, les_name, les_unit, les_score, ' .
+        $sql    = 'SELECT les_num, les_name, les_unit, score, ' .
             'max(datetime) as datetime, count(datetime) as count ' .
-            'FROM en_lesson left join en_recordTime ' .
-            'on en_lesson.les_id = en_recordTime.les_id ' .
-            'WHERE les_bookid = ? group by en_lesson.les_id';
+            'FROM en_nce_lesson left join en_recordTime ' .
+            'on en_nce_lesson.les_id = en_recordTime.les_id ' .
+            'WHERE les_bookid = ? group by en_nce_lesson.les_id';
         $sth = $this->db->prepare($sql);
         $sth->execute(array($id));
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
     
     function getLessonCountByBookId($id) {
-        $sql = 'SELECT COUNT(*) AS sum FROM en_lesson WHERE les_bookid = ?';
+        $sql = 'SELECT COUNT(*) AS sum FROM en_nce_lesson WHERE les_bookid = ?';
         $sth = $this->db->prepare($sql);
         $sth->execute(array($id));
         $data = $sth->fetch(PDO::FETCH_ASSOC);
@@ -37,7 +46,7 @@ class Sentence_En_Model extends Super_Model {
     
     function getFinishedLessonCountByBookId($id) {
         $sql = 'SELECT COUNT(*) AS c FROM en_recordTime WHERE les_id IN ' .
-            '(select les_id from en_lesson where les_bookid = ?) ' .
+            '(select les_id from en_nce_lesson where les_bookid = ?) ' .
             'GROUP BY les_id';
         $sth = $this->db->prepare($sql);
         $sth->execute(array($id));
