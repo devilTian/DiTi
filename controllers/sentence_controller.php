@@ -24,14 +24,14 @@ class Sentence_Controller extends Super_Controller {
         $handle = @fopen('DB/1.txt', 'r');        
         if ($handle) {
             while (($buffer = fgets($handle, 4096)) !== false) {
-                if (trim($buffer) === '') {
+                $buffer = trim($buffer);
+                if ($buffer === '') {
                     continue;
                 } else if (preg_match('/^(\d{1,3})\.\s?(.*)/', $buffer, $match)) { // us     
                     $num = $match[1]; 
                     $en  = $match[2];
                 } else {  // en
-                    $cn = trim($buffer);
-                    $data[] = array($num, $en, $cn, '听力口语关键句', 1);                    
+                    $data[] = array($num, $en, $buffer, '听力口语关键句', 1);                    
                 }
             }
             if (!feof($handle)) {
