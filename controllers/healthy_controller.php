@@ -5,9 +5,41 @@ class Healthy_Controller extends Super_Controller {
        $this->show();
     }
     
+    private function getHeight() {
+        $this->session = &load_class('session');      
+        $id = $this->session->get('id');
+        $this->load->model('user', 'u');
+        $height = $this->u->getHeight($id);        
+        return $height;
+    }
+    
+    private function getBmi($height, $weight) {
+        if (!is_numeric($height) || !is_numeric($weight)) {
+            return false;
+        }
+        $bmi = round($weight/($height*$height/10000), 1);
+        $level = '无';
+        if ($bmi >= 32) {
+            $level = '超过32, 非常肥胖';
+        } else if ($bmi >= 28) {
+            $level = '超过28, 肥胖';
+        } else if ($bmi >= 25) {
+            $level = '超过25, 过重';
+        } else if ($bmi >= 20) {
+            $level = '超过20, 适中';
+        } else if ($bmi >= 18.5) {
+            $level = '超过18.5, 正常'; 
+        } else {
+            $level = '小于18.5, 过轻';
+        }
+        return array('val' => $bmi, 'level' => $level);
+    }    
+    
     function show() {
-        $this->loadModel('healthy', 'm');
+        $this->load->model('healthy', 'm');
         $data = $this->m->getStatistic();
+        $data['height'] = $this->getHeight();
+        $data['bmi']    = $this->getBmi($data['height'], $data['weight']['val']);
         $weightUnitOpt = $this->m->weightUnitOpt;
         $maintenance   = $this->m->maintenance;
         $foodOpt       = $this->m->getFoodOpt();
@@ -15,8 +47,10 @@ class Healthy_Controller extends Super_Controller {
     }
     
     function showStatistics() {
-        $this->loadModel('healthy', 'm');
+        $this->load->model('healthy', 'm');
         $data = $this->m->getStatistic();
+        $data['height'] = $this->getHeight();
+        $data['bmi']    = $this->getBmi($data['height'], $data['weight']['val']);
         $weightUnitOpt = $this->m->weightUnitOpt;
         require('views/healthy_statistics_view.php'); 
     }
@@ -33,11 +67,11 @@ class Healthy_Controller extends Super_Controller {
                 throw new Exception('输入的重量范围不在0到1000之间!');
             }
             
-            $this->loadModel('healthy', 'm');
+            $this->load->model('healthy', 'm');
             if (false === array_key_exists($unit, $this->m->weightUnitOpt)) {
                 throw new Exception('输入的重量单位错误!');
             }
-            
+            $this->session = &load_class('session');
             if ($this->m->updateWeight($weight, $unit) === true) {
                 echo json_encode(array('status' => 0));
             }
@@ -46,7 +80,7 @@ class Healthy_Controller extends Super_Controller {
     
     // record food`s calorie 
     function updateDiet() {
-        $this->loadModel('healthy', 'm');
+        $this->load->model('healthy', 'm');
         if (isset($_POST['dietType'])) {
             $dietType = $_POST['dietType'];
             $foodId   = 0;
@@ -117,7 +151,7 @@ class Healthy_Controller extends Super_Controller {
                 throw new Exception('输入的运行类型字符超10个字');
             }
             
-            $this->loadModel('healthy', 'm');
+            $this->load->model('healthy', 'm');
             if ($this->m->addWorkout(array($cal, $type)) ===  true) {
                 echo json_encode(array('status' => 0));
             }

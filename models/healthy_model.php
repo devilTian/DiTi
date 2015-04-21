@@ -28,7 +28,7 @@ class Healthy_Model extends Super_Model {
         $sql = 'SELECT id FROM food WHERE id = ?';
         $sth = $this->db->prepare($sql);
         $sth->execute(array($foodId));
-        $ret = !empty($sth->fetchAll(PDO::FETCH_ASSOC));
+        $ret = count($sth->fetchAll(PDO::FETCH_ASSOC)) > 0 ? true : false;
         return $ret;
     }
     
@@ -57,7 +57,7 @@ class Healthy_Model extends Super_Model {
                         round($v['calorie'], 2) * intval($v['copies']);
                 $result['dietItems'][] =
                         array($v['name'],
-                              "{$v['copies']}份, 热量{$v['calorie']}Cal/份."
+                              "{$v['copies']}份, {$v['calorie']}Cal/份."
                         );
             }
 
@@ -72,7 +72,9 @@ class Healthy_Model extends Super_Model {
     
     // insert new weight record into db
     function updateWeight($weight, $unit) {
-        $sql = "INSERT INTO weight VALUES(null, $weight, '$unit', default, 1)";
+        $userId = $this->session->get('id');
+        $sql = "INSERT INTO weight VALUES(null, $weight, '$unit', default, " .
+                "$userId)";
         $affectedRow = $this->db->exec($sql);
         if ($affectedRow !== 1) {
             throw new Exception('更新体重数据失败!');
@@ -111,7 +113,7 @@ class Healthy_Model extends Super_Model {
         if ($affectedRow !== 1) {
             throw new Exception('录入新食品数据失败!');
         }
-        return $dbh->lastInsertId();
+        return $this->db->lastInsertId();
     }
     
     function addNewDiets($data) {
@@ -125,4 +127,3 @@ class Healthy_Model extends Super_Model {
         return true;
     }
 }
-

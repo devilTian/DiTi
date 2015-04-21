@@ -7,8 +7,55 @@ and open the template in the editor.
     Created on : 2014-11-6, 16:20:04
     Author     : tianye
 */
-/*[TODO][TEST] !!!please delete me before producing!!!*/
 .white {
     color: white;
 }
-/*[TODO][TEST] !!!please delete me before producing!!!*/
+
+// english/500sentence
+.englishSearchInput {
+    margin: 5px 0px 0px 1em;
+}
+.headline {
+    font:normal bold 30px arial,sans-serif;
+    color:green;
+}
+.res_express {
+    margin-bottom: 1px;
+}
+.res_express>.label, span.bookDescription{
+    padding-left: 0px;
+    background-color: #ffffff;
+    color: #006600;
+    font: 14px/150% Arial,Helvetica,sans-serif;
+}
+.res_express>.label>.pl {
+    color:#666666;
+    font:12px/150% Arial,Helvetica,sans-serif;
+}
+.gray-link {
+    font: 12px Helvetica,Arial,sans-serif;
+    line-height: 1.62;
+    border-top: 1px dashed #dcdcdc;
+    margin-top: 30px;
+    color: #999;
+    overflow: hidden;
+    zoom: 1;
+    padding: 14px 0;
+}
+.specBookTxt {
+    text-indent: 2em;
+}
+.lessonInfoTitle {
+    color: #209E85;
+}
+.lessonInfoVal {
+    margin-left:1em;
+    color:#C09;
+}
+div.evenLesson {
+    border-bottom:dashed 1px #CCC
+}
+div.oddLesson {
+    border-bottom:dashed 1px #CCC;
+    background-color:rgb(233,244,233)
+}

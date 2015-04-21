@@ -41,8 +41,35 @@
     </div>
 </form>
 <script type="text/javascript">
-$(document).foundation().ready(function() {
+$(document).foundation().ready(function() {    
+    $('#username_reg').blur(function() {
+        clearAllErrorClass();
+        var uDom = $(this),
+            username = uDom.val();
+        if (false === /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/.test(username) &&
+            false === /^\d{11}$/.test(username) &&
+            false === /^[1-9][0-9]{4,14}$/.test(username)) {
+            addErrorClass(uDom, '用户名错误');
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: 'index.php/login/checkUserName',
+            data: {
+                username: username
+            },
+            dataType: "JSON",
+            success: function(ret) {
+                if (ret.status === 1) {  // same username exists!
+                    addErrorClass(uDom, '用户名已存在')            
+                }
+            }
+        });
+    });
     $('#registerSubmitBtn').click(function() {
+        if ($('#username_reg').hasClass('error') === true) {
+            return false;
+        }
         clearAllErrorClass();
         // validation
         var uDom = $('#username_reg'),
@@ -69,7 +96,9 @@ $(document).foundation().ready(function() {
             },
             dataType: "JSON",
             success: function(ret) {
-                if (ret.status === 0) {
+                if (ret.status === 1) {  // same username exists!
+                    addErrorClass(uDom, '用户名已存在')
+                } else if (ret.status === 0) {
                     window.location.reload();
                 }
             }

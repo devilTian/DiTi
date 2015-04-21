@@ -1,4 +1,4 @@
-<?php 
+<?php
 $uri   = substr($_SERVER['REQUEST_URI'], strlen($_SERVER['SCRIPT_NAME']));
 $parts = preg_split('/\?/', $uri);
 
@@ -21,7 +21,7 @@ $function   = isset($segment[1]) ? $segment[1] : $defFunction;
 $function   = strtolower($function);
 
 // validate request`s controller
-$valid = array('resume', 'healthy', 'notes', 'login');
+$valid = array('resume', 'healthy', 'notes', 'login', 'sentence');
 if (array_search($controller, $valid) === false){
     $path = dirname($_SERVER['SCRIPT_NAME']);
     if ($path !== '\\' && $path !== '/') {
@@ -57,5 +57,33 @@ if (file_exists($c_file)) {
 
 function &get_instance() {
     return Super_Controller::get_instance();
+}
+
+function &load_class($class, $path = 'library', $param = null, $alias = null) {
+    static $_classes = array();
+    if ($alias !== null) {
+        $key = $alias;
+    } else {
+        $key = strtolower($class);
+    }
+    if (isset($_classes[$key])) {
+        return $_classes[$key];
+    }
+    
+    $name = ucfirst(strtolower($class));
+    if (file_exists("$path/$class.php")) {
+        $name = ucfirst(strtolower($class));
+        if (false === class_exists($name)) {
+            require("$path/$class.php");        
+        }
+    }
+    if ($name === false) {
+        throw new Exception("不能获取指定的类[$class.php]");
+    }
+    
+    // dont keep track of what we just loaded
+    
+    $_classes[$key] = new $name();
+    return $_classes[$key];
 }
 ?>
