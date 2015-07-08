@@ -73,7 +73,7 @@ class Healthy_Model extends Super_Model {
     // insert new weight record into db
     function updateWeight($weight, $unit) {
         $userId = $this->session->get('id');
-        $sql = "INSERT INTO weight VALUES(null, $weight, '$unit', default, " .
+        $sql = "INSERT INTO weight VALUES(null, $weight, '$unit', NOW(), " .
                 "$userId)";
         $affectedRow = $this->db->exec($sql);
         if ($affectedRow !== 1) {
@@ -84,7 +84,7 @@ class Healthy_Model extends Super_Model {
     
     function addWorkout($data) {
         $sql = 'INSERT INTO workout(userId, calorie, type, datetime) ' .
-                'VALUES(1, ?, ?, DEFAULT)';
+                'VALUES(1, ?, ?, NOW())';
         $sth = $this->db->prepare($sql);
         $sth->execute($data);
         if ($sth->rowCount() !== 1) {
@@ -117,7 +117,8 @@ class Healthy_Model extends Super_Model {
     }
     
     function addNewDiets($data) {
-        $sql = 'INSERT INTO diets(foodId, copies, datetime) VALUES(?, ?, DEFAULT)';
+        $sql = 'INSERT INTO diets(foodId, copies, datetime) ' .
+			'VALUES(?, ?, NOW())';
         $sth = $this->db->prepare($sql);
         $sth->execute($data);
         if ($sth->rowCount() !== 1) {

@@ -1,35 +1,35 @@
 <?php
-$uri   = substr($_SERVER['REQUEST_URI'], strlen($_SERVER['SCRIPT_NAME']));
-$parts = preg_split('/\?/', $uri);
-
-$uri = $parts[0];
-if(isset($parts[1])) {
-    $_SERVER['QUERY_STRING'] = $parts[1];
-    parse_str($_SERVER['QUERY_STRING'], $_GET);
-} else {
-    $_SERVER['QUERY_STRING'] = '';
-    $_GET = array();
-}
-$uri = str_replace(array('//', '../'), '/', trim($uri, '/'));
-$segment = explode('/', $uri);
+date_default_timezone_set('Asia/Chongqing');
+$valid = array('resume', 'healthy', 'notes', 'login', 'sentence');
 
 $defController = 'healthy';
 $defFunction   = 'index';
 
-$controller = isset($segment[0]) ? $segment[0] : $defController;
-$function   = isset($segment[1]) ? $segment[1] : $defFunction;
-$function   = strtolower($function);
-
 // validate request`s controller
-$valid = array('resume', 'healthy', 'notes', 'login', 'sentence');
-if (array_search($controller, $valid) === false){
+function redirectHomePage() {
     $path = dirname($_SERVER['SCRIPT_NAME']);
     if ($path !== '\\' && $path !== '/') {
         $path .= '/';
     }
-    header("location: http://{$_SERVER['SERVER_ADDR']}{$path}frame.php");
+    header("location: http://{$_SERVER['SERVER_NAME']}{$path}frame.php");
     die;
 }
+
+
+if (isset($_SERVER['PATH_INFO'])) {
+	$segment = explode('/', trim($_SERVER['PATH_INFO'], '/'));
+
+	if (array_search($segment[0], $valid) !== false) {
+		$controller = $segment[0];
+	} else {
+		redirectHomePage();
+	}
+    $function = isset($segment[1]) && '' !== trim($segment[1]) ?
+		$segment[1] : $defFunction;
+} else {
+	redirectHomePage();
+}
+$function = strtolower($function);
 
 // load controllers
 $controller = strtolower("{$controller}_controller");

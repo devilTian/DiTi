@@ -15,7 +15,7 @@ class Notes_Model extends Super_Model  {
     }
     
     function add($content, $id = null) {        
-        $sql = 'INSERT INTO notes VALUES(CURRENT_TIMESTAMP, ?, ?)';
+        $sql = 'INSERT INTO notes VALUES(NOW(), ?, ?)';
         $sth = $this->db->prepare($sql);
         $sth->execute(array($content, $id));
         $affectedRow = $sth->rowCount();            

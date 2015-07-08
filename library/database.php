@@ -8,7 +8,8 @@ class Database {
             "host={$info['host']};charset={$info['charset']}";
         $user = $info['user'];
         $pwd  = $info['passwd'];
-        $this->dbh = new PDO($dsn, $user, $pwd); 
+        $this->dbh = new PDO($dsn, $user, $pwd);
+		$this->dbh->exec("SET time_zone = '{$info['timezone']}';");
     }
     
     public function getdbh() {
