@@ -9,7 +9,7 @@ class Notes_Model extends Super_Model  {
         $sql   = 'SELECT t AS orig_t, DATE_FORMAT(t, "%m月%d日 %H:%i") AS t' .
             ', content, nickname, notes.userId as userId ' .
             'FROM notes left join users on notes.userId = users.id ' .
-            'ORDER BY t DESC';
+            'ORDER BY orig_t DESC';
         return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
         
     }
