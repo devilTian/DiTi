@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="css/app.css"/>
 
         <script src="js/vendor/modernizr.js"></script>
-        <script src="js/angular.js"></script>
+        <script src="js/angular.min.js"></script>
     </head>
     <body ng-app="myApp">
         <div>            

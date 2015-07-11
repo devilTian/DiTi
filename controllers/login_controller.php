@@ -56,7 +56,7 @@ class Login_Controller extends Super_Controller {
         if ($apppath !== '/' && $apppath !== '\\') {
             $apppath .= '/';
         }
-        header("location: http://{$_SERVER['SERVER_ADDR']}{$apppath}frame.php");
+        header("location: http://{$_SERVER['SERVER_NAME']}{$apppath}frame.php");
     }
     
     public function showRegisterForm() {
