@@ -7,11 +7,16 @@ and open the template in the editor.
     Created on : 2014-11-6, 16:20:04
     Author     : tianye
 */
+
+/* login */
+.login {
+	padding: 0px 15px;
+}
 .white {
     color: white;
 }
 
-// english/500sentence
+/* english/500sentence */
 .englishSearchInput {
     margin: 5px 0px 0px 1em;
 }
