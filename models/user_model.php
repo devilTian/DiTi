@@ -32,7 +32,7 @@ class User_Model extends Super_Model {
         $sql = 'SELECT id FROM users WHERE name = ?';
         $sth = $this->db->prepare($sql);
         $sth->execute(array($name));
-         if ($sth->rowCount() !== 0) {
+        if ($sth->rowCount() !== 0) {
             return true;
         } else {
             return false;
@@ -68,5 +68,11 @@ class User_Model extends Super_Model {
         }
         return true;
     }
+
+	public function changePassword($id, $old, $new) {
+		$sql = "UPDATE users SET pwd = MD5(?) WHERE id = ? AND pwd = MD5(?)";
+		$sth = $this->db->prepare($sql);
+		return $sth->execute(array($new, $id, $old));
+	}
 }
 ?>

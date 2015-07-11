@@ -104,5 +104,23 @@ class Login_Controller extends Super_Controller {
         $this->session->set('height', $height);
         echo json_encode(array('status' => 0));
     }    
+
+	public function changePassword() {
+		$old = trim($_POST['o']);
+		$new = trim($_POST['n']);
+		if (!preg_match('/^.{6,16}$/', $old)) {
+            throw new Exception('请输入6-16位数字、字母或常用符号, 字母区分大小写');
+		}
+		if (!preg_match('/^.{6,16}$/', $new)) {
+            throw new Exception('请输入6-16位数字、字母或常用符号, 字母区分大小写');
+		}
+        $this->load->model('user', 'm');
+        $id = $this->session->get('id');
+        if ($this->m->changePassword($id, $old, $new)) {
+			echo json_encode(array('status' => 0));
+		} else {
+			echo json_encode(array('status' => 1));
+		}
+	}
 }
 ?>
