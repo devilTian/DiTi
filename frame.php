@@ -26,10 +26,9 @@
                         <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
                         <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
                     </ul>
-
                     <section class="top-bar-section">    
                         <!-- Left Nav Section -->
-                        <ul class="left" id="topmenu">
+                        <ul class="left menu" id="topmenu">
                             <li class="divider"></li>
                             <li><a href="#" name="resume">About Me</a></li>
                             <li class="divider"></li>
@@ -99,9 +98,7 @@
                             </ul>
                         <?php } ?>
                     </section>
-                </nav>              
-
-
+                </nav>
                 <nav class="tab-bar show-for-small" data-topbar role="navigation">
                     <section class="left-small">
                         <a class="left-off-canvas-toggle menu-icon"><span></span></a>
@@ -115,7 +112,7 @@
                 </nav>
                 <!-- Left Nav Section -->
                 <aside class="left-off-canvas-menu">    
-                    <ul class="off-canvas-list" id="topleftmenu">
+                    <ul class="off-canvas-list menu" id="topleftmenu">
                         <li><label>DiTi</label></li>
                         <li><a href="#" name="resume">About Me</a></li>
                         <?php if (!empty($_SESSION['user'])) { ?>
@@ -187,9 +184,9 @@
             $(document).foundation().ready(function() {
                 $('#mainContent').height($(document).height()-45);
                 $('a[href=#]').click(function() {
-                        $('.exit-off-canvas').trigger('click')
+                    $('.exit-off-canvas').trigger('click')
                 });
-                $('#topleftmenu>li a[name]').click(function() {
+                $('ul.menu>li a[name]').click(function() {
                     var link = $(this).attr('name');
                     $.ajax({
                         type: "POST",
