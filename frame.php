@@ -48,7 +48,7 @@
                         </ul>
                         <?php if (empty($_SESSION['user'])) { ?>
                             <!-- Right login Section -->
-                            <ul class="right" id="loginDiv">
+                            <ul class="right menu" id="loginDiv">
                                 <form ng-controller="loginController">
                                     <li class="has-form" ng-repeat="param in params">
                                         <div class="row collapse">
@@ -75,24 +75,24 @@
                                     </li>
                                     -->
                                     <li class="has-form">
-                                        <a href="#" class="button" id="loginBtn">登录</a>
+                                        <a href="#" class="button login" id="loginBtn">登录</a>
                                     </li>
                                     <li class="has-form">
-                                        <a href="#" class="button alert" id="registerBtn">注册</a>
+                                        <a href="#" class="button alert register" id="registerBtn">注册</a>
                                     </li>
                                 </form>
                             </ul>
                         <?php } else { ?>
-                            <ul class="right" id="loginDiv">
+                            <ul class="right menu" id="loginDiv">
                                 <li class="has-dropdown">
                                     <a href="#">设置</a>
                                     <ul class="dropdown">
-                                        <li><a href="#" id="accountSetup">账号配置</a></li>
+                                        <li><a name="login/showAccountSetupForm" href="#" id="accountSetup">账号配置</a></li>
                                     </ul>
                                 </li>
                                 <li class="divider"></li>
                                 <li class="has-form">
-                                    <a href="index.php/login/logout" id="logout" class="button alert">退出</a>
+                                    <a href="index.php/login/logout" id="logout" class="button alert logout">退出</a>
                                 </li>
                                 <li class="divider"></li>
                             </ul>
@@ -125,7 +125,7 @@
                 </aside>
                 <!-- Right login Section -->
                 <aside class="right-off-canvas-menu">
-                    <ul class="off-canvas-list" id="toprightmenu">
+                    <ul class="off-canvas-list menu" id="toprightmenu">
                         <?php if (empty($_SESSION['user'])) { ?>
                             <li class="login">
                                 <input type="text" name="username"
@@ -150,15 +150,15 @@
                             </li>
                             -->
                             <li class="login">
-                                <a href="#" class="button tiny" id="loginBtn">登录</a>
+                                <a href="#" class="button tiny login" id="loginBtn">登录</a>
                             </li>
                             <li class="login">
-                                <a href="#" class="button tiny alert" id="registerBtn">注册</a>
+                                <a href="#" class="button tiny alert register" id="registerBtn">注册</a>
                             </li>
                         <?php } else { ?>
                             <li><label>设置</label></li>
-                            <li><a href="#" id="accountSetup">账号配置</a></li>
-                            <li class="login"><a href="index.php/login/logout" id="logout" class="button tiny alert">退出</a>
+                            <li><a href="#" name="login/showAccountSetupForm" id="accountSetup">账号配置</a></li>
+                            <li class="login"><a href="index.php/login/logout" id="logout" class="button tiny alert logout">退出</a>
                             </li>
                         <?php } ?>
                     </ul>
@@ -197,7 +197,7 @@
                         }
                     });
                 });
-                $('#loginBtn').click(function() {
+                $('a.login').click(function() {
                     clearAllErrorClass();
                     var userDom = $('#username'),
                             pwdDom = $('#password'),
@@ -228,7 +228,7 @@
                     }
                     return false;
                 });
-                $('#registerBtn').click(function() {
+                $('a.register').click(function() {
                     clearAllErrorClass();
                     $.ajax({
                         type: "POST",
@@ -239,17 +239,6 @@
                         }
                     });
                     return false;
-                });
-                $('#accountSetup').click(function() {
-                    $.ajax({
-                        type: "POST",
-                        url: 'index.php/login/showAccountSetupForm',
-                        dataType: "html",
-                        success: function(html) {
-                            $('#mainContent').html(html);
-                        }
-                    });
-                    return true;
                 });
             });
             
