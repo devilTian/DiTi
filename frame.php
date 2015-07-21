@@ -183,9 +183,6 @@
             }
             $(document).foundation().ready(function() {
                 $('#mainContent').height($(document).height()-45);
-                $('a[href=#]').click(function() {
-                    $('.exit-off-canvas').trigger('click')
-                });
                 $('ul.menu>li a[name]').click(function() {
                     var link = $(this).attr('name');
                     $.ajax({
@@ -194,13 +191,14 @@
                         dataType: "html",
                         success: function(html) {
                             $('#mainContent').html(html);
+                            $('.exit-off-canvas').trigger('click');
                         }
                     });
                 });
                 $('a.login').click(function() {
                     clearAllErrorClass();
-                    var userDom = $('#username'),
-                            pwdDom = $('#password'),
+                    var userDom = $(this).parent().parent().find('[name=username]'),
+                            pwdDom = $(this).parent().parent().find('[name=password]'),
                             username = userDom.val().trim(),
                             password = pwdDom.val().trim();
                     if (username.length === 0) {
@@ -236,6 +234,7 @@
                         dataType: "html",
                         success: function(html) {
                             $('#mainContent').html(html);
+                            $('.exit-off-canvas').trigger('click');
                         }
                     });
                     return false;
