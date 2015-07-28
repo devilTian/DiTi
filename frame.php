@@ -45,6 +45,13 @@
                             <?php } ?>
                             <li><a href="#" name="notes">Note</a></li>
                             <li class="divider"></li>
+                            <li class="has-dropdown">
+                                <a href="#">Journey</a>
+                                <ul class="dropdown">
+                                    <li><a href="#" name="journey/hokkaido">北海道</a></li>
+                                </ul>
+                            </li>
+                            <li class="divider"></li>
                         </ul>
                         <?php if (empty($_SESSION['user'])) { ?>
                             <!-- Right login Section -->
@@ -121,6 +128,8 @@
                             <li><a href="#" name="sentence">五百句</a></li>
                         <?php } ?>
                         <li><a href="#" name="notes">Note</a></li>
+                        <li><label>Journey</label></li>
+                        <li><a href="#" name="journey/hokkaido">北海道</a></li>
                     </ul>
                 </aside>
                 <!-- Right login Section -->
