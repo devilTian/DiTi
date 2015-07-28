@@ -1,6 +1,6 @@
 <?php
 date_default_timezone_set('Asia/Chongqing');
-$valid = array('resume', 'healthy', 'notes', 'login', 'sentence', 'journey');
+$valid = array('resume', 'healthy', 'notes', 'login', 'sentence');
 
 $defController = 'healthy';
 $defFunction   = 'index';
