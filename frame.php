@@ -42,7 +42,15 @@
                                     </ul>
                                 </li>
                                 <li class="divider"></li>
-                            <?php } ?>
+                            <?php } ?>                            
+                            <li class="has-dropdown">
+                                <a href="#">Journey</a>
+                                <ul class="dropdown">
+                                    <li><a href="#" name="journey/hokkaido">北海道</a></li>
+                                    <li><a href="#" name="journey/taipei">台北</a></li>
+                                </ul>
+                            </li>
+                            <li class="divider"></li>
                             <li><a href="#" name="notes">Note</a></li>
                             <li class="divider"></li>
                         </ul>
@@ -120,6 +128,9 @@
                             <li><label>英语</label></li>
                             <li><a href="#" name="sentence">五百句</a></li>
                         <?php } ?>
+                        <li><label>Journey</label></li>
+                        <li><a href="#" name="journey/hokkaido">北海道</a></li>
+                        <li><a href="#" name="journey/taipei">台北</a></li>
                         <li><a href="#" name="notes">Note</a></li>
                     </ul>
                 </aside>
