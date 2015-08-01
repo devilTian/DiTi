@@ -203,8 +203,8 @@ $(document).foundation().ready(function() {
         clearAllErrorClass();
         var weight = $('#weight').val(),
             unit   = $('#weightUnit>option:selected').val();
-        if (!/^[1-9][0-9]{0,2}$/.test(weight)) {
-            addErrorClass($('#weight'), '范围应在0到1000之间!');
+        if (!/^[1-9][0-9]{0,2}(\.[0-9])?$/.test(weight)) {
+            addErrorClass($('#weight'), '范围[0.0-999.9]');
             return false;
         }
         
