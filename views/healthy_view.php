@@ -37,14 +37,10 @@
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row">
-                            <div class="large-6 medium-6 small-8 small-centered columns">
-                                <ul class="button-group">
-                                    <li>
-                                        <a href="#" class="button tiny radius"
-                                           id="submitWeightBtn">提交
-                                        </a>
-                                    </li>
-                                </ul>
+                            <div class="large-12 medium-12 small-12 columns">
+                                <a href="#" class="button tiny radius expand"
+                                   id="submitWeightBtn">提交
+                                </a>
                             </div>
                         </div>
                     </form>
@@ -100,10 +96,10 @@
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row dietOldDiv">
-                            <div class="large-3 medium-3 columns hide-for-small-only">
-                                <label class="right inline">食物名称</label>
+                            <div class="large-3 medium-3 small-3 columns">
+                                <label class="right inline">名称</label>
                             </div>
-                            <div class="large-3 medium-3 small-12 columns">
+                            <div class="large-3 medium-3 small-9 columns">
                                 <select id="foodOptions">
                                     <option selected="selected" value="">请选择</option>
                                     <?php foreach ($foodOpt as $v) { ?>
@@ -134,14 +130,10 @@
                             <div class="large-3 columns hide-for-small-only"></div>
                         </div>
                         <div class="row">
-                            <div class="large-6 medium-6 small-8 small-centered columns">
-                                <ul class="button-group">
-                                    <li>
-                                        <a href="#" class="button tiny radius"
-                                           id="submitDietBtn">提交
-                                        </a>
-                                    </li>
-                                </ul>
+                            <div class="large-12 medium-12 small-12 columns">
+                                <a href="#" class="button tiny radius expand"
+                                   id="submitDietBtn">提交
+                                </a>
                             </div>
                         </div>
                     </form>
@@ -172,14 +164,10 @@
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row">
-                            <div class="large-6 medium-6 small-8 small-centered columns">
-                                <ul class="button-group">
-                                    <li>
-                                        <a href="#" class="button tiny radius"
-                                           id="submitBurnBtn">提交
-                                        </a>
-                                    </li>
-                                </ul>
+                            <div class="large-12 medium-12 small-12 columns">
+                                <a href="#" class="button tiny radius expand"
+                                   id="submitBurnBtn">提交
+                                </a>
                             </div>
                         </div>
                     </form>                   
