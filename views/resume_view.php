@@ -40,7 +40,7 @@
             <li>技术博客: <a href="http://deviltian.github.io/DiTi" target="_blank">http://deviltian.github.io/DiTi</a></li>
             <li>GitHub: <a href="https://github.com/devilTian" target="_blank">https://github.com/devilTian</a></li>
             <li>期望职位: PHP高级研发工程师, 架构师, DBA</li>
-            <li>期望薪水: 税前月薪14 - 16k, 开发团队过千人的公司可例外</li>
+            <!--<li>期望薪水: 税前月薪14 - 16k, 开发团队过千人的公司可例外</li>-->
             <li>期望城市: 北京</li>
         </ul>
         <p>
