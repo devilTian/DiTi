@@ -1,8 +1,14 @@
 <?php
 date_default_timezone_set('Asia/Chongqing');
-$valid = array('resume', 'healthy', 'notes', 'login', 'sentence', 'journey');
+$dbsrc = &load_class('database');
+$menu = $dbsrc->getdbh()->query('SELECT name,link FROM navigation')
+        ->fetchAll(PDO::FETCH_ASSOC);
+$valid = array();
+foreach ($menu as $item) {
+    $valid[] = $item['link'];
+}
 
-$defController = 'healthy';
+$defController = 'health';
 $defFunction   = 'index';
 
 // validate request`s controller

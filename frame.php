@@ -33,7 +33,7 @@
                             <li><a href="#" name="resume">About Me</a></li>
                             <li class="divider"></li>
                             <?php if (!empty($_SESSION['user'])) { ?>
-                                <li><a href="#" name="healthy">健康</a></li>
+                                <li><a href="#" name="health">健康</a></li>
                                 <li class="divider"></li>
                                 <li class="has-dropdown">
                                     <a href="#">英语</a>
@@ -124,7 +124,7 @@
                         <li><label>DiTi</label></li>
                         <li><a href="#" name="resume">About Me</a></li>
                         <?php if (!empty($_SESSION['user'])) { ?>
-                            <li><a href="#" name="healthy">健康</a></li>
+                            <li><a href="#" name="health">健康</a></li>
                             <li><label>英语</label></li>
                             <li><a href="#" name="sentence">五百句</a></li>
                         <?php } ?>
