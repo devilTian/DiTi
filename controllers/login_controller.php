@@ -7,6 +7,10 @@ class Login_Controller extends Super_Controller {
         $this->session = &load_class('session');
     }
 
+    public function lallaa() {
+        echo 123;
+    }
+    
     public function index() {
         $user = trim($_POST['u']);
         $pwd = trim($_POST['p']);

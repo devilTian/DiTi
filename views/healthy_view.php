@@ -37,14 +37,10 @@
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row">
-                            <div class="large-6 medium-6 small-8 small-centered columns">
-                                <ul class="button-group">
-                                    <li>
-                                        <a href="#" class="button tiny radius"
-                                           id="submitWeightBtn">提交
-                                        </a>
-                                    </li>
-                                </ul>
+                            <div class="large-12 medium-12 small-12 columns">
+                                <a href="#" class="button tiny radius expand"
+                                   id="submitWeightBtn">提交
+                                </a>
                             </div>
                         </div>
                     </form>
@@ -100,10 +96,10 @@
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row dietOldDiv">
-                            <div class="large-3 medium-3 columns hide-for-small-only">
-                                <label class="right inline">食物名称</label>
+                            <div class="large-3 medium-3 small-3 columns">
+                                <label class="right inline">名称</label>
                             </div>
-                            <div class="large-3 medium-3 small-12 columns">
+                            <div class="large-3 medium-3 small-9 columns">
                                 <select id="foodOptions">
                                     <option selected="selected" value="">请选择</option>
                                     <?php foreach ($foodOpt as $v) { ?>
@@ -117,20 +113,27 @@
                             <div class="large-3 medium-3 small-3 columns">
                                 <label class="right inline">份数</label>
                             </div>
-                            <div class="large-3 medium-3 small-9 columns">
-                                <input type="text" name="copies" id="copies" value="1"/>
+                            <div class="large-3 medium-3 small-9 columns">                               
+                                <select id="copies">                                   
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>                                    
+                                </select>
                             </div>
                             <div class="large-3 columns hide-for-small-only"></div>
                         </div>
                         <div class="row">
-                            <div class="large-6 medium-6 small-8 small-centered columns">
-                                <ul class="button-group">
-                                    <li>
-                                        <a href="#" class="button tiny radius"
-                                           id="submitDietBtn">提交
-                                        </a>
-                                    </li>
-                                </ul>
+                            <div class="large-12 medium-12 small-12 columns">
+                                <a href="#" class="button tiny radius expand"
+                                   id="submitDietBtn">提交
+                                </a>
                             </div>
                         </div>
                     </form>
@@ -161,14 +164,10 @@
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
                         <div class="row">
-                            <div class="large-6 medium-6 small-8 small-centered columns">
-                                <ul class="button-group">
-                                    <li>
-                                        <a href="#" class="button tiny radius"
-                                           id="submitBurnBtn">提交
-                                        </a>
-                                    </li>
-                                </ul>
+                            <div class="large-12 medium-12 small-12 columns">
+                                <a href="#" class="button tiny radius expand"
+                                   id="submitBurnBtn">提交
+                                </a>
                             </div>
                         </div>
                     </form>                   
@@ -203,8 +202,8 @@ $(document).foundation().ready(function() {
         clearAllErrorClass();
         var weight = $('#weight').val(),
             unit   = $('#weightUnit>option:selected').val();
-        if (!/^[1-9][0-9]{0,2}$/.test(weight)) {
-            addErrorClass($('#weight'), '范围应在0到1000之间!');
+        if (!/^[1-9][0-9]{0,2}(\.[0-9])?$/.test(weight)) {
+            addErrorClass($('#weight'), '范围[0.0-999.9]');
             return false;
         }
         
@@ -235,6 +234,7 @@ $(document).foundation().ready(function() {
             
         if ((!/^\d+$/.test(copies)) && (copies < 1)) {
             addErrorClass($('#copies'), '必填且为正整数');
+            return false;
         }        
         if (type === 'new') {
             var cal      = $('#calorie').val(),
@@ -242,17 +242,21 @@ $(document).foundation().ready(function() {
                 price    = $('#price').val();
             if ((!/^\d+$/.test(cal)) || (cal < 1)) {
                 addErrorClass($('#calorie'), '必填且为正整数');
+                return false;
             }
             if (foodName.length > 15 || foodName.length < 1) {
                 addErrorClass($('#foodName'), '必填且不超过15个字');
+                return false;
             }
             if (!/^[1-9][0-9]{0,9}(\.[0-9]{1,2})?$/.test(price)) {
                 addErrorClass($('#price'), '格式错误');
+                return false;
             }
         } else if (type === 'old') {
             var foodId = $('#foodOptions>option:selected').val();
             if (!/^\d+$/.test(foodId) || foodId === '') {
                 addErrorClass($('#foodOptions'), '请选择食物名称');
+                return false;
             }
         } else {
             return false;
@@ -296,9 +300,11 @@ $(document).foundation().ready(function() {
             type    = typeDom.val();
         if ((!/^\d+$/.test(cal)) || (cal <= 0 ) || (cal > 10000)) {
             addErrorClass(calDom, '范围在1到10000之间');
+            return false;
         }
         if (type.length > 10 || type.length < 1) {
             addErrorClass(typeDom, '必填且不超过10个字');
+            return false;
         }
         $.ajax({
             type: "POST",
