@@ -59,7 +59,7 @@ function redirect() {
 	if ($apppath !== '/' && $apppath !== '\\') {
 		$apppath .= '/';
 	}
-	header("location: http://{$_SERVER['SERVER_NAME']}{$apppath}frame.php");
+	header("location: http://{$_SERVER['SERVER_NAME']}{$apppath}frame.html");
 	die;
 }
 

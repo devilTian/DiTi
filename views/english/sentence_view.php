@@ -42,7 +42,7 @@
             <ul class="small-block-grid-2 medium-block-grid-4 large-block-grid-4">
                 <?php
                 foreach ($data['books'] as $book) {
-                    echo "<li><a data-reveal-id='myModal' class='bookImg' href='index.php/sentence/showSpecBookDetail" .
+                    echo "<li><a data-reveal-id='myModal' class='bookImg' href='index.php/english/sentence/showSpecBookDetail" .
                     "?id={$book['id']}'>" .
                     "<img class='th' title='{$book['name']}' " .
                     "alt='{$book['name']}' data-orign=''".
