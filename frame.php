@@ -8,7 +8,7 @@
         <title>DiTi</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/foundation.css">
-
+        <link rel="stylesheet" href="css/foundation-icons.css">
         <!-- This is how you would link your custom stylesheet-->
         <link rel="stylesheet" href="css/app.css"/>
 
