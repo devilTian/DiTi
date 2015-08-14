@@ -14,249 +14,267 @@
 
         <script src="js/vendor/modernizr.js"></script>
         <script src="js/angular.min.js"></script>
+        <script src="js/mm-foundation-tpls-0.6.0.min.js"></script>        
     </head>
     <body ng-app="myApp">
-        <div class="off-canvas-wrap" data-offcanvas>            
-            <div class="inner-wrap">
-                <nav class="top-bar hide-for-small" data-topbar role="navigation">
-                    <ul class="title-area">
-                        <li class="name">
-                            <h1><a href="#">DiTi</a></h1>
-                        </li>
-                        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-                        <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
-                    </ul>
-                    <section class="top-bar-section">    
-                        <!-- Left Nav Section -->
-                        <ul class="left menu" id="topmenu">
-                            <li class="divider"></li>
-                            <li><a href="#" name="resume">About Me</a></li>
-                            <li class="divider"></li>
-                            <?php if (!empty($_SESSION['user'])) { ?>
-                                <li><a href="#" name="health">健康</a></li>
-                                <li class="divider"></li>
-                                <li class="has-dropdown">
-                                    <a href="#">英语</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#" name="sentence">五百句</a></li>
-                                    </ul>
-                                </li>
-                                <li class="divider"></li>
-                            <?php } ?>                            
-                            <li class="has-dropdown">
-                                <a href="#">Journey</a>
-                                <ul class="dropdown">
-                                    <li><a href="#" name="journey/hokkaido">北海道</a></li>
-                                    <li><a href="#" name="journey/taipei">台北</a></li>
-                                </ul>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="#" name="notes">Note</a></li>
-                            <li class="divider"></li>
-                        </ul>
-                        <?php if (empty($_SESSION['user'])) { ?>
-                            <!-- Right login Section -->
-                            <ul class="right menu" id="loginDiv">
-                                <form ng-controller="loginController">
-                                    <li class="has-form" ng-repeat="param in params">
-                                        <div class="row collapse">
-                                            <div class="large-12 small-12 columns">
-                                                <input type="{{param.type}}"
-                                                       name="{{param.name}}"
-                                                       id="{{param.name}}"
-                                                       placeholder="{{param.cnName}}">
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--
-                                    <li class="has-form">
-                                            <ul class="inline-list">
-                                                    <li>
-                                                            <label class="white" for="remember">
-                                                            <input type="checkbox" id="remember"/>
-                                                            记住我</label>
-                                                    </li>
-                                                    <li>
-                                                            <a href="#">忘记密码</a>
-                                                    </li>
-                                            </ul>
-                                    </li>
-                                    -->
-                                    <li class="has-form">
-                                        <a href="#" class="button login" id="loginBtn">登录</a>
-                                    </li>
-                                    <li class="has-form">
-                                        <a href="#" class="button alert register" id="registerBtn">注册</a>
-                                    </li>
-                                </form>
-                            </ul>
-                        <?php } else { ?>
-                            <ul class="right menu" id="loginDiv">
-                                <li class="has-dropdown">
-                                    <a href="#">设置</a>
-                                    <ul class="dropdown">
-                                        <li><a name="login/showAccountSetupForm" href="#" id="accountSetup">账号配置</a></li>
-                                    </ul>
-                                </li>
-                                <li class="divider"></li>
-                                <li class="has-form">
-                                    <a href="index.php/login/logout" id="logout" class="button alert logout">退出</a>
-                                </li>
-                                <li class="divider"></li>
-                            </ul>
-                        <?php } ?>
-                    </section>
-                </nav>
-                <nav class="tab-bar show-for-small" data-topbar role="navigation">
-                    <section class="left-small">
-                        <a class="left-off-canvas-toggle menu-icon"><span></span></a>
-                    </section>
-                    <section class="middle tab-bar-section">
-                        <h1 class="title">DiTi</h1>
-                    </section>
-                    <section class="right-small">
-                        <a class="right-off-canvas-toggle menu-icon"><span></span></a>
-                    </section>
-                </nav>
-                <!-- Left Nav Section -->
-                <aside class="left-off-canvas-menu">    
-                    <ul class="off-canvas-list menu" id="topleftmenu">
-                        <li><label>DiTi</label></li>
-                        <li><a href="#" name="resume">About Me</a></li>
-                        <?php if (!empty($_SESSION['user'])) { ?>
-                            <li><a href="#" name="health">健康</a></li>
-                            <li><label>英语</label></li>
-                            <li><a href="#" name="sentence">五百句</a></li>
-                        <?php } ?>
-                        <li><label>Journey</label></li>
-                        <li><a href="#" name="journey/hokkaido">北海道</a></li>
-                        <li><a href="#" name="journey/taipei">台北</a></li>
-                        <li><a href="#" name="notes">Note</a></li>
-                    </ul>
-                </aside>
-                <!-- Right login Section -->
-                <aside class="right-off-canvas-menu">
-                    <ul class="off-canvas-list menu" id="toprightmenu">
-                        <?php if (empty($_SESSION['user'])) { ?>
-                            <li class="login">
-                                <input type="text" name="username"
-                                       placeholder="请输入用户名" id="username"/>
-                            </li>
-                            <li class="login">
-                                <input type="password" name="password"
-                                       placeholder="请输入密码" id="password"/>
-                            </li>
-                            <!--
-                            <li class="has-form">
-                                            <ul class="inline-list">
-                                                            <li>
-                                                                            <label class="white" for="remember">
-                                                                            <input type="checkbox" id="remember"/>
-                                                                            记住我</label>
-                                                            </li>
-                                                            <li>
-                                                                            <a href="#">忘记密码</a>
-                                                            </li>
-                                            </ul>
-                            </li>
-                            -->
-                            <li class="login">
-                                <a href="#" class="button tiny login" id="loginBtn">登录</a>
-                            </li>
-                            <li class="login">
-                                <a href="#" class="button tiny alert register" id="registerBtn">注册</a>
-                            </li>
-                        <?php } else { ?>
-                            <li><label>设置</label></li>
-                            <li><a href="#" name="login/showAccountSetupForm" id="accountSetup">账号配置</a></li>
-                            <li class="login"><a href="index.php/login/logout" id="logout" class="button tiny alert logout">退出</a>
-                            </li>
-                        <?php } ?>
-                    </ul>
-                </aside>
-                <section role="main" class="main-section" id="mainContent">
-                    welcome~
-                </section>
-                <a class="exit-off-canvas"></a>
-
+        <div class="off-canvas-wrap">            
+            <div class="inner-wrap" ng-controller="menuController" >
+				<top-bar class="top-bar hide-for-small" data-topbar role="navigation">
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="#">DiTi</a></h1>
+						</li>
+						<!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+						<li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
+					</ul>
+					<top-bar-section class="top-bar-section">    
+						<!-- Left Nav Section -->
+						<ul class="left menu" id="topmenu">
+							<li parent-dropdown="{{item.children.length}}" has-dropdown ng-repeat="item in topMenuData">
+								<a href="#" ng-bind="item.name" ng-click="item.children.length > 0 ? false : request(item.link)"></a>
+								<ul top-bar-dropdown ng-if="item.children.length > 0">
+									<li ng-repeat="child in item.children">
+										<a href="#" ng-bind="child.name" ng-click="request(item.link+'/'+child.link)"></a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<!-- Right login Section -->
+						<ul ng-if="!isLogin" class="right menu" id="loginDiv">
+							<li class="has-form">
+								<div class="row collapse">
+									<div class="large-12 small-12 columns">
+								<input type="text" name="username" ng-model='loginform.user'
+									   placeholder="请输入用户名" id="username"/>
+								</div>
+							</li>
+							<li class="has-form">
+								<div class="row collapse">
+									<div class="large-12 small-12 columns">
+								<input type="password" name="password" ng-model='loginform.pwd'
+									   placeholder="请输入密码" id="password"/>
+								</div>
+							</li>
+							<!--
+							<li class="has-form">
+									<ul class="inline-list">
+											<li>
+													<label class="white" for="remember">
+													<input type="checkbox" id="remember"/>
+													记住我</label>
+											</li>
+											<li>
+													<a href="#">忘记密码</a>
+											</li>
+									</ul>
+							</li>
+							-->
+							<li class="has-form">
+								<a href="#" class="button"
+									ng-click='checkUserAndPwd()'
+									id="loginBtn">登录</a>
+							</li>
+							<li class="has-form">
+								<a href="#" class="button alert"
+									ng-click='register()'
+									id="registerBtn">注册</a>
+							</li>
+						</ul>
+						<ul ng-if="isLogin" class="right menu" id="loginDiv">
+							<li has-dropdown>
+								<a href="#">设置</a>
+								<ul top-bar-dropdown>
+									<li><a ng-click="request('login/showAccountSetupForm')"
+										href="#" id="accountSetup">账号配置</a></li>
+								</ul>
+							</li>
+							<li class="divider"></li>
+							<li class="has-form">
+								<a ng-href="index.php/login/logout"
+									id="logout" class="button alert">退出</a>
+							</li>
+							<li class="divider"></li>
+						</ul>
+					</top-bar-section>
+				</top-bar>
+				
+				<!-- Left Nav Section -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon"><span></span></a>
+					</section>
+					<section class="middle tab-bar-section">
+						<h1 class="title">DiTi</h1>
+					</section>
+					<section class="right-small">
+						<a class="right-off-canvas-toggle menu-icon"><span></span></a>
+					</section>
+				</nav>
+				<aside class="left-off-canvas-menu">    
+					<ul class="off-canvas-list" id="topleftmenu">
+						<li><label>DiTi</label></li>
+						<li ng-repeat="item in sideMenuData">
+							<label ng-if="item.hasChild" ng-bind="item.name"></label>
+							<a ng-if="!item.hasChild"
+								href="#" ng-bind="item.name"
+								ng-click="request(item.link)"></a>
+						</li>
+					</ul>
+				</aside>
+				<!-- Right login Section -->
+				<aside class="right-off-canvas-menu">
+					<ul ng-if="!isLogin" id="rightSideDiv">
+						<li class="login">
+							<input type="text" name="username" ng-model='loginform.user'
+							   placeholder="请输入用户名" id="username"/>
+						</li>
+						<li class="login">
+							<input type="password" name="password" ng-model='loginform.pwd'
+							   placeholder="请输入密码" id="password"/>
+						</li>
+						<li class="login has-form">
+							<a href="#" class="button"
+								ng-click='checkUserAndPwd()'
+								id="loginBtn">登录</a>
+						</li>
+						<li class="has-form login">
+							<a href="#" class="button alert"
+								ng-click='register()'
+								id="registerBtn">注册</a>
+						</li>
+					</ul>
+					<ul ng-if="isLogin" id="rightSideDiv">
+						<li><label>设置</label></li>
+						<li><a ng-click="request('login/showAccountSetupForm')"
+							href="#" id="accountSetup">账号配置</a></li>
+						<li>
+							<a ng-href="index.php/login/logout"
+								id="logout" class="button alert">退出</a>
+						</li>
+					</ul>
+					<ul id="offCanvasFlag" class="off-canvas-list"></ul>
+				</aside>
+				<section role="main" class="main-section" id="mainContent">
+					<div class="columns" style="height: 500px">
+						<p>Welcome~</p>
+					</div>
+				</section>    
+				<a class="exit-off-canvas"></a>
             </div>
         </div>
         <script src="js/vendor/jquery.js"></script>
         <script src="js/foundation.min.js"></script>
         <script>
-            function clearAllErrorClass() {
-                $('input.error').removeClass('error');
-                $('small.error').remove();
-            }
-            function addErrorClass(dom, errMsg) {
-                dom.addClass('error');
-                dom.after('<small class="error">' + errMsg + '.</small>');
-            }
-            $(document).foundation().ready(function() {
-                $('#mainContent').height($(document).height()-45);
-                $('ul.menu>li a[name]').click(function() {
-                    var link = $(this).attr('name');
-                    $.ajax({
-                        type: "POST",
-                        url: 'index.php/' + link,
-                        dataType: "html",
-                        success: function(html) {
-                            $('#mainContent').html(html);
-                            $('.exit-off-canvas').trigger('click');
+            var myAppModule = angular.module('myApp', ['mm.foundation']);
+            myAppModule.directive('parentDropdown', function() {
+                return {
+                    link : function(scope, element, attrs) {
+                        if (attrs.parentDropdown === '0') {
+                            $(element).removeAttr('has-dropdown').removeClass('has-dropdown');
                         }
+                    }
+                };
+            });
+            myAppModule.controller('menuController', function($scope, $http) {
+                $scope.isLogin      = false;
+                $scope.topMenuData  = [];
+                $scope.sideMenuData = [];
+                $scope.loginform    = {
+                    "user" : '',
+                    "pwd"  : ''
+                };
+                $scope.request = function(link) {
+                    $http({
+                        method  : 'POST',
+                        url     : 'index.php/' + link,
+                        headers : {"content-type" : 'application/json'}
+                    }).success(function(html) {
+                        $('#mainContent').html(html);
+						$('#offCanvasFlag').trigger('click');
                     });
-                });
-                $('a.login').click(function() {
-                    clearAllErrorClass();
-                    var userDom = $(this).parent().parent().find('[name=username]'),
-                            pwdDom = $(this).parent().parent().find('[name=password]'),
-                            username = userDom.val().trim(),
-                            password = pwdDom.val().trim();
-                    if (username.length === 0) {
-                        addErrorClass(userDom, '用户名不能为空!');
-                    } else if (password.length === 0) {
-                        addErrorClass(pwdDom, '密码不能为空!');
+                };
+                $scope.clearAllErrorClass = function() {
+                    $('input.error').removeClass('error');
+                    $('small.error').remove();
+                };
+                $scope.addErrorClass = function(dom, errMsg) {
+                    dom.addClass('error');
+                    dom.after('<small class="error">' + errMsg + '.</small>');
+                };
+                $scope.checkUserAndPwd = function() {
+                    $scope.clearAllErrorClass();
+                    if ($scope.loginform.user === '') {
+                        //$scope.addErrorClass(userDom, '用户名不能为空!');
+                    } else if ($scope.loginform.pwd === '') {  // [TODO] encrypt
+                        //$scope.addErrorClass(pwdDom, '密码不能为空!');
                     } else {
-                        $.ajax({
-                            type: "POST",
-                            url: 'index.php/login',
-                            dataType: "JSON",
-                            data: {
-                                u: username,
-                                p: password  // [TODO] encrypt
-                            },
-                            success: function(ret) {
-                                if ('success' === ret.msg) {
-                                    window.location.reload();
-                                } else {
-                                    userDom.focus();
-                                    addErrorClass(userDom, ret.msg);
-                                }
+                        $http({
+                            method   : 'POST',
+                            url      : 'index.php/login',
+                            headers : {"content-type" : 'application/json'},
+                            data     : $scope.loginform,
+                        }).success(function(ret) {
+                            if ('success' === ret.msg) {
+                                window.location.reload();
+                            } else {
+                                userDom.focus();
+                                addErrorClass(userDom, ret.msg);
                             }
                         });
                     }
-                    return false;
-                });
-                $('a.register').click(function() {
-                    clearAllErrorClass();
-                    $.ajax({
-                        type: "POST",
-                        url: 'index.php/login/showRegisterForm',
-                        dataType: "html",
-                        success: function(html) {
-                            $('#mainContent').html(html);
-                            $('.exit-off-canvas').trigger('click');
+                };
+				$scope.register = function() {
+                    $scope.clearAllErrorClass();
+					$http({
+						method : 'POST',
+						url    : 'index.php/login/showRegisterForm'
+					}).success(function(html) {
+						$('#mainContent').html(html);
+						$('#offCanvasFlag').trigger('click');
+					});
+				};
+                // Get mene data.
+                $http({
+                    method  : 'POST',
+                    url     : 'index.php/layout/getNavigationData',
+                    headers : {"content-type" : 'application/json'}
+                }).success(function(data) {
+                    var tempTopMenu = [], tempSideMenu = [], id, pid, clone;
+                    data.data.forEach(function(v) {
+                        id    = parseInt(v.id);
+                        pid   = parseInt(v.pid);
+					    clone = jQuery.extend({}, v);
+                        if (pid === -1) {  // level 1
+                            if(v.link === 'login') {
+                                $scope.isLogin = true;
+                            } else {
+								tempSideMenu[id] = clone;
+								tempTopMenu[id]  = v;
+								tempTopMenu[id]['children'] = [];
+                            }                            
+                        } else {  // level 2
+							clone.link = tempSideMenu[pid]['link'] + '/' +
+								clone.link;
+							tempSideMenu[pid]['hasChild'] = true;
+                            tempSideMenu.splice(pid+1, 0, clone);
+                            tempTopMenu[pid]['children'].push(v);
                         }
+                    }); console.info(tempSideMenu);
+                   tempTopMenu.forEach(function(v) {
+                        $scope.topMenuData.push(v);
                     });
-                    return false;
+                    tempSideMenu.forEach(function(v) {
+                        $scope.sideMenuData.push(v);
+                    });
                 });
+				$scope.$watch(function() {
+					return $('#rightSideDiv li').length;
+				}, function() {
+					$('#rightSideDiv').addClass('off-canvas-list');
+				});
             });
-            
-            var myAppModule = angular.module('myApp', []);
-            myAppModule.controller('loginController', function($scope, $http) {
-                $scope.params = [{name: 'username', cnName: '用户名', type: 'text'},
-                                 {name: 'password', cnName: '密码', type:'password'}];
-                $http.get('index.php/login/lallaa');
+            $(document).ready(function() {
+                $(document).foundation();
             });
         </script>
     </body>     

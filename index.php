@@ -1,46 +1,39 @@
 <?php
 date_default_timezone_set('Asia/Chongqing');
-$dbsrc = &load_class('database');
-$menu = $dbsrc->getdbh()->query('SELECT name,link FROM navigation')
-        ->fetchAll(PDO::FETCH_ASSOC);
-$valid = array();
-foreach ($menu as $item) {
-    $valid[] = $item['link'];
-}
 
-$defController = 'health';
+// Set default controller and function.
+$defController = 'health';  // [TODO]
 $defFunction   = 'index';
 
-// validate request`s controller
-function redirectHomePage() {
-    $path = dirname($_SERVER['SCRIPT_NAME']);
-    if ($path !== '\\' && $path !== '/') {
-        $path .= '/';
+// Analyse request.
+if (isset($_SERVER['PATH_INFO'])) {  // index.php/abc/m?x=1  => /abc/m
+    $segment = explode('/', trim($_SERVER['PATH_INFO'], '/'));
+    if ($segment[0] === '') {        
+        redirect();
+    } else {
+		$filePath = 'controllers';
+		$i        = 0;
+		while (isset($segment[$i]) && is_dir("$filePath/{$segment[$i]}")) {
+			$filePath .= "/{$segment[$i]}";
+			$i++; 
+		}
+		if (!isset($segment[$i])) {
+			redirect();
+		}
+        $controller = $segment[$i];
+        $function   = isset($segment[$i+1]) && '' !== trim($segment[$i+1]) ?
+            $segment[$i+1] : $defFunction;
     }
-    header("location: http://{$_SERVER['SERVER_NAME']}{$path}frame.php");
-    die;
-}
-
-
-if (isset($_SERVER['PATH_INFO'])) {
-	$segment = explode('/', trim($_SERVER['PATH_INFO'], '/'));
-
-	if (array_search($segment[0], $valid) !== false) {
-		$controller = $segment[0];
-	} else {
-		redirectHomePage();
-	}
-    $function = isset($segment[1]) && '' !== trim($segment[1]) ?
-		$segment[1] : $defFunction;
 } else {
-	redirectHomePage();
+	redirect();
 }
-$function = strtolower($function);
 
-// load controllers
+// Modify word case about controller and function..
 $controller = strtolower("{$controller}_controller");
-$c_file = "controllers/$controller.php";
+$function   = strtolower($function);
+$c_file     = "$filePath/$controller.php";
 
+// Instantiate controller and then run method.
 if (file_exists($c_file)) {
     try {
         require_once('controllers/super_controller.php');
@@ -59,6 +52,15 @@ if (file_exists($c_file)) {
     } 
 } else {
    throw new Exception('对应的控制器文件不存在!'); 
+}
+
+function redirect() {
+	$apppath = dirname($_SERVER['SCRIPT_NAME']);
+	if ($apppath !== '/' && $apppath !== '\\') {
+		$apppath .= '/';
+	}
+	header("location: http://{$_SERVER['SERVER_NAME']}{$apppath}frame.php");
+	die;
 }
 
 function &get_instance() {

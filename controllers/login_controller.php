@@ -6,14 +6,12 @@ class Login_Controller extends Super_Controller {
         parent::__construct();                
         $this->session = &load_class('session');
     }
-
-    public function lallaa() {
-        echo 123;
-    }
     
     public function index() {
-        $user = trim($_POST['u']);
-        $pwd = trim($_POST['p']);
+        $postdata = file_get_contents("php://input");
+        $request  = json_decode($postdata, true);
+        $user = trim($request['user']);
+        $pwd = trim($request['pwd']);
         $this->load->model('user', 'm');
         if (strlen($user) === 0) {
             $msg = '用户名不能为空!';
@@ -56,11 +54,7 @@ class Login_Controller extends Super_Controller {
 
     public function logout() {
         $this->session->destroy();
-        $apppath = dirname($_SERVER['SCRIPT_NAME']);
-        if ($apppath !== '/' && $apppath !== '\\') {
-            $apppath .= '/';
-        }
-        header("location: http://{$_SERVER['SERVER_NAME']}{$apppath}frame.php");
+		redirect();
     }
     
     public function showRegisterForm() {
