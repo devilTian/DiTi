@@ -42,6 +42,7 @@ function echoRet($data, $status = true) {
 // Exception Handler
 function exception_handler($e) {
 	echoRet($e->getMessage(), false);
+	die;
 }
 set_exception_handler('exception_handler');
 
