@@ -24,8 +24,10 @@ class Login_Controller extends Super_Controller {
             $this->session->set('id',   $id);
             $this->session->set('nickname', $this->m->getNickName($id));
             $msg = 'success';
+			$this->echoRet('');
+			return true;
         }
-        echo json_encode(array('msg' => $msg));
+		$this->echoRet($msg, false);
     }
     
     public function checkUserName() {

@@ -33,6 +33,18 @@ $controller = strtolower("{$controller}_controller");
 $function   = strtolower($function);
 $c_file     = "$filePath/$controller.php";
 
+// stdout
+function echoRet($data, $status = true) {
+	$result = array('status' => $status, 'data' => $data);            
+	echo json_encode($result);
+}
+
+// Exception Handler
+function exception_handler($e) {
+	echoRet($e->getMessage(), false);
+}
+set_exception_handler('exception_handler');
+
 // Instantiate controller and then run method.
 if (file_exists($c_file)) {
     try {

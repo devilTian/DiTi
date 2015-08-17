@@ -164,6 +164,14 @@
         <script src="js/vendor/jquery.js"></script>
         <script src="js/foundation.min.js"></script>
         <script>
+            var clearAllErrorClass = function() {
+                    $('input.error').removeClass('error');
+                    $('small.error').remove();
+                };
+            var addErrorClass = function(dom, errMsg) {
+                    dom.addClass('error');
+                    dom.after('<small class="error">' + errMsg + '.</small>');
+                };
             var myAppModule = angular.module('myApp', ['mm.foundation']);
             myAppModule.directive('parentDropdown', function() {
                 return {
@@ -174,7 +182,28 @@
                     }
                 };
             });
-            myAppModule.controller('menuController', function($scope, $http) {
+			myAppModule.factory('uiHttp', ['$http', function($http) {
+				return function(url, method, data, successFunc, errorFunc) {
+
+					if (!successFunc) {
+						successFunc = function() {};
+					}
+					if (!errorFunc) {
+						errorFunc = function(ret) {
+							alert(ret.data);
+						};
+					}
+                    $http({
+                        method  : method ? method : 'POST',
+                        url     : 'index.php/' + url,
+                        headers : {"content-type" : 'application/json'},
+						data    : data
+                    }).success(function(ret) {
+						ret.status ? successFunc(ret) : errorFunc(ret);
+                    });
+				};
+			}]);
+            myAppModule.controller('menuController', function($scope, uiHttp) {
                 $scope.isLogin      = false;
                 $scope.topMenuData  = [];
                 $scope.sideMenuData = [];
@@ -183,14 +212,10 @@
                     "pwd"  : ''
                 };
                 $scope.request = function(link) {
-                    $http({
-                        method  : 'POST',
-                        url     : 'index.php/' + link,
-                        headers : {"content-type" : 'application/json'}
-                    }).success(function(html) {
-                        $('#mainContent').html(html);
+					uiHttp(link, false, {}, function(ret) {
+                        $('#mainContent').html(ret.data);
 						$('#offCanvasFlag').trigger('click');
-                    });
+					});
                 };
                 $scope.clearAllErrorClass = function() {
                     $('input.error').removeClass('error');
@@ -201,45 +226,31 @@
                     dom.after('<small class="error">' + errMsg + '.</small>');
                 };
                 $scope.checkUserAndPwd = function() {
+					var userDom = $('input[name=username]'),
+						pwdDom  = $('input[name=password]');
                     $scope.clearAllErrorClass();
                     if ($scope.loginform.user === '') {
-                        //$scope.addErrorClass(userDom, '用户名不能为空!');
+                        $scope.addErrorClass(userDom, '用户名不能为空!');
                     } else if ($scope.loginform.pwd === '') {  // [TODO] encrypt
-                        //$scope.addErrorClass(pwdDom, '密码不能为空!');
+                        $scope.addErrorClass(pwdDom, '密码不能为空!');
                     } else {
-                        $http({
-                            method   : 'POST',
-                            url      : 'index.php/login',
-                            headers : {"content-type" : 'application/json'},
-                            data     : $scope.loginform,
-                        }).success(function(ret) {
-                            if ('success' === ret.msg) {
-                                window.location.reload();
-                            } else {
-                                userDom.focus();
-                                addErrorClass(userDom, ret.msg);
-                            }
-                        });
+						uiHttp('login', false, $scope.loginform, function(ret) {
+							window.location.reload();
+						}, function(ret) {
+							$scope.addErrorClass(userDom, ret.data);
+						});
                     }
                 };
 				$scope.register = function() {
                     $scope.clearAllErrorClass();
-					$http({
-						method : 'POST',
-						url    : 'index.php/login/showRegisterForm'
-					}).success(function(html) {
-						$('#mainContent').html(html);
-						$('#offCanvasFlag').trigger('click');
+					uiHttp('login/showRegisterForm', 'POST', {}, function(ret) {
+						$('#mainContent').html(ret.data);
 					});
 				};
                 // Get mene data.
-                $http({
-                    method  : 'POST',
-                    url     : 'index.php/layout/getNavigationData',
-                    headers : {"content-type" : 'application/json'}
-                }).success(function(data) {
+				uiHttp('layout/getNavigationData', 'POST', {}, function(ret) {
                     var tempTopMenu = [], tempSideMenu = [], id, pid, clone;
-                    data.data.forEach(function(v) {
+                    ret.data.forEach(function(v) {
                         id    = parseInt(v.id);
                         pid   = parseInt(v.pid);
 					    clone = jQuery.extend({}, v);
@@ -258,7 +269,7 @@
                             tempSideMenu.splice(pid+1, 0, clone);
                             tempTopMenu[pid]['children'].push(v);
                         }
-                    }); console.info(tempSideMenu);
+                    });
                    tempTopMenu.forEach(function(v) {
                         $scope.topMenuData.push(v);
                     });

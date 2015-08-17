@@ -21,7 +21,8 @@ class Loader {
         }
     }
     
-    public function view($fileName, $alias = null, $data = array()) {
+    public function view($fileName, $alias = null, $data = array(),
+		$isReturn = false) {
         $tmp = explode(DIRECTORY_SEPARATOR, $fileName);
         if (count($tmp) !== 1) {
             $fileName = array_pop($tmp);
@@ -37,7 +38,14 @@ class Loader {
         }
         if (file_exists($v_file)) {
             try {
-                include_once($v_file);
+				ob_start();
+				include($v_file);
+				$html = ob_get_clean();
+				if ($isReturn) {
+					return $html;
+				} else {
+					echoRet($html);
+				}
             } catch (Exception $e) {
                 throw new Exception('加载视图层失败!');
             } 

@@ -15,7 +15,6 @@ class Super_Controller {
     }
     
     public function echoRet($data, $status = true) {
-        $result = array('status' => $status, 'data' => $data);            
-        echo json_encode($result);
-    }
+		echoRet($data, $status);
+	}
 }

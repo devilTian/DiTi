@@ -40,19 +40,10 @@ class Healthy_Controller extends Super_Controller {
         $data = $this->m->getStatistic();
         $data['height'] = $this->getHeight();
         $data['bmi']    = $this->getBmi($data['height'], $data['weight']['val']);
-        $weightUnitOpt = $this->m->weightUnitOpt;
-        $maintenance   = $this->m->maintenance;
-        $foodOpt       = $this->m->getFoodOpt();
-        require('views/healthy_view.php'); 
-    }
-    
-    function showStatistics() {
-        $this->load->model('healthy', 'm');
-        $data = $this->m->getStatistic();
-        $data['height'] = $this->getHeight();
-        $data['bmi']    = $this->getBmi($data['height'], $data['weight']['val']);
-        $weightUnitOpt = $this->m->weightUnitOpt;
-        require('views/healthy_statistics_view.php'); 
+        $data['weightUnitOpt'] = $this->m->weightUnitOpt;
+		$data['html']   = $this->load->view('healthy_statistics', NULL, $data, true);
+        $data['foodOpt'] = $this->m->getFoodOpt();
+		$this->load->view('healthy', NULL, $data);
     }
     
     // recode body weight daily

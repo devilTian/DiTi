@@ -2,7 +2,7 @@
     <a href="#" class="button tiny radius" id="jumpToWeightBtn">记录今天的体重</a>
 <?php } else { ?>
     <p>
-        今天的体重是<span class="label"><?php echo round($data['weight']['val'],1) . $weightUnitOpt[$data['weight']['unit']]?></span>
+        今天的体重是<span class="label"><?php echo round($data['weight']['val'],1) . $data['weightUnitOpt'][$data['weight']['unit']]?></span>
             <?php if ($data['height'] === false ) {?>
                 .
             <?php } else { ?>

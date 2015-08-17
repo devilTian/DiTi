@@ -4,7 +4,7 @@
             <dd class="accordion-navigation">
                 <a href="#statistic">总结</a>
                 <div id="statistic" class="content active">                    
-                    <?php require('healthy_statistics_view.php');?>                   
+                    <?php echo $data['html'];?>                   
                 </div>
             </dd>            
             <dd class="accordion-navigation">
@@ -19,7 +19,7 @@
                             </div>
                             <div class="large-3 medium-3 small-9 columns">
                                 <input type="text" name="weight" id="weight"
-                                       placeholder="<?php if($data['weight'] !== false) echo $data['weight']['val'] . $weightUnitOpt[$data['weight']['unit']];?>"/>
+                                       placeholder="<?php if($data['weight'] !== false) echo $data['weight']['val'] . $data['weightUnitOpt'][$data['weight']['unit']];?>"/>
                             </div>
                             <div class="large-6 columns hide-for-small-only"></div>
                         </div>
@@ -29,7 +29,7 @@
                             </div>
                             <div class="large-3 medium-3 small-9 columns">
                                 <select id="weightUnit">
-                                    <?php foreach ($weightUnitOpt as $k => $v) { ?>
+                                    <?php foreach ($data['weightUnitOpt'] as $k => $v) { ?>
                                     <option value="<?php echo $k ?>"><?php echo $v ?></option>
                                     <?php } ?>
                                 </select>
@@ -102,7 +102,7 @@
                             <div class="large-3 medium-3 small-9 columns">
                                 <select id="foodOptions">
                                     <option selected="selected" value="">请选择</option>
-                                    <?php foreach ($foodOpt as $v) { ?>
+                                    <?php foreach ($data['foodOpt'] as $v) { ?>
                                     <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
                                     <?php } ?>
                                 </select>

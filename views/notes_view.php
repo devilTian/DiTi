@@ -76,7 +76,7 @@ $(document).foundation().ready(function() {
             data: data,
             dataType: "JSON",
             success: function(ret) {
-                $('a[name=notes]').trigger('click');
+                $('a[name=notes]').trigger('click'); //TODO 
                 kDom.val('');
             }
         });
