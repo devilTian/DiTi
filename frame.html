@@ -13,7 +13,8 @@
 
         <script src="js/vendor/modernizr.js"></script>
         <script src="js/angular.min.js"></script>
-        <script src="js/mm-foundation-tpls-0.6.0.min.js"></script>        
+        <script src="js/mm-foundation-tpls-0.6.0.min.js"></script>
+        <script src="js/app/service.js"></script>
     </head>
     <body ng-app="myApp">
         <div class="off-canvas-wrap">            
@@ -211,7 +212,8 @@
                 dom.addClass('error');
                 dom.after('<small class="error">' + errMsg + '.</small>');
             };
-            var myAppModule = angular.module('myApp', ['mm.foundation']);
+            var myAppModule = angular.module('myApp',
+                ['mm.foundation', 'ditiService']);
             myAppModule.directive('parentDropdown', function() {
                 return {
                     link: function(scope, element, attrs) {
@@ -220,29 +222,7 @@
                         }
                     }
                 };
-            });
-            myAppModule.factory('uiHttp', ['$http', function($http) {
-                return function(url, method, data, successFunc, errorFunc) {
-
-                    if (!successFunc) {
-                        successFunc = function() {
-                        };
-                    }
-                    if (!errorFunc) {
-                        errorFunc = function(ret) {
-                            alert(ret.data);
-                        };
-                    }
-                    $http({
-                        method: method ? method : 'POST',
-                        url: 'index.php/' + url,
-                        headers: {"content-type": 'application/json'},
-                        data: data
-                    }).success(function(ret) {
-                        ret.status ? successFunc(ret) : errorFunc(ret);
-                    });
-                };
-            }]);
+            });            
             myAppModule.controller('menuController', function($scope, uiHttp) {
                 $scope.isLogin = false;
                 $scope.topMenuData = [];
