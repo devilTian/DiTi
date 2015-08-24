@@ -1,182 +1,195 @@
 <div class="row">
     <div class="small-12 small-centered columns">
-        <dl class="accordion" data-accordion>
-            <dd class="accordion-navigation">
-                <a href="#statistic">总结</a>
-                <div id="statistic" class="content active">                    
-                    <?php echo $data['html'];?>                   
-                </div>
-            </dd>            
-            <dd class="accordion-navigation">
-                <a href="#weightRecord">记录体重</a>
-                <div id="weightRecord" class="content">
-                    <div data-alert class="alert-box info radius <?php if($data['weight'] !== false) echo 'hide'; ?>" id="weightAlter1">Hi, <?php echo $_SESSION['nickname'] ?>!今天你还没有记录你的体重!<br/>赶紧去测一下吧！</div>
-                    <div data-alert class="alert-box info radius <?php if($data['weight'] === false) echo 'hide'; ?>" id="weightAlter2">Hi, <?php echo $_SESSION['nickname']?>!你已经记录了你的体重, 但还可以再次测试~</div>
-                    <form id="weightForm">
-                        <div class="row">
-                            <div class="large-3 medium-3 small-3 columns">
-                                <label class="right inline">体重</label>                                
-                            </div>
-                            <div class="large-3 medium-3 small-9 columns">
-                                <input type="text" name="weight" id="weight"
-                                       placeholder="<?php if($data['weight'] !== false) echo $data['weight']['val'] . $data['weightUnitOpt'][$data['weight']['unit']];?>"/>
-                            </div>
-                            <div class="large-6 columns hide-for-small-only"></div>
+        <accordion close-others="true">
+            <accordion-group heading="总结" is-open="initData.weight !== false">
+                <p ng-if="initData.weight === false">无</p>
+                <p ng-if="initData.weight !== false">
+                    <p ng-if="initData.height !== false">
+                        今天的体重是<span class="label" ng-bind="initData.weight.val + initData.weightUnitOpt[initData.weight.unit]"></span>
+                        ,身高是<span class="label" ng-bind="initData.height + '厘米'"></span><br/>
+                        BMI=<span class="label" ng-bind="initData.bmi.val"></span>
+                        ,<span class="label" ng-bind="initData.bmi.level"></span>,
+                    </p>
+                    <p ng-if="initData.height === false">
+                        今天的体重是<span class="label" ng-bind="initData.weight.val + initData.weightUnitOpt[initData.weight.unit] + '.'"></span>
+                    </p>
+                    请将今天的总卡路里摄入量控制在<span class="alert label" ng-bind="initData.calPerDay + 'calories'"></span>以下.<br/>
+                    运动消耗掉<span class="success label" ng-bind="initData.workout + 'calories'"></span>.<br/>
+                    今日已摄入总热量: <b ng-bind="initData.intake + '卡'"></b>, 包括:
+                    <table ng-if="initData.weight !== false">
+                        <thead>
+                            <tr>
+                                <th width="200">名称</th>
+                                <th width="150">热量</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in initData.dietItems">
+                                <td ng-bind="item[0]"></td>
+                                <td ng-bind="item[1]"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </p>    
+            </accordion-group>
+            <accordion-group heading="记录体重" is-open="initData.weight === false">
+                <div data-alert class="alert-box info radius" ng-if="initData.weight === false" id="weightAlter1">Hi, {{initData.nick}}!今天你还没有记录你的体重!<br/>赶紧去测一下吧！</div>
+                <div data-alert class="alert-box info radius" ng-if="initData.weight !== false" id="weightAlter2">Hi, {{initData.nick}}!你已经记录了你的体重, 但还可以再次测试~</div>
+                <form id="weightForm">
+                    <div class="row">
+                        <div class="large-3 medium-3 small-3 columns">
+                            <label class="right inline">体重</label>                                
                         </div>
-                        <div class="row">
-                            <div class="large-3 medium-3 small-3 columns">
-                                <label class="right inline">单位</label>
-                            </div>
-                            <div class="large-3 medium-3 small-9 columns">
-                                <select id="weightUnit">
-                                    <?php foreach ($data['weightUnitOpt'] as $k => $v) { ?>
-                                    <option value="<?php echo $k ?>"><?php echo $v ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                            <div class="large-6 columns hide-for-small-only"></div>
+                        <div class="large-3 medium-3 small-9 columns">
+                            <input type="text" name="weight" id="weight" ng-model="formData.weight"
+                                placeholder="{{initData.weight !== false ? initData.weight.val + initData.weightUnitOpt[initData.weight.unit] : ''}}">
                         </div>
-                        <div class="row">
-                            <div class="large-12 medium-12 small-12 columns">
-                                <a href="#" class="button tiny radius expand"
-                                   id="submitWeightBtn">提交
-                                </a>
-                            </div>
+                        <div class="large-6 columns hide-for-small-only"></div>
+                    </div>
+                    <div class="row">
+                        <div class="large-3 medium-3 small-3 columns">
+                            <label class="right inline">单位</label>
                         </div>
-                    </form>
-                </div>
-            </dd>
-            <dd class="accordion-navigation">
-                <a href="#dietCal">记录饮食热量</a>
-                <div id="dietCal" class="content">
-                    <div data-alert class="alert-box info radius" id="dietAlter1">记录你当前吃下的食物~</div>
-                    <form id="dietForm">
-                          <div class="row">
-                            <div class="large-3 medium-3 small-3 columns">
-                                <label class="right">类型</label>
-                            </div>
-                            <div class="large-6 medium-6 small-9 columns">
-                                <input type="radio" name="dietType" value="old" id="oldDiet" checked="checked"><label for="oldDiet">已存食物</label>&nbsp;
-                                <input type="radio" name="dietType" value="new" id="newDiet"><label for="newDiet">新食物</label>
-                            </div>
-                            <div class="large-3 columns hide-for-small-only"></div>
+                        <div class="large-3 medium-3 small-9 columns">
+                            <select ng-model="formData.unit" ng-options="k as v for (k, v) in initData.weightUnitOpt">
+                            </select>
                         </div>
-                        <div class="row dietNewDiv">
-                            <div class="large-3 medium-3 small-3 columns">
-                                <label class="right inline">热量</label>
-                            </div>
-                            <div class="large-3 medium-3 small-9 columns">
-                                <div class="row collapse">
-                                    <div class="small-8 columns">
-                                        <input type="text" name="calorie" id="calorie" placeholder="calorie"/>
-                                    </div>
-                                    <div class="small-4 columns">
-                                        <a href="#" class="button postfix" id="convertKjToCalBtn">KJ->Cal</a>
-                                    </div>
-                                </div>                                
-                            </div>
-                            <div class="large-6 columns hide-for-small-only"></div>
+                        <div class="large-6 columns hide-for-small-only"></div>
+                    </div>
+                    <div class="row">
+                        <div class="large-12 medium-12 small-12 columns">
+                            <a href="#" class="button tiny radius expand"
+                                ng-click="submitWeight()">提交
+                            </a>
                         </div>
-                        <div class="row dietNewDiv">
-                            <div class="large-3 medium-3 small-3 columns">
-                                <label class="right inline">名称</label>
-                            </div>
-                            <div class="large-3 medium-3 small-9 columns">
-                                <input type="text" name="foodName" id="foodName"/>
-                            </div>
-                            <div class="large-6 columns hide-for-small-only"></div>
+                    </div>
+                </form>
+            </accordion-group>
+            <accordion-group heading="记录饮食热量">
+                <div data-alert class="alert-box info radius" id="dietAlter1">记录你当前吃下的食物~</div>
+                <form id="dietForm">
+                      <div class="row">
+                        <div class="large-3 medium-3 small-3 columns">
+                            <label class="right">类型</label>
                         </div>
-                        <div class="row dietNewDiv">
-                            <div class="large-3 medium-3 small-3 columns">
-                                <label class="right inline">价格</label>
-                            </div>
-                            <div class="large-3 medium-3 small-9 columns">
-                                <input type="text" name="price" id="price"/>
-                            </div>
-                            <div class="large-6 columns hide-for-small-only"></div>
+                        <div class="large-6 medium-6 small-9 columns">
+                            <input type="radio" name="dietType" value="old" id="oldDiet" checked="checked"><label for="oldDiet">已存食物</label>&nbsp;
+                            <input type="radio" name="dietType" value="new" id="newDiet"><label for="newDiet">新食物</label>
                         </div>
-                        <div class="row dietOldDiv">
-                            <div class="large-3 medium-3 small-3 columns">
-                                <label class="right inline">名称</label>
-                            </div>
-                            <div class="large-3 medium-3 small-9 columns">
-                                <select id="foodOptions">
-                                    <option selected="selected" value="">请选择</option>
-                                    <?php foreach ($data['foodOpt'] as $v) { ?>
-                                    <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                            <div class="large-6 columns hide-for-small-only"></div>
+                        <div class="large-3 columns hide-for-small-only"></div>
+                    </div>
+                    <div class="row dietNewDiv">
+                        <div class="large-3 medium-3 small-3 columns">
+                            <label class="right inline">热量</label>
                         </div>
-                        <div class="row">
-                            <div class="large-3 medium-3 small-3 columns">
-                                <label class="right inline">份数</label>
-                            </div>
-                            <div class="large-3 medium-3 small-9 columns">                               
-                                <select id="copies">                                   
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>                                    
-                                </select>
-                            </div>
-                            <div class="large-3 columns hide-for-small-only"></div>
+                        <div class="large-3 medium-3 small-9 columns">
+                            <div class="row collapse">
+                                <div class="small-8 columns">
+                                    <input type="text" name="calorie" id="calorie" placeholder="calorie"/>
+                                </div>
+                                <div class="small-4 columns">
+                                    <a href="#" class="button postfix" id="convertKjToCalBtn">KJ->Cal</a>
+                                </div>
+                            </div>                                
                         </div>
-                        <div class="row">
-                            <div class="large-12 medium-12 small-12 columns">
-                                <a href="#" class="button tiny radius expand"
-                                   id="submitDietBtn">提交
-                                </a>
-                            </div>
+                        <div class="large-6 columns hide-for-small-only"></div>
+                    </div>
+                    <div class="row dietNewDiv">
+                        <div class="large-3 medium-3 small-3 columns">
+                            <label class="right inline">名称</label>
                         </div>
-                    </form>
-                </div>
-            </dd>
-            <dd class="accordion-navigation">
-                <a href="#burn">记录运动消耗的热量</a>
-                <div id="burn" class="content">
-                    <form id="burnForm">
-                        <div class="row">
-                            <div class="large-3 medium-3 small-4 columns">
-                                <label class="right inline">消耗</label>
-                            </div>
-                            <div class="large-3 medium-3 small-8 columns">
-                                <input type="text" name="calorie" id="calorie"
-                                    placeholder="calorie"/>
-                            </div>
-                            <div class="large-6 columns hide-for-small-only"></div>
+                        <div class="large-3 medium-3 small-9 columns">
+                            <input type="text" name="foodName" id="foodName"/>
                         </div>
-                        <div class="row">
-                            <div class="large-3 medium-3 small-4 columns">
-                                <label class="right inline">运动类型</label>
-                            </div>
-                            <div class="large-3 medium-3 small-8 columns">
-                                <input type="text" name="type" id="type"
-                                    value="跑步"/>
-                            </div>
-                            <div class="large-6 columns hide-for-small-only"></div>
+                        <div class="large-6 columns hide-for-small-only"></div>
+                    </div>
+                    <div class="row dietNewDiv">
+                        <div class="large-3 medium-3 small-3 columns">
+                            <label class="right inline">价格</label>
                         </div>
-                        <div class="row">
-                            <div class="large-12 medium-12 small-12 columns">
-                                <a href="#" class="button tiny radius expand"
-                                   id="submitBurnBtn">提交
-                                </a>
-                            </div>
+                        <div class="large-3 medium-3 small-9 columns">
+                            <input type="text" name="price" id="price"/>
                         </div>
-                    </form>                   
-                </div>
-            </dd>
-        </dl>    
+                        <div class="large-6 columns hide-for-small-only"></div>
+                    </div>
+                    <div class="row dietOldDiv">
+                        <div class="large-3 medium-3 small-3 columns">
+                            <label class="right inline">名称</label>
+                        </div>
+                        <div class="large-3 medium-3 small-9 columns">
+                            <select id="foodOptions">
+                                <option selected="selected" value="">请选择</option>
+                                <?php foreach ($data['foodOpt'] as $v) { ?>
+                                <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="large-6 columns hide-for-small-only"></div>
+                    </div>
+                    <div class="row">
+                        <div class="large-3 medium-3 small-3 columns">
+                            <label class="right inline">份数</label>
+                        </div>
+                        <div class="large-3 medium-3 small-9 columns">                               
+                            <select id="copies">                                   
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>                                    
+                            </select>
+                        </div>
+                        <div class="large-3 columns hide-for-small-only"></div>
+                    </div>
+                    <div class="row">
+                        <div class="large-12 medium-12 small-12 columns">
+                            <a href="#" class="button tiny radius expand"
+                               id="submitDietBtn">提交
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </accordion-group>
+            <accordion-group heading="记录运动消耗的热量">
+                <form id="burnForm">
+                    <div class="row">
+                        <div class="large-3 medium-3 small-4 columns">
+                            <label class="right inline">消耗</label>
+                        </div>
+                        <div class="large-3 medium-3 small-8 columns">
+                            <input type="text" name="calorie" id="calorie"
+                                placeholder="calorie"/>
+                        </div>
+                        <div class="large-6 columns hide-for-small-only"></div>
+                    </div>
+                    <div class="row">
+                        <div class="large-3 medium-3 small-4 columns">
+                            <label class="right inline">运动类型</label>
+                        </div>
+                        <div class="large-3 medium-3 small-8 columns">
+                            <input type="text" name="type" id="type"
+                                value="跑步"/>
+                        </div>
+                        <div class="large-6 columns hide-for-small-only"></div>
+                    </div>
+                    <div class="row">
+                        <div class="large-12 medium-12 small-12 columns">
+                            <a href="#" class="button tiny radius expand"
+                               id="submitBurnBtn">提交
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </accordion-group>
+        </accordion>
     </div>
 </div>
-<script type="text/javascript">    
+<script type="text/javascript">
 $(document).foundation().ready(function() {
     function clearAllErrorClass() {
         $('input.error').removeClass('error');
@@ -190,9 +203,9 @@ $(document).foundation().ready(function() {
     function freshStatisticsData() {
         $.ajax({
             url: 'index.php/healthy/showStatistics',
-            dataType: "html",
-            success: function(html) {
-                $('#statistic').html(html);
+            dataType: "json",
+            success: function(ret) {
+                $('#statistic').html(ret.data);
             }
         });
     }
@@ -330,7 +343,7 @@ $(document).foundation().ready(function() {
         return false;
     });
     $('#statistic').on('click', '#jumpToWeightBtn', function() {
-        $('a[href=#weightRecord]').trigger('click');
+        $('[heading=记录体重]').trigger('click');
     });
     $('input[type=radio][name=dietType]').click(function() {
         var type = $(this).val();

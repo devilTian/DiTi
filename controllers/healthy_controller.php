@@ -35,22 +35,33 @@ class Healthy_Controller extends Super_Controller {
         return array('val' => $bmi, 'level' => $level);
     }    
     
-    function show() {
+    public function getInitData() {
+        $this->session = &load_class('session');  
+        $this->load->model('healthy', 'm');
+        $data = $this->m->getStatistic();
+        $data['nick']   = $this->session->get('nickname');
+        $data['height'] = $this->getHeight();
+        $data['bmi']    = $this->getBmi($data['height'], $data['weight']['val']);
+        $data['weightUnitOpt'] = $this->m->weightUnitOpt;
+        $data['html']   = $this->load->view('healthy_statistics', NULL, $data, true);
+        $data['foodOpt'] = $this->m->getFoodOpt();
+        $this->echoRet($data);
+    }
+    
+    public function showStatistics() {          
         $this->load->model('healthy', 'm');
         $data = $this->m->getStatistic();
         $data['height'] = $this->getHeight();
         $data['bmi']    = $this->getBmi($data['height'], $data['weight']['val']);
         $data['weightUnitOpt'] = $this->m->weightUnitOpt;
-		$data['html']   = $this->load->view('healthy_statistics', NULL, $data, true);
-        $data['foodOpt'] = $this->m->getFoodOpt();
-		$this->load->view('healthy', NULL, $data);
+        $this->load->view('healthy_statistics', NULL, $data);
     }
     
     // recode body weight daily
     function updateWeight() {
-        if (isset($_POST['weight']) && isset($_POST['unit'])) {
-            $weight = $_POST['weight'];
-            $unit   = $_POST['unit'];
+        if (isset($this->post['weight']) && isset($this->post['unit'])) {
+            $weight = $this->post['weight'];
+            $unit   = $this->post['unit'];
 
             //validation
             $weight = floatval($weight);

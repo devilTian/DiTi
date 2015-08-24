@@ -13,302 +13,333 @@
 
         <script src="js/vendor/modernizr.js"></script>
         <script src="js/angular.min.js"></script>
-        <script src="js/mm-foundation-tpls-0.6.0.min.js"></script>        
+        <script src="js/angular.min.js.map"></script>
+        <script src="js/angular-route.min.js"></script>
+        <script src="js/mm-foundation-tpls-0.6.0.min.js"></script>
+        <script src="js/app/service.js"></script>
     </head>
     <body ng-app="myApp">
         <div class="off-canvas-wrap">            
             <div class="inner-wrap" ng-controller="menuController" >
-				<top-bar class="top-bar hide-for-small" data-topbar role="navigation">
-					<ul class="title-area">
-						<li class="name">
-							<h1><a href="#">DiTi</a></h1>
-						</li>
-						<!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-						<li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
-					</ul>
-					<top-bar-section class="top-bar-section">    
-						<!-- Left Nav Section -->
-						<ul class="left menu" id="topmenu">
-							<li parent-dropdown="{{item.children.length}}" has-dropdown ng-repeat="item in topMenuData">
-								<a href="#" ng-bind="item.name" ng-click="item.children.length > 0 ? false : request(item.link)"></a>
-								<ul top-bar-dropdown ng-if="item.children.length > 0">
-									<li ng-repeat="child in item.children">
-										<a href="#" ng-bind="child.name" ng-click="request(item.link+'/'+child.link)"></a>
-									</li>
-								</ul>
-							</li>
-						</ul>
-						<!-- Right login Section -->
-						<ul ng-if="!isLogin" class="right menu" id="loginDiv">
-							<li class="has-form">
-								<div class="row collapse">
-									<div class="large-12 small-12 columns">
-								<input type="text" name="username" ng-model='loginform.user'
-									   placeholder="请输入用户名" id="username"/>
-								</div>
-							</li>
-							<li class="has-form">
-								<div class="row collapse">
-									<div class="large-12 small-12 columns">
-								<input type="password" name="password" ng-model='loginform.pwd'
-									   placeholder="请输入密码" id="password"/>
-								</div>
-							</li>
-							<!--
-							<li class="has-form">
-									<ul class="inline-list">
-											<li>
-													<label class="white" for="remember">
-													<input type="checkbox" id="remember"/>
-													记住我</label>
-											</li>
-											<li>
-													<a href="#">忘记密码</a>
-											</li>
-									</ul>
-							</li>
-							-->
-							<li class="has-form">
-								<a href="#" class="button"
-									ng-click='checkUserAndPwd()'
-									id="loginBtn">登录</a>
-							</li>
-							<li class="has-form">
-								<a href="#" class="button alert"
-									ng-click='register()'
-									id="registerBtn">注册</a>
-							</li>
-						</ul>
-						<ul ng-if="isLogin" class="right menu" id="loginDiv">
-							<li has-dropdown>
-								<a href="#">设置</a>
-								<ul top-bar-dropdown>
-									<li><a ng-click="request('login/showAccountSetupForm')"
-										href="#" id="accountSetup">账号配置</a></li>
-								</ul>
-							</li>
-							<li class="divider"></li>
-							<li class="has-form">
-								<a ng-href="index.php/login/logout"
-									id="logout" class="button alert">退出</a>
-							</li>
-							<li class="divider"></li>
-						</ul>
-					</top-bar-section>
-				</top-bar>
-				
-				<!-- Left Nav Section -->
-				<nav class="tab-bar show-for-small">
-					<section class="left-small">
-						<a class="left-off-canvas-toggle menu-icon"><span></span></a>
-					</section>
-					<section class="middle tab-bar-section">
-						<h1 class="title">DiTi</h1>
-					</section>
-					<section class="right-small">
-						<a class="right-off-canvas-toggle menu-icon"><span></span></a>
-					</section>
-				</nav>
-				<aside class="left-off-canvas-menu">    
-					<ul class="off-canvas-list" id="topleftmenu">
-						<li><label>DiTi</label></li>
-						<li ng-repeat="item in sideMenuData">
-							<label ng-if="item.hasChild" ng-bind="item.name"></label>
-							<a ng-if="!item.hasChild"
-								href="#" ng-bind="item.name"
-								ng-click="request(item.link)"></a>
-						</li>
-					</ul>
-				</aside>
-				<!-- Right login Section -->
-				<aside class="right-off-canvas-menu">
-					<ul ng-if="!isLogin" id="rightSideDiv">
-						<li class="login">
-							<input type="text" name="username" ng-model='loginform.user'
-							   placeholder="请输入用户名" id="username"/>
-						</li>
-						<li class="login">
-							<input type="password" name="password" ng-model='loginform.pwd'
-							   placeholder="请输入密码" id="password"/>
-						</li>
-						<li class="login has-form">
-							<a href="#" class="button"
-								ng-click='checkUserAndPwd()'
-								id="loginBtn">登录</a>
-						</li>
-						<li class="has-form login">
-							<a href="#" class="button alert"
-								ng-click='register()'
-								id="registerBtn">注册</a>
-						</li>
-					</ul>
-					<ul ng-if="isLogin" id="rightSideDiv">
-						<li><label>设置</label></li>
-						<li><a ng-click="request('login/showAccountSetupForm')"
-							href="#" id="accountSetup">账号配置</a></li>
-						<li>
-							<a ng-href="index.php/login/logout"
-								id="logout" class="button alert">退出</a>
-						</li>
-					</ul>
-					<ul id="offCanvasFlag" class="off-canvas-list"></ul>
-				</aside>
-				<section role="main" class="main-section" id="mainContent">
-					<p class="panel">
-						子曰:学而时习之，不亦悦乎？有朋自远方来，不亦乐乎？人不知而不愠，不亦君子乎？
-					</p>
-					<p class="panel">
-						有子曰：其为人也孝弟，而好犯上者，鲜矣；不好犯上，而好作乱者，未之有也。君子务本，本立而道生。孝弟也者，其为仁之本与！
-					</p>
-					<p class="panel">
-						 子曰：巧言令色，鲜矣仁。
-					</p>
-					<p class="panel">
-						曾子曰：吾日三省吾身：为人谋而不忠乎？与朋友交而不信乎？传不习乎？
-					</p>
-					<p class="panel">
-						子曰：道千乘之国，敬事而信，节用而爱人，使民以时。
-					</p>
-					<p class="panel">
-						子曰：弟子入则孝，出则弟，谨而信，泛爱众而亲仁。行有馀力，则以学文。
-					</p>
-					<p class="panel">
-						子夏曰：贤贤易色，事父母能竭其力，事君能致其身，与朋友交言而有信：虽曰未学，吾必谓之学矣。
-					</p>
-					<p class="panel">
-						子曰：君子不重则不威，学则不固。主忠信，无友不如己者，过则勿惮改。
-					</p>
-					<p class="panel">
-						曾子曰：慎终追远，民德归厚矣。
-					</p>
-				</section>    
-				<a class="exit-off-canvas"></a>
+                <top-bar class="top-bar hide-for-small" data-topbar role="navigation">
+                    <ul class="title-area">
+                        <li class="name">
+                            <h1><a href="#">DiTi</a></h1>
+                        </li>
+                        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+                        <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
+                    </ul>
+                    <top-bar-section class="top-bar-section">    
+                        <!-- Left Nav Section -->
+                        <ul class="left menu" id="topmenu">
+                            <li parent-dropdown="{{item.children.length}}" has-dropdown ng-repeat="item in topMenuData">
+                                <a ng-href="{{item.children.length > 0 ? '' : '#!/' + item.link}}" ng-bind="item.name"></a>
+                                <ul top-bar-dropdown ng-if="item.children.length > 0">
+                                    <li ng-repeat="child in item.children">
+                                        <a href="#" ng-bind="child.name" ng-href="#!/{{item.link + '/' + child.link}}"></a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- Right login Section -->
+                        <form name="form.topLogin" novalidate>
+                            <ul ng-if="!isLogin" class="right menu" id="loginDiv">
+                                    <li class="has-form">
+                                        <div class="row collapse">
+                                            <div class="large-12 small-12 columns">
+                                                <input type="text" name="username" ng-model='loginform.user'
+                                                    placeholder="请输入用户名" class="error" id="username" required/>
+                                                <small class="error" ng-show="form.topLogin.username.$error.required">Required!</small>
+                                                <small class="error" ng-show="form.topLogin.username.$error.remote" ng-bind="loginErrMsg"></small>
+                                            </div>
+                                    </li>
+                                    <li class="has-form">
+                                        <div class="row collapse">
+                                            <div class="large-12 small-12 columns">
+                                                <input type="password" name="password" ng-model='loginform.pwd'
+                                                    placeholder="请输入密码" id="password" required/>
+                                                <small class="error" ng-show="form.topLogin.password.$error.required">Required!</small>
+                                            </div>
+                                    </li>
+                                    <!--
+                                    <li class="has-form">
+                                                    <ul class="inline-list">
+                                                                    <li>
+                                                                                    <label class="white" for="remember">
+                                                                                    <input type="checkbox" id="remember"/>
+                                                                                    记住我</label>
+                                                                    </li>
+                                                                    <li>
+                                                                                    <a href="#">忘记密码</a>
+                                                                    </li>
+                                                    </ul>
+                                    </li>
+                                    -->
+                                <li class="has-form">
+                                    <a href="#" class="button"
+                                       ng-click='checkUserAndPwd("top")'
+                                       id="loginBtn">登录</a>
+                                </li>
+                                <li class="has-form">
+                                    <a href="#" class="button alert"
+                                       ng-click='register()'
+                                       id="registerBtn">注册</a>
+                                </li>
+                            </ul>
+                        </form>
+                        <ul ng-if="isLogin" class="right menu" id="loginDiv">
+                            <li has-dropdown>
+                                <a href="#">设置</a>
+                                <ul top-bar-dropdown>
+                                    <li><a href="#!/login/showAccountSetupForm" id="accountSetup">账号配置</a></li>
+                                </ul>
+                            </li>
+                            <li class="divider"></li>
+                            <li class="has-form">
+                                <a ng-href="index.php/login/logout"
+                                   id="logout" class="button alert">退出</a>
+                            </li>
+                            <li class="divider"></li>
+                        </ul>
+                    </top-bar-section>
+                </top-bar>
+
+                <!-- Left Nav Section -->
+                <nav class="tab-bar show-for-small">
+                    <section class="left-small">
+                        <a class="left-off-canvas-toggle menu-icon"><span></span></a>
+                    </section>
+                    <section class="middle tab-bar-section">
+                        <h1 class="title">DiTi</h1>
+                    </section>
+                    <section class="right-small">
+                        <a class="right-off-canvas-toggle menu-icon"><span></span></a>
+                    </section>
+                </nav>
+                <aside class="left-off-canvas-menu">    
+                    <ul class="off-canvas-list" id="topleftmenu">
+                        <li><label>DiTi</label></li>
+                        <li ng-repeat="item in sideMenuData">
+                            <label ng-if="item.hasChild" ng-bind="item.name"></label>
+                            <a ng-if="!item.hasChild"
+                               href="#!/{{item.link}}" ng-bind="item.name"></a>
+                        </li>
+                    </ul>
+                </aside>
+                <!-- Right login Section -->
+                <aside class="right-off-canvas-menu">
+                    <form name="form.rightLogin" novalidate>
+                        <ul ng-if="!isLogin" id="rightSideDiv">
+                            <li class="login">
+                                <input type="text" name="username" ng-model='loginform.user'
+                                    placeholder="请输入用户名" required
+                                    ng-class="{'error' : form.rightLogin.username.$error.required || form.rightLogin.username.$error.remote}"/>
+                                <small class="error" ng-show="form.rightLogin.username.$error.required">Required!</small>
+                                <small class="error" ng-show="form.rightLogin.username.$error.remote" ng-bind="loginErrMsg"></small>
+                            </li>
+                            <li class="login">
+                                <input type="password" name="password" ng-model='loginform.pwd'
+                                    placeholder="请输入密码" required
+                                    ng-class="{'error' : form.rightLogin.password.$error.required}"/>
+                                <small class="error" ng-show="form.rightLogin.password.$error.required">Required!</small>
+                            </li>
+                            <li class="login has-form">
+                                <a href="#" class="button"
+                                   ng-click='checkUserAndPwd("right")'
+                                   id="loginBtn">登录</a>
+                            </li>
+                            <li class="has-form login">
+                                <a href="#" class="button alert"
+                                   ng-click='register()'
+                                   id="registerBtn">注册</a>
+                            </li>
+                        </ul>
+                    </form>
+                    <ul ng-if="isLogin" id="rightSideDiv">
+                        <li><label>设置</label></li>
+                        <li><a href="#!/login/showAccountSetupForm" id="accountSetup">账号配置</a></li>
+                        <li>
+                            <a ng-href="index.php/login/logout"
+                               id="logout" class="button alert">退出</a>
+                        </li>
+                    </ul>
+                    <ul id="offCanvasFlag" class="off-canvas-list"></ul>
+                </aside>
+                <section role="main" class="main-section" id="mainContent">
+					<br/>
+					<div class="small-12 columns" ng-view></div>
+                </section>    
+                <a class="exit-off-canvas"></a>
             </div>
         </div>
         <script src="js/vendor/jquery.js"></script>
         <script src="js/foundation.min.js"></script>
         <script>
             var clearAllErrorClass = function() {
-                    $('input.error').removeClass('error');
-                    $('small.error').remove();
-                };
+                $('input.error').removeClass('error');
+                $('small.error').remove();
+            };
             var addErrorClass = function(dom, errMsg) {
-                    dom.addClass('error');
-                    dom.after('<small class="error">' + errMsg + '.</small>');
-                };
-            var myAppModule = angular.module('myApp', ['mm.foundation']);
+                dom.addClass('error');
+                dom.after('<small class="error">' + errMsg + '.</small>');
+            };
+            var myAppModule = angular.module('myApp',
+                ['mm.foundation', 'ditiService', 'ngRoute'])
+                .config(['$routeProvider', '$locationProvider',
+                    function($routeProvider, $locationProvider) {
+                    $routeProvider.when('/', {
+                        templateUrl : 'views/home_view.html'
+                    }).when('/resume', {
+                        templateUrl : 'views/resume_view.html'
+                    }).when('/journey/hokkaido', {
+                        templateUrl : 'views/journey/hokkaido_view.html'
+                    }).when('/healthy', {
+                        templateUrl : 'views/healthy_view.php',
+                        controller  : 'healthController'
+                    }).otherwise({
+                        redirectTo : '/'
+                    });
+                    $locationProvider.html5Mode(false);
+                    $locationProvider.hashPrefix('!');
+            }]).run(function($rootScope, $location) {
+			});
             myAppModule.directive('parentDropdown', function() {
                 return {
-                    link : function(scope, element, attrs) {
+                    link: function(scope, element, attrs) {
                         if (attrs.parentDropdown === '0') {
                             $(element).removeAttr('has-dropdown').removeClass('has-dropdown');
                         }
                     }
                 };
             });
-			myAppModule.factory('uiHttp', ['$http', function($http) {
-				return function(url, method, data, successFunc, errorFunc) {
-
-					if (!successFunc) {
-						successFunc = function() {};
-					}
-					if (!errorFunc) {
-						errorFunc = function(ret) {
-							alert(ret.data);
-						};
-					}
-                    $http({
-                        method  : method ? method : 'POST',
-                        url     : 'index.php/' + url,
-                        headers : {"content-type" : 'application/json'},
-						data    : data
-                    }).success(function(ret) {
-						ret.status ? successFunc(ret) : errorFunc(ret);
-                    });
-				};
-			}]);
-            myAppModule.controller('menuController', function($scope, uiHttp) {
-                $scope.isLogin      = false;
-                $scope.topMenuData  = [];
+            myAppModule.controller('menuController', function($scope, uiHttp, $location, $anchorScroll) {
+                $scope.isLogin = false;
+                $scope.account = false;
+                $scope.topMenuData = [];
                 $scope.sideMenuData = [];
-                $scope.loginform    = {
-                    "user" : '',
-                    "pwd"  : ''
+                $scope.loginform = {
+                    "user": '',
+                    "pwd": ''
                 };
-                $scope.request = function(link) {
-					uiHttp(link, false, {}, function(ret) {
-                        $('#mainContent').html(ret.data);
-						$('#offCanvasFlag').trigger('click');
-					});
-                };
-                $scope.clearAllErrorClass = function() {
-                    $('input.error').removeClass('error');
-                    $('small.error').remove();
-                };
-                $scope.addErrorClass = function(dom, errMsg) {
-                    dom.addClass('error');
-                    dom.after('<small class="error">' + errMsg + '.</small>');
-                };
-                $scope.checkUserAndPwd = function() {
-					var userDom = $('input[name=username]'),
-						pwdDom  = $('input[name=password]');
-                    $scope.clearAllErrorClass();
-                    if ($scope.loginform.user === '') {
-                        $scope.addErrorClass(userDom, '用户名不能为空!');
-                    } else if ($scope.loginform.pwd === '') {  // [TODO] encrypt
-                        $scope.addErrorClass(pwdDom, '密码不能为空!');
-                    } else {
-						uiHttp('login', false, $scope.loginform, function(ret) {
-							window.location.reload();
-						}, function(ret) {
-							$scope.addErrorClass(userDom, ret.data);
-						});
+                $scope.form = {};
+                $scope.loginErrMsg = '';
+                
+				$scope.$on('$locationChangeStart', function(event, curUrl, lastUrl) {
+					var path    = $location.path(),
+                        curLink = path.substr(1),
+						isAllow = false;
+                    $scope.sideMenuData.forEach(function(obj) {
+                        if (obj.link === curLink) {
+                            isAllow = true;
+                        }
+                    });
+                    if (!isAllow && $scope.sideMenuData.length !== 0) {
+                        event.preventDefault();
+					} else {
+						$location.path(path);
+					}
+                });
+                $scope.checkUserAndPwd = function(pos) {
+                    var form;
+                    if (pos === 'top') {
+                        form = $scope.form.topLogin;
+                    } else if (pos === 'right') {
+                        form = $scope.form.rightLogin;
+                    };
+                    if (form.username.$error.required ||
+                        form.password.$error.required) {
+                        return false;
                     }
+                    uiHttp('login', false, $scope.loginform, function(ret) {
+                        window.location.reload();
+                    }, function(ret) {
+                        $scope.loginErrMsg = ret.data;
+                        form.username.$setValidity('remote', false);
+                    });
                 };
-				$scope.register = function() {
-                    $scope.clearAllErrorClass();
-					uiHttp('login/showRegisterForm', 'POST', {}, function(ret) {
-						$('#mainContent').html(ret.data);
-					});
-				};
+                $scope.register = function() {
+                    $('#offCanvasFlag').trigger('click');
+                    uiHttp('login/showRegisterForm', 'POST', {}, function(ret) {
+                        $('#mainContent').html(ret.data);
+                    });
+                };
                 // Get mene data.
-				uiHttp('layout/getNavigationData', 'POST', {}, function(ret) {
+                uiHttp('layout/getNavigationData', 'POST', {}, function(ret) {
                     var tempTopMenu = [], tempSideMenu = [], id, pid, clone;
                     ret.data.forEach(function(v) {
-                        id    = parseInt(v.id);
-                        pid   = parseInt(v.pid);
-					    clone = jQuery.extend({}, v);
+                        id = parseInt(v.id);
+                        pid = parseInt(v.pid);
+                        clone = jQuery.extend({}, v);
                         if (pid === -1) {  // level 1
-                            if(v.link === 'login') {
+                            if (v.link === 'login') {
                                 $scope.isLogin = true;
                             } else {
-								tempSideMenu[id] = clone;
-								tempTopMenu[id]  = v;
-								tempTopMenu[id]['children'] = [];
-                            }                            
+                                tempSideMenu[id] = clone;
+                                tempTopMenu[id] = v;
+                                tempTopMenu[id]['children'] = [];
+                            }
                         } else {  // level 2
-							clone.link = tempSideMenu[pid]['link'] + '/' +
-								clone.link;
-							tempSideMenu[pid]['hasChild'] = true;
-                            tempSideMenu.splice(pid+1, 0, clone);
+                            clone.link = tempSideMenu[pid]['link'] + '/' +
+                                    clone.link;
+                            tempSideMenu[pid]['hasChild'] = true;
+                            tempSideMenu.splice(pid + 1, 0, clone);
                             tempTopMenu[pid]['children'].push(v);
                         }
                     });
-                   tempTopMenu.forEach(function(v) {
+                    tempTopMenu.forEach(function(v) {
                         $scope.topMenuData.push(v);
                     });
                     tempSideMenu.forEach(function(v) {
                         $scope.sideMenuData.push(v);
                     });
                 });
-				$scope.$watch(function() {
-					return $('#rightSideDiv li').length;
-				}, function() {
-					$('#rightSideDiv').addClass('off-canvas-list');
-				});
+                $scope.$watch(function() {
+                    return $('#rightSideDiv li').length;
+                }, function() {
+                    $('#rightSideDiv').addClass('off-canvas-list');
+                });
+                $scope.scrollTo = function(id) {  // Handle anchor hash link
+                    $location.hash(id);
+                    $anchorScroll();
+                };
+                $(document).ready(function() {
+                    $(document).foundation();
+                    $('form').on('keyup', '[name=username],[name=password]',
+                        function(event) {
+                        var type = $(this).parents('form').attr('name');
+                        if (event.keyCode === 13) {  // enter
+                            if (type === 'form.topLogin') {
+                                $scope.checkUserAndPwd('top');
+                            } else if (type === 'form.rightLogin') {
+                                $scope.checkUserAndPwd('right');
+                            }                        
+                        }
+                    });
+                });
             });
-            $(document).ready(function() {
-                $(document).foundation();
+            myAppModule.controller('healthController', function(uiHttp, $scope) {
+                $scope.initData = {};
+                $scope.formData  = {
+                    "unit"   : 'kilograms',
+                    "weight" : ''
+                };
+                $scope.submitWeight = function() {
+                    alert($scope.unit);
+                    uiHttp('/healthy/updateWeight', 'POST', {
+                        "weight" : $scope.formData.weight,
+                        "unit"   : $scope.formData.unit
+                    }, function(ret) {
+                        $('#weightAlter1').addClass('hide');
+                        $('#weightAlter2').removeClass('hide');
+                        $('#weightForm')[0].reset();
+                        $('a[href=#statistic]').trigger('click');
+                        freshStatisticsData();
+                    });
+                }
+                uiHttp('healthy/getInitData', '', {}, function(ret) {                    
+                    $scope.initData = ret.data;
+                    console.info($scope);
+                });
             });
         </script>
     </body>     
